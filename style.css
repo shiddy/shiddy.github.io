@@ -111,6 +111,11 @@ body {
 }
 
 
+/* Code */
+pre {
+    line-height: 1em;
+}
+
 /* Links */
 a {
     color: var(--color-blue);
