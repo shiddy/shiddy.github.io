@@ -1,6 +1,4 @@
-CREATED 2017-09-09
-
-'m writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what *this feels like* and what this *felt like* to determine whether my decisions were worth it. Hopefully, those who read this can gain some insight before heading down the same road as I have.
+I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what *this feels like* and what this *felt like* to determine whether my decisions were worth it. Hopefully, those who read this can gain some insight before heading down the same road as I have.
 
 This post will span a year; starting with my efforts throughout my senior year until I have finished with my Bachelor's degree and can provide my historical perspective on my work/life balance.
 
@@ -104,3 +102,4 @@ After reading through my journals over the last years I have realized something.
 
 I feel that I have spent enough time here waxing non-poetic about burnout. But I need to start knowing what the goals in the next chapter in my life should look like.
 
+<p id="date">written on 2017-09-09</p>

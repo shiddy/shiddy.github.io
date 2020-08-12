@@ -1,5 +1,3 @@
-CREATED 2016-03-05
-
     In college, I studied comp-sci
     in class, so damned bored I could die.
     convinced to be best
@@ -40,3 +38,4 @@ It's easy to think that when someone does not get something immediately or strug
 
 If we as a group ever want computer science to be loved by others, we need to call out people like me for not paying it forward.
 
+<p id="date">written on 2016-03-05</p>

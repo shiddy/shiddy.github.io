@@ -1,5 +1,3 @@
-CREATED: 2017-07-11
-
 I've recently attended some security meetups where I live to provide solidarity and support to my friends presenting. One common thread among all of the meetings I've been to is the frustration with user's security. More plainly: "What should I be doing to ensure that my user base is secure using X?" There are always multiple propositions in response to this problem, generally under a mantra of educating the populous on security.
 
 The most frustrating of the recommendations speakers had raised was with the prospect of child upbringing. That parents needed to teach their children to be secure in their online dealings. This always comes across as a  *how* rather than a *why*. Which means regardless of your intentions, you will come across as patronizing or suspicious.
@@ -104,3 +102,5 @@ Muli-factor authentication on your phone might not help, if someone can convince
 ### So what should I do?
 
 Use the internet as you see fit. Just know that the internet is now a very public place. Conduct yourself like you would in public. Operate under the expectation that what you do online might be viewed by others. If anything in this post made you consider your security posture, spend a minute or two looking up what advice professionals have to offer. Most importantly, enjoy the content you post and the content posted by others. Eat Trash; Be free; Death is coming.
+
+<p id="date">written on 2017-07-11</p>
