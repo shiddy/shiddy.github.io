@@ -103,7 +103,7 @@ main() {
     # ./bin/ssg_helpers.py $dst
     # echo "########"
     # testing "$urls" "$dst"
-    # render_archive "$urls" "$src"
+    render_archive "$urls" "$src"
 
 	print_status 'url' 'urls' "$urls" >&2
 	echo >&2
