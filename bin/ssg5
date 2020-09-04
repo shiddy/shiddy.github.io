@@ -292,23 +292,14 @@ render_archive() {
             title=$(echo "$i" | sed 's|_| |g' | cut -d'.' -f1)
             date=$(grep -Eo "([0-9]+-[0-9]+-[0-9]+)" "$src/$file") || date=''
             # Posix string indexing is not a thing
-            link="$date <li><a href=\"$i\">[$date] ${title:6}</a></li>\t"
+            hr_title=$(echo $title | sed "s|posts/||")
+            link="$date <li><a href=\"$i\">[$date] ${hr_title}</a></li>\t"
             elements=$elements$link
         fi
     done
-    elements=$(echo $elements | python -c "import sys; a = [x for x in sys.stdin]; a=a[0].strip().split('\t'); a.sort(); a=[x[11:] for x in a]; print(''.join(a))")
-    echo $elements
-    # elements=""
-    # for link in $test; do
-    #     echo "###### $link"
-    #     # elements=$elements$(echo $link | cut -d' ' -f2)
-    #     elm=$(echo $link | cut -d' ' -f2)
-    #     echo "###### $elm"
-    #     elements=$elements$elm
-    # done
-    # echo $elements
-    sed "s|<p>ARCHIVE_STUB</p>|<ul>$elements</ul>|g" > destination/_index.html < destination/index.html
-    mv destination/_index.html destination/index.html
+    elements=$(echo $elements | python3 -c "import sys; a = [x for x in sys.stdin]; a=a[0].strip().split('\t'); a.sort(); a=[x[11:] for x in a]; print(''.join(a))")
+    sed "s|<p>ARCHIVE_STUB</p>|<ul>$elements</ul>|g" > $dst/_index.html < $dst/index.html
+    mv $dst/_index.html $dst/index.html
 }
 
 main "$@"
