@@ -1,5 +1,7 @@
 # GPG & Hardware Tokens
 
+<img src="/assets/Yubikey-Header.jpeg" alt="Header Img" width=100%/>
+
 ## TL;DR
  * [Preamble](#Preamble)
  * [Requirements](#Requirements)
@@ -18,6 +20,7 @@
    * [Adding our public key to various authorized keys](#Adding our public key to various authorized keys)
  * [Setting touch behavior for Yubikey Subkeys](#Setting touch behavior for Yubikey Subkeys)
  * [Setting pin retries for Yubikey](#Setting pin retries for Yubikey)
+ * [Setting pins for your Smart Card](#Setting pins for your Smart Card)
 
 ## Preamble
 
@@ -82,24 +85,30 @@ I understand that there are mechanisms to run this as a batch job, however I wan
 ### Creating the Master Cert Key
 
 ```b
-gpg --expert --full-generate-key --cert-digest-algo 10
+gpg --expert --full-generate-key --cert-digest-algo H10
 ```
 
 **\*Note\*** The `--cert-digest-algo` flag allows us to specify the hashing algoritm on these keys. By default we will see SHA256, which is fine for most everyone, but since we can specify SHA512 which will be faster on our 64-bit machines, and also make a collision with our hash much less likely. [According to the Docs](https://www.gnupg.org/gph/en/manual/r2029.html) we can show the algorithms used here, but only some of them map to the globals in *gcrypt.h* so no love on specifying whatever hash you want ¯\\_(ツ)_/¯
 
-We select `(11) ECC (set your own capabilites` and we then toggle the signing capability `s` which is on by default.
+We select `(11) ECC (set your own capabilites` and we then toggle the signing capability `s` which is on by default so that only the certify cababilty remains.
+
+![/assets/gpg-capability-selection.png)
 
 Finally we select `(Q) Finished` to then specify the encryption algorithm. In our case we want `(1) Curve 25519`
 
 Next we are prompted with how long we want this cert to be valid for. I normally don't like to set limits for how long a key will be used in fear that I will lose historical data. That being said, I also limit the damage that is done if these keys are compromised by creating a revocation certificate. So, I enter a `0` and confirm with `y` to state that my master key will not expire.
 
-Now we want to provide some information about who the key belongs to. I'll enter `shiddy` and `shiddy@shiddy.io` and leave the comment blank. We then finilize the key creation with `(O)kay`.
+Now we want to provide some information about who the key belongs to. I'll enter `shiddy` for my name and `shiddy@shiddy.io` for my email. and leave the comment blank. We then finilize the key creation with `(O)kay`.
+
+At this point you may be prompted for a passphrase, **This is different than your smart card pin**, and is the only thing preventing this key from being used if someone get's access to your keyring or private key storage. Make sure to set it to something secure.
 
 Congrats! We now will follow a simiar sequence of steps to generate our *Authorization*, *Encryption*, and *Signing* keys.
 
 If we want to confirm our key status at any time we can execute `gpg --export shiddy@shiddy.io | gpg --list-packets`
 
-Which at this point shows that we have generated two keys `pkey[0]` and `pkey[1]` as well as our `digest algo 10` as part of the signature packet.
+Which at this point shows that we have generated two keys `pkey[0]` and `pkey[1]` as well as our `digest algo H10` as part of the signature packet.
+
+![/assets/gpg-list-packets-example.png)
 
 ### Master Key Revokation
 
@@ -118,7 +127,7 @@ The above command created a file `shiddy@shiddy.io.gpg-revocation-certificate` w
 We want to create our subkeys from our master Certify key. So we will tell GPG that we want to edit this key which will drop us into a gpg prompt.
 
 ```b
-gpg --expert --edit-key --cert-digest-algo 10 shiddy@shiddy.io
+gpg --expert --edit-key --cert-digest-algo H10 shiddy@shiddy.io
 ```
 
 We can then enter `addkey` to begin the creation of a new subkey.
@@ -167,6 +176,8 @@ Let's check that our computer is able to read the smart card data. After pluggin
 
 If you are not starting out fresh, you can always run `ykman piv reset && ykman openpgp reset`
 
+**Note** The `ykman openpgp reset` command resets your pin to 123456 and admin pin to 12345678. It's assumed that you know your pin and admin pin. We will change it to something else later in [Setting pins for your Smart Card](#Setting pins for your Smart Card) below.
+
 **Note** if you find you are getting errors like `Error: Failed connecting to YubiKey ... Make sure the application have require permissions` You might need to unplug and replug in your hardware device. We are making many changed in the course of this post and sometimes it can lock after it's been updated.
 
 ```b
@@ -175,6 +186,8 @@ gpg --edit-key shiddy@shiddy.io
 
 Here we want to select a specific subkey with `key 1` and then telling saying that specific key should be sent to our smartcard with `keytocard`.
 
+**Note** You will see that the specific subkey is selected when it has an asterisk **(\*)** next to it
+
 Since our key selected earlier was a signature key we inform the smart card it's a signature key with `(1) Signature Key`
 
 Tada!
@@ -182,6 +195,8 @@ Tada!
 We can follow this patter for our *Authentication* and *Encryption* subkeys:
 
 Unselect our signature key with `key 1`, select our Auth key with `key 2`, apply it to the card with `keytocard`, and tell the smart card it's an authentication key with `(2) Authentication Key`.
+
+![/assets/gpg-keytocard-example.png)
 
 Finally writing our Encryption key via: Unselecting our authentication key with `key 2`, selecting our encryption key with `key 3`, writing it to the card with `keytocard`, and telling the card it's an encryption key with `(3) Encryption Key`.
 
@@ -275,4 +290,19 @@ Here I am setting the number of retries for my pin to 5, the number of reset-cod
 ```b
 ykman openpgp set-pin-retiries 5 5 10
 ```
+
+## Setting pins for your Smart Card
+
+Smart Cards generally have two pins, a pin for regular verification of the card owner, and an admin pin for making hardware changes to the smart card itself.
+
+If we fail validation with the pin a number of time above our pin retry count, we have to use the administrative pin to unlock the key. If we fail to validate the admin key in the same way, we brick our key, and would have to factory reset it.
+
+We can change these pins as well as unblock our pin with gpg, using the following command:
+
+```b
+gpg --change-pin
+```
+
+*If you have not modified this value yet, 123456 is the factory pin and 12345678 is the default administrative pin*
+
 <p id="date">written on 2020-09-07</p>
