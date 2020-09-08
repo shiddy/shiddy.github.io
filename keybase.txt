@@ -1,0 +1,54 @@
+https://keybase.io/shiddy
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://shiddy.io
+  * I am shiddy (https://keybase.io/shiddy) on keybase.
+  * I have a public key ASAymW0Migjf1Ezy9GYJltowsKpy7f3iXtb9ZaQBTHx5jwo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012014654893dc0ec8981c0456efe0187a806fd8f017b163703c5760f9920c6c21d00a",
+      "host": "keybase.io",
+      "kid": "012032996d0c8a08dfd44cf2f4660996da30b0aa72edfde25ed6fd65a4014c7c798f0a",
+      "uid": "addda71f28439aa3c177ef08a9114519",
+      "username": "shiddy"
+    },
+    "merkle_root": {
+      "ctime": 1599540759,
+      "hash": "cca13809a30d31bef2ddd1ed8a43564fe922f1dc593beb1fd09aa86f370ea0018ed6254d35ab2e393a1441b7ece3e320724e2a108bb03b00c10b0ad17ff2a7ce",
+      "hash_meta": "6a6c68363af1fec9691b80253f76b8d64939187d72e151c8482e2b26e7e14d95",
+      "seqno": 17503206
+    },
+    "service": {
+      "entropy": "QXJN3qJsQDirCWo7+g370BjD",
+      "hostname": "shiddy.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.5.1"
+  },
+  "ctime": 1599540765,
+  "expire_in": 504576000,
+  "prev": "88ef8fd372c90c87d9508e039544e501cf747d353bdd37a2dca021832f372370",
+  "seqno": 48,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgMpltDIoI39RM8vRmCZbaMLCqcu394l7W/WWkAUx8eY8Kp3BheWxvYWTESpcCMMQgiO+P03LJDIfZUI4DlUTlAc90fTU73Tei3KAhgy83I3DEIHNLjwlkT0Io94uz5i1/Kb7fevtoouCFb9KkXAOFY/DSAgHCo3NpZ8RAkca8nLJ4YDNwhJ0p4Bi0yxl4AqMsPEr9vACYkqYyXgAl58Opnx2wMLB6qpb1zd0hSOce0gOd/amDWsSf2NX6D6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIDaoGWfr14yZoNplbtNOcv/LBTp1uCCd+Qyvy573tPTAo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/shiddy
+
