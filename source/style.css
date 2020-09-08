@@ -37,6 +37,18 @@ body {
     padding: 1em;
 }
 
+p,h1,h2,h3,h4,h5,h6,b,i,a,pre {
+    font-family: "Ubuntu Mono", "Lucida Console", Monaco, monospace;
+}
+
+p,b,i,a {
+    font-size: 16px;
+}
+
+pre.header, a.header {
+    font-size: 14px;
+    font-family: Monaco, monospace;
+}
 
 #container {
     margin: 1em auto;
@@ -111,9 +123,23 @@ body {
 }
 
 
-/* Code */
 pre {
     line-height: 1em;
+}
+
+/* Code */
+code {
+    word-wrap: break-word;
+    background-color: var(--color-8);
+    display: inline;
+    font-size: 15px;
+    color: var(--color-0)
+}
+
+code.language-b {
+    padding: 0.5em 0.5em;
+    display: inline-block;
+    margin: 0.5em;
 }
 
 /* Links */

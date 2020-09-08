@@ -195,6 +195,8 @@ render_md_files_lowdown() {
 		lowdown \
 		-D html-skiphtml \
 		-d metadata \
+        --html-no-skiphtml \
+        --html-no-escapehtml \
 		-d autolink < "$1/$f" |
 		render_html_file "$3" \
 		> "$2/${f%\.md}.html"
@@ -286,11 +288,13 @@ render_archive() {
 
     # This only works for .md files for now
     # This also needs to be more clear at only getting things matching the pattern CREATED: 2017-07-11
+    echo $urls
     for i in $urls; do
         if echo "$i" | grep -q 'posts/'; then
             file=$(echo $i | sed 's|.html|.md|')
             title=$(echo "$i" | sed 's|_| |g' | cut -d'.' -f1)
-            date=$(grep -Eo "([0-9]+-[0-9]+-[0-9]+)" "$src/$file") || date=''
+            date=$(grep -Eo "(written on 20[0-9]+-[0-9]+-[0-9]+)" "$src/$file") || date=''
+            date=$(echo $date | sed 's|written on ||')
             # Posix string indexing is not a thing
             hr_title=$(echo $title | sed "s|posts/||")
             link="$date <li><a href=\"$i\">[$date] ${hr_title}</a></li>\t"
