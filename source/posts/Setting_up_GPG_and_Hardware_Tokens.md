@@ -8,7 +8,7 @@
    * [Configuration](#Configuration)
  * [Our GPG key structure](#Our GPG key structure)
    * [Creating the Master Cert Key](#Creating the Master Cert Key)
-   * [Master Key Revokation](#Master Key Revokation)
+   * [Master Key Revocation](#Master Key Revocation)
    * [Subkey Generation](#Subkey Generation)
    * [Exporting our keys](#Exporting our keys)
      * [Exporting Public Keys](#Exporting Public Keys)
@@ -24,9 +24,9 @@
 
 ## Preamble
 
-Every time I set up a new computer there is a fair amount of time spent on getting various configs into a state I am comfortable with. Unfortunately, I don't have a means to automatically set up hardware tokens for authing into some machines so I often have to spend a day just looking up all the various commands and parameters. This post aims to make that proccess easier for me in the future, but also hopefully save you some time on your next gpg key setup.
+Every time I set up a new computer there is a fair amount of time spent on getting various configs into a state I am comfortable with. Unfortunately, I don't have a means to automatically set up hardware tokens for authing into some machines so I often have to spend a day just looking up all the various commands and parameters. This post aims to make that process easier for me in the future, but also hopefully save you some time on your next gpg key setup.
 
-I also am using the **Yubikey 5** because [it supports the GPG 3.4 Smart Card spec](https://support.yubico.com/support/solutions/articles/15000027139-yubikey-5-2-3-enhancements-to-openpgp-3-4-support). Allowing us to write eliptic curve keypairs to the device. If you have a yubikey 4 or lower you will have to use RSA as your algorithm for all keys in this process.
+I also am using the **Yubikey 5** because [it supports the GPG 3.4 Smart Card spec](https://support.yubico.com/support/solutions/articles/15000027139-yubikey-5-2-3-enhancements-to-openpgp-3-4-support). Allowing us to write elliptic curve keypairs to the device. If you have a yubikey 4 or lower you will have to use RSA as your algorithm for all keys in this process.
 
 I don't claim to be a cryptography expert, and what I am posting here is to the best of my knowledge the most generic use case friendly way to set up a hardware token. If you have improvements feel free to send me a pgp message with the details.
 
@@ -44,7 +44,7 @@ For MacOS I assume that you are using homebrew or are able to get these programs
 brew install gnupg pinentry-mac ykman
 ```
 
-For Linux I am using a Debian based package manager, but I trust you are able to find these packages with your speicifc distro
+For Linux I am using a Debian based package manager, but I trust you are able to find these packages with your specific distro.
 
 ```b
 sudo apt install gpg scdaemon libccid pinentry yubikey-manager
@@ -88,29 +88,29 @@ I understand that there are mechanisms to run this as a batch job, however I wan
 gpg --expert --full-generate-key --cert-digest-algo H10
 ```
 
-**\*Note\*** The `--cert-digest-algo` flag allows us to specify the hashing algoritm on these keys. By default we will see SHA256, which is fine for most everyone, but since we can specify SHA512 which will be faster on our 64-bit machines, and also make a collision with our hash much less likely. [According to the Docs](https://www.gnupg.org/gph/en/manual/r2029.html) we can show the algorithms used here, but only some of them map to the globals in *gcrypt.h* so no love on specifying whatever hash you want ¯\\_(ツ)_/¯
+**\*Note\*** The `--cert-digest-algo` flag allows us to specify the hashing algorithm on these keys. By default we will see SHA256, which is fine for most everyone, but since we can specify SHA512 which will be faster on our 64-bit machines, and also make a collision with our hash much less likely. [According to the Docs](https://www.gnupg.org/gph/en/manual/r2029.html) we can show the algorithms used here, but only some of them map to the globals in *gcrypt.h* so no love on specifying whatever hash you want ¯\\_(ツ)_/¯
 
-We select `(11) ECC (set your own capabilites` and we then toggle the signing capability `s` which is on by default so that only the certify cababilty remains.
+We select `(11) ECC (set your own capabilites` and we then toggle the signing capability `s` which is on by default so that only the certify capability remains.
 
-![/assets/gpg-capability-selection.png)
+![gpg capability selection](/assets/gpg-capability-selection.png)
 
 Finally we select `(Q) Finished` to then specify the encryption algorithm. In our case we want `(1) Curve 25519`
 
 Next we are prompted with how long we want this cert to be valid for. I normally don't like to set limits for how long a key will be used in fear that I will lose historical data. That being said, I also limit the damage that is done if these keys are compromised by creating a revocation certificate. So, I enter a `0` and confirm with `y` to state that my master key will not expire.
 
-Now we want to provide some information about who the key belongs to. I'll enter `shiddy` for my name and `shiddy@shiddy.io` for my email. and leave the comment blank. We then finilize the key creation with `(O)kay`.
+Now we want to provide some information about who the key belongs to. I'll enter `shiddy` for my name and `shiddy@shiddy.io` for my email, and leave the comment blank. We then finalize the key creation with `(O)kay`.
 
-At this point you may be prompted for a passphrase, **This is different than your smart card pin**, and is the only thing preventing this key from being used if someone get's access to your keyring or private key storage. Make sure to set it to something secure.
+At this point you may be prompted for a passphrase, **This is different than your smart card pin**, and is the only thing preventing this key from being used if someone gets access to your keyring or private key storage. Make sure to set it to something secure.
 
-Congrats! We now will follow a simiar sequence of steps to generate our *Authorization*, *Encryption*, and *Signing* keys.
+Congrats! We now will follow a similar sequence of steps to generate our *Authorization*, *Encryption*, and *Signing* keys.
 
 If we want to confirm our key status at any time we can execute `gpg --export shiddy@shiddy.io | gpg --list-packets`
 
 Which at this point shows that we have generated two keys `pkey[0]` and `pkey[1]` as well as our `digest algo H10` as part of the signature packet.
 
-![/assets/gpg-list-packets-example.png)
+![gpg list packets example](/assets/gpg-list-packets-example.png)
 
-### Master Key Revokation
+### Master Key Revocation
 
 We want to make a means for us to say that this key has been compromised if we make a mistake in the future.
 
@@ -120,7 +120,7 @@ This is important because we set this key to never expire, if our key was compro
 gpg --output shiddy\@shiddy.io.gpg-revocation-certificate --gen-revoke shiddy@shiddy.io
 ```
 
-The above command created a file `shiddy@shiddy.io.gpg-revocation-certificate` which contains the revokation certificate, print it and put in in a fire-safe, slap it on a usb and put it somewhere safe but **do not keep it on your hard drive**
+The above command created a file `shiddy@shiddy.io.gpg-revocation-certificate` which contains the revocation certificate, print it and put in in a fire-safe, slap it on a usb and put it somewhere safe but **do not keep it on your hard drive**
 
 ### Subkey Generation
 
@@ -136,17 +136,17 @@ Selecting `(11) ECC (set your own capabilities)` again will default to *Sign* as
 
 Two more to go! Let's create our *Authenticate* key next
 
-Invoke `addkey` again, `(11) ECC (set your own capabilities)` and this time only enabling the *Authorization* capability and disabling any other capabilites. `0` for the expiration date, and a confimation with `y`.
+Invoke `addkey` again, `(11) ECC (set your own capabilities)` and this time only enabling the *Authorization* capability and disabling any other capabilities. `0` for the expiration date, and a confirmation with `y`.
 
-One final `addkey`, `(12) ECC (encrypt only)`, `(1) Curve 25519` for the elliptic curve, `0` for the expiration date, and finnally `y` to confirm
+One final `addkey`, `(12) ECC (encrypt only)`, `(1) Curve 25519` for the elliptic curve, `0` for the expiration date, and finally `y` to confirm
 
 finally we want to cleanly exit gpg with `save`.
 
 Huzzah! We now have a bunch of public and private keys!
 
-If we note what is returned to us here, we can see our master key set up with `sec ed25519` and our *Sign* and *Authenticate* keys as `ssb ed25519`. However our *Encryption* key is a `ssb cv25519` which specifies that it's going to be using an *integrated encryption scheme* (IES) to encrypt since the plaintext that can be encrypted in most eliptic curves is much smaller than RSA at similar bit lengths.
+If we note what is returned to us here, we can see our master key set up with `sec ed25519` and our *Sign* and *Authenticate* keys as `ssb ed25519`. However our *Encryption* key is a `ssb cv25519` which specifies that it's going to be using an *integrated encryption scheme* (IES) to encrypt since the plaintext that can be encrypted in most elliptic curves is much smaller than RSA at similar bit lengths.
 
-It's also worth point out that we could create any subkey with any algorithm you desire, so if you for example worked at a place where it might not be guaranteed that you can ssh with eliptic curves, then you can reasonably only create the Authorization key as a RSA4096 while keeping the other two subkey pairs as EC25519.
+It's also worth point out that we could create any subkey with any algorithm you desire, so if you for example worked at a place where it might not be guaranteed that you can ssh with elliptic curves, then you can reasonably only create the Authorization key as a RSA4096 while keeping the other two subkey pairs as EC25519.
 
 We can optionally add an image to this key with `addphoto` but it's worth noting that this is going to be stored on other people's machines, and that we don't want to make the people offering free cryptography solutions sad, so limiting the size is ideal.
 
@@ -168,7 +168,7 @@ gpg --export -a shiddy@shiddy.io > shiddy\@shiddy.io.pub
 gpg --export-secret-keys -a shiddy@shiddy.io > shiddy\@shiddy.io.priv
 ```
 
-The two export commands we ran created two files `shiddy@shiddy.io.pub` and `shiddy@shiddy.io.priv` we want to save the priv one in the same place as our `shiddy@shiddy.io.gpg-revocation-certificate` from before. Making sure to remove them from the hard drive after doing so.
+The two export commands we ran created two files `shiddy@shiddy.io.pub` and `shiddy@shiddy.io.priv` we want to save the private file one in the same place as our `shiddy@shiddy.io.gpg-revocation-certificate` from before. Making sure to remove them from the hard drive after doing so.
 
 ## Writing our Keys to a Yubikey
 
@@ -184,7 +184,7 @@ If you are not starting out fresh, you can always run `ykman piv reset && ykman 
 gpg --edit-key shiddy@shiddy.io
 ```
 
-Here we want to select a specific subkey with `key 1` and then telling saying that specific key should be sent to our smartcard with `keytocard`.
+Here we want to select a specific subkey with `key 1` and then telling saying that specific key should be sent to our smart card with `keytocard`.
 
 **Note** You will see that the specific subkey is selected when it has an asterisk **(\*)** next to it
 
@@ -194,17 +194,17 @@ Tada!
 
 We can follow this patter for our *Authentication* and *Encryption* subkeys:
 
-Unselect our signature key with `key 1`, select our Auth key with `key 2`, apply it to the card with `keytocard`, and tell the smart card it's an authentication key with `(2) Authentication Key`.
+Deselect our signature key with `key 1`, select our Auth key with `key 2`, apply it to the card with `keytocard`, and tell the smart card it's an authentication key with `(2) Authentication Key`.
 
-![/assets/gpg-keytocard-example.png)
+![gpg keytocard example](/assets/gpg-keytocard-example.png)
 
-Finally writing our Encryption key via: Unselecting our authentication key with `key 2`, selecting our encryption key with `key 3`, writing it to the card with `keytocard`, and telling the card it's an encryption key with `(3) Encryption Key`.
+Finally writing our Encryption key via: Deselecting our authentication key with `key 2`, selecting our encryption key with `key 3`, writing it to the card with `keytocard`, and telling the card it's an encryption key with `(3) Encryption Key`.
 
 Now we cleanly close gpg with `save`.
 
 ## GPG Private Key Cleanup
 
-We will want to remove our private keys from GPG since they are now all written to our smartcard
+We will want to remove our private keys from GPG since they are now all written to our smart card
 
 ```b
 gpg --delete-secret-and-public-keys
@@ -272,7 +272,7 @@ Which can then be added to any of the expected authorized_keys files.
 Here we are setting the state of the touch behavior for all our subkeys on our smart card. We have a few states to choose from.
 If you would like to read more about them you can read them with `ykman openpgp set-touch -h`.
 
-Unless you are doing any scripting where you would need to ssh to a bunch of places over some reasonable periof of time, set your policy to `Cached` instead of `On`, and if you don't want anyone to change this policy on your smartcard, you can set `fixed` or `cached-fixed` so that it can't be changed apart from a factory reset of the yubikey.
+Unless you are doing any scripting where you would need to ssh to a bunch of places over some reasonable period of time, set your policy to `Cached` instead of `On`, and if you don't want anyone to change this policy on your smart card, you can set `fixed` or `cached-fixed` so that it can't be changed apart from a factory reset of the yubikey.
 
 ```b
 POLICY="On"
