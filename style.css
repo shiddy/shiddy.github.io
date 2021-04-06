@@ -38,7 +38,7 @@ body {
 }
 
 p,h1,h2,h3,h4,h5,h6,b,i,a,pre {
-    font-family: "Ubuntu Mono", "Lucida Console", Monaco, monospace;
+    font-family: monospace;
 }
 
 p,b,i,a {
@@ -47,7 +47,7 @@ p,b,i,a {
 
 pre.header, a.header {
     font-size: 14px;
-    font-family: Monaco, monospace;
+    font-family: monospace;
 }
 
 #container {
