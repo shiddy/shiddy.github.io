@@ -1,0 +1,5 @@
+plugins:
+  - jekyll-feed
+title: Shiddy.io
+description: Musings on living in a computing world
+author: Shiddy

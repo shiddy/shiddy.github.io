@@ -1,0 +1,114 @@
+Title: Phone Marketing Nonsense
+Date: 2015-08-05
+Category: Random
+
+# I don’t want a new phone.
+
+I really don’t. I love my phone despite all its flaws. All of which are completely my fault and are not in any way the manufacturers. My phone has lasted through a personal hell:
+
+* hours underwater when I went swimming on vacation
+* Being left in a snow bank for a few days when I had to hitchhike.
+* Being dropped to the point the metal corners bent inward. (the screen is still flawless)
+* The back camera has been broken after being punctured.
+* Currently taped over with duct tape, both cameras only show red when active.
+* The battery lasts around 6 hours after a full charge with no usage.
+
+That being said, the final straw for my pocket buddy was that HTC decided it was a good idea to start placing advertisements in the push notifications. Absolutely unacceptable.
+
+In my quest to find a decent phone I wanted to document some of the nonsense I’ve seen. I was expecting fad features. I’m looking at you “OK, Google”… and don’t think I forgot about you Mr “break me on anything galaxy edge”. Instead, I found that the marketing for cell phones the most confusing.
+
+Being cognizant of cellphone hardware no longer is a concern for an average consumer. Most phones work amazingly well. Even mediocre phones do more than an average person has time to enjoy. Distinguishing yourself as a manufacturer to your potential consumers is more akin to a popularity contest than ever. Yet, I find myself subject to less consumer vitriol online as well. Apart from short interest spikes after a release, announcements and product news does not seem to last more than a day. Keeping customers engaged with your service appears to be the holy grail of phone manufacturers.
+
+## This can be seen most clearly with Apple and OnePlus.
+
+I need not speak of the marketing pull Apple has on the first world. They market their products as sleek, and fashionable status symbol. People have the perception that Apple iPhones are the most powerful, and are involved with the most designing effort of any modern day cell phone.
+
+This was certainly the case at the launch of the iPhone. The cell phone design paradigm was seemingly set in stone by Apple. Josh Heifferich’s image of phones before and after Apple got involved does the most justice to prove this point:
+
+![]({static}/images/150805-phone.jpg)
+
+[src](https://twitter.com/Digeratii/status/165324320179109888)
+
+<table>
+  <tr>
+    <th>Model</th>
+    <th>Screen Size</th>
+    <th>Storage</th>
+    <th>Removable Storage</th>
+    <th>Memory</th>
+    <th>Battery</th>
+    <th>Camera (rear)</th>
+    <th>Camera (front)</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <td>Apple iPhone 6</td>
+    <td>5.5”</td>
+    <td>16GB</td>
+    <td>No</td>
+    <td>1GB LPDDR3</td>
+    <td>2915mAh</td>
+    <td>8MP</td>
+    <td>1.2MP</td>
+    <td>$749 usd</td>  </tr>  <tr>
+    <td>Samsung Galaxy S5</td>
+    <td>5.1”</td>
+    <td>16Gb</td>
+    <td>Yes</td>
+    <td>2GB LPDDR3</td>
+    <td>2800mAh</td>
+    <td>16MP</td>
+    <td>2MP</td>
+    <td>~$410 usd</td>
+  </tr>
+</table>
+
+[src](https://www.apple.com/shop/buy-iphone/iphone6/5.5-inch-display-16gb-silver) [src](https://www.amazon.com/Samsung-SM-G900H-Unlocked-Cellphone-International/dp/B00JKSUHLU/ref=sr_1_1)
+
+<table>
+  <tr>
+    <th>CPU</th>
+    <th>Cores</th>
+    <th>Clock Speed</th>
+    <th>CL1Cashe (Data)</th>
+    <th>Architecture</th>
+  </tr>
+  <tr>
+    <td>Apple A8</td>
+    <td>2</td>
+    <td>1.4 GHz</td>
+    <td>64Kb/Core</td>
+    <td>Harvard</td>
+  </tr>
+  <tr>
+    <td>SnapDragon 805</td>
+    <td>4</td>
+    <td>2.7 GHz</td>
+    <td>16Kb/Core</td>
+    <td>Harvard</td>
+  </tr>
+</table>
+
+What makes Apple so ubiquitous is clearly it’s advertising and word of mouth. They have built a reputation of having the highest quality phones used by the most famous people. As of my typing of this, they sell a watch for $17,000. Which is only $7,000 difference between their cheapest gold watch. The price difference is due entirely to a watchband color.
+I don’t want to spend time berating those who want to own these devices, nor spend space on my server dissecting why we are willing to pay more for status. Apple is the most clear example of how marketing is he most important factor in the success of mobile consumer technology, and sets the bar pretty high.
+
+## Which brings me to OnePlus
+
+OnePlus is an attempt to build a company identity that has failed in all the right ways. Most people are not aware that this company is owned by Oppo Electronics. I as most others believed that the company was akin to a startup or scaling company. According to most press at the time of their launch the general consensus was that this company was a small group built on creating high-end mobile products at ridiculously cheap prices. I managed to find an article I read a couple years ago after first hearing about the company.
+
+“For years, building a smartphone was only a possibility for the biggest of tech companies, but more and more small manufacturers have begun throwing their hats in the ring — from Jolla, to Blu Products, to Yota Devices. OnePlus is the latest in that ilk of small manufacturers” 
+[src](https://www.theverge.com/2013/12/16/5217794/oppo-ex-vice-president-pete-lau-launches-oneplus)
+
+Not that I put much stock in the Verge, but this understanding was rather prevalent throughout my following of OnePlus. There is a world of difference between “small manufacturers” and a subsidiary of Oppo electronics. Regardless of the intent, or the relativism of the word “small” defining their business, this attempt to change public perception worked. Therefore, their marketing pitch of overthrowing the status quo as a small new manufacturer was alluring to most of the hipsters (myself included)
+
+Then rolled in the invites… If you want to purchase a OnePlus 2 (silly name aside) you have to sign up to be on a waiting list which automatically increases your queue placement based on how many referrals you generate. These referrals are generated through getting others to sign up and join the queue as well. It does not matter whether you were signed up first, it matters that you have more referrals than others.
+
+![](https://media.giphy.com/media/7wToiGB3M5wME/giphy.gif)
+
+I don’t think that it’s reasonable to toady your potential customers around the way that the marketing team for OnePlus demands in order for you to buy their products. I’m absolutely anti-spam and anti-solicitation. Their invite system will artificially force people abusing the system or spamming to the top of the queue. This is not even that hard for people to accomplish anymore. [There are articles showing how it's possible and has been done already.](https://medium.com/@JakeCooper/how-i-hacked-the-oneplus-reservation-system-120ea1a7ad82)
+
+Evangelical marketing schemes like what OnePlus has implemented uproot the trust that we have in communally identifying worthwhile products. This is the most upsetting because the OnePlus 1 & 2 are more than powerful enough to get started through grass roots and word of mouth legitimatly. I would own one already if it were not for their marketing bogus.
+
+Here is a good bit of advice for people who think this is not all that bad. If you are told that you have to tell other people how good something is before you can own it, it’s probably not a good thing.
+
+It’s rather unfortunate that I’m beginning to have to play detective for company selling anything to see whether it’s a giant marketing ploy…
