@@ -1,189 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ShiddyIO</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2022-02-16T12:00:00-07:00</updated><entry><title>ANSI Escape Codes, Terminal Games, and lots of extra work</title><link href="/ansi-escape-codes-terminal-games-and-lots-of-extra-work.html" rel="alternate"></link><published>2022-02-16T12:00:00-07:00</published><updated>2022-02-16T12:00:00-07:00</updated><author><name>Shiddy</name></author><id>tag:None,2022-02-16:/ansi-escape-codes-terminal-games-and-lots-of-extra-work.html</id><summary type="html">&lt;h1&gt;ANSI Escape Codes, Terminal Games, and lots of extra work&lt;/h1&gt;
-&lt;p&gt;Do you ever have a day where you are just going through the motions, and suddenly something feels off?&lt;/p&gt;
-&lt;p&gt;I had this feeling around a month ago and it's consumed a lot of my thinking since. This mixed with the …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;ANSI Escape Codes, Terminal Games, and lots of extra work&lt;/h1&gt;
-&lt;p&gt;Do you ever have a day where you are just going through the motions, and suddenly something feels off?&lt;/p&gt;
-&lt;p&gt;I had this feeling around a month ago and it's consumed a lot of my thinking since. This mixed with the fact that I have not created a post for this site in far too long I figured now would be the best time to document everything.&lt;/p&gt;
-&lt;p&gt;TL;DR lots of info below, Feel free to use the index to go to anyything specific&lt;/p&gt;
-&lt;h2&gt;Index (cause this is going to get long)&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="#1"&gt;Inspiration in the Unknown&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#2"&gt;What is going on?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#3"&gt;What are Escape Codes&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#4"&gt;\033 0x1b ^[&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="#5"&gt;Colors in the terminal&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#5"&gt;Cursor Movement with ANSI Escape Codes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#6"&gt;Finding Terminal Size with ANSI Escape Codes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#7"&gt;Mouse Events with ANSI Escape Codes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;h1&gt;Inspiration in the Unknown &lt;a name="1"&gt;&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;I was doing some maitenance on a home server that was acting pretty sluggish. Standard stuff. I sshed into the box, and started by checking the resources using &lt;a href="https://htop.dev/"&gt;htop&lt;/a&gt; and found a process that was pegging one CPU. I clicked in my browser, did some research on how to address it, and clicked back to my terminal running HTOP...&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="/images/out.gif"&gt;&lt;/p&gt;
-&lt;p&gt;If you are like me, that is strange. HTOP responded to my mouse clicking the window.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="/images/double-take.gif"&gt;&lt;/p&gt;
-&lt;p&gt;How did this terminal have access to my mouse? How was it able to discern where my mouse clicked in the window? I'm connected over a TTY, so it's not like it could read /dev/mouse... Will this work over PowerShell? (yes)... Wait.. Vim allows mouse input for things, does this also work over SSH? (yes)&lt;/p&gt;
-&lt;p&gt;Lots of thoughts were immediatly in my head, I used to find these thoughts scary, now... I love these thoughts.&lt;/p&gt;
-&lt;h2&gt;What is going on? &lt;a name="2"&gt;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;A brief look at the source code for HTOP shows that it uses &lt;code&gt;curses.h&lt;/code&gt; for rendering information to the screen. After spending some time searching in curses I pointed to a wonderful man page &lt;code&gt;man console_codes 4&lt;/code&gt; that explains what's happening in a level of detail that only a man page can show&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ShiddyIO</title><link href="https://shiddy.io/" rel="alternate"></link><link href="https://shiddy.io/feeds/all.atom.xml" rel="self"></link><id>https://shiddy.io/</id><updated>2022-11-16T05:00:00-07:00</updated><entry><title>The Report to the Shareholders Q4 2022</title><link href="https://shiddy.io/the-report-to-the-shareholders-q4-2022.html" rel="alternate"></link><published>2022-11-16T05:00:00-07:00</published><updated>2022-11-16T05:00:00-07:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2022-11-16:/the-report-to-the-shareholders-q4-2022.html</id><summary type="html">&lt;p&gt;&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h1&gt;Q4 2022 - Report to the Shareholders&lt;/h1&gt;
+&lt;hr/&gt;
+
+&lt;p&gt;Trigger warning: Depression, Self-Harm, and Suicide&lt;/p&gt;
+&lt;p&gt;That satisfaction of pretending to be the hero, assuming the decency of institutions, qualifying personal truths with a "hot take" warning, the vindication of being the smuggest corpse in the mass grave.&lt;/p&gt;
+&lt;p&gt;I'm trying to release these familiar …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h1&gt;Q4 2022 - Report to the Shareholders&lt;/h1&gt;
+&lt;hr/&gt;
+
+&lt;p&gt;Trigger warning: Depression, Self-Harm, and Suicide&lt;/p&gt;
+&lt;p&gt;That satisfaction of pretending to be the hero, assuming the decency of institutions, qualifying personal truths with a "hot take" warning, the vindication of being the smuggest corpse in the mass grave.&lt;/p&gt;
+&lt;p&gt;I'm trying to release these familiar feelings and keep finding myself hitting a wall. I've turned into one of the old dogs. I'm worried I am Okonkwo and I didn't spot the missionaries in time.&lt;/p&gt;
+&lt;p&gt;Is this all too macabre, too obtuse, too self-referential? I can't help but assume that any reader trying to inventory their current situation would stumble into something more tactful than this... Shit, If your attention has not faltered from these literary turds on this blog up to this point, I guess I owe you some thanks.&lt;/p&gt;
+&lt;h1&gt;From Here on up, The Hills Don't Get Any Higher&lt;/h1&gt;
+&lt;hr/&gt;
+
+&lt;p&gt;I've been catching myself day-dreaming a lot as of late. Seems to me that whenever the weather changes and the day turns to night before you get to where you're going, my brain starts filling the empty space with pontification. The current track has to do with this bubble, a myth to me but perhaps familiar to some of you.&lt;/p&gt;
+&lt;p&gt;Some businesses (Businesses hiring really smart people mind you) have been working with these machines you see. These machines are able to be linked together, they make more than the sum of their parts, they are used to formulate and solve problems outside your understanding. These things will be the only tool worth learning, a breaker in our technological evolution. There will be but a threshold, the before, the arcane, the analogue. Now we have the new, the sleek the digital.&lt;/p&gt;
+&lt;p&gt;Then the bubble popped... oopsy woopsy ¯\&lt;em&gt;(ツ)&lt;/em&gt;/¯&lt;/p&gt;
+&lt;h1&gt;...But the Valleys Get Deeper and Deeper&lt;/h1&gt;
+&lt;hr/&gt;
+
+&lt;p&gt;For those playing the home game and are at a loss, I'm talking about the 90s ".com" bubble. I doubt that were I alive then I would have the wisdom to see through the hype. That I would be able to suss out that in spite of how impressive hardware is or may become, that these computers are just as paltry as any other tool when commoditized. The markets would correct, the business would follow suit. The time working as a html code monkey has run out.&lt;/p&gt;
+&lt;p&gt;The disregard for substance today... it's hard to take its measure. I have a strong conviction in my soul that Americans are currently on a similar trajectory as they were in the 90s. Here is a thought experiment: What is a "tech company" to you? I implore you to ask yourself earnestly. I've had the fortune of seeing more than one tech company to its conclusion while the getting was good, lining my pockets along the way. To be honest, I don't know how much I would call my work technical. I can frame my work in a lens to keep that from being an outright lie, but I won't pretend that it's convincing to even myself.&lt;/p&gt;
+&lt;p&gt;I'm not so foolish as to think think that I will end up unscathed as our current bubble pops. I'm also not going to pretend that I am different than the Boomers in the 60s or the Gen-Xers in the 90s. I'm doing the same looking at a younger generation saying "Fuck you; got mine." Bluntly, my intent is to prove that I am a problem solver and a worthwhile person to have in one's corner. It feels more prudent than ever to play my hand well, and make myself useful as a mover and shaker. Not that any of these perspectives are new, or a substantive course correction from my norm, just worth expressing that if things do go to shit I'll be around with my ears and eyes open.&lt;/p&gt;
+&lt;h1&gt;Are you going to do something or just stand there and bleed?&lt;/h1&gt;
+&lt;hr/&gt;
+
+&lt;p&gt;I don't know how to point out the dialectic at play in my head as of late. I feel that I have (perhaps maladaptively) reinforced the position that I must always seek the path to better my condition. To take every interaction in my memory and try to wrangle it into a box labeled growth. I am the one who gallivants around making the big choices, min-maxing my kit, and ending on a pile of loot. Every option to be framed from the hero's perspective.&lt;/p&gt;
+&lt;p&gt;I know that's cringe. It hurt to type. Fighting that perspective however, is more alien to me than I would like to admit. It all feels like a neurotic ultra-liberal fixation that might have motivated and sustained me when I was younger, but now rings increasingly hollow.&lt;/p&gt;
+&lt;p&gt;I'm far too willfully American to be persuaded by this duplicitous world I've been painting. Life's been better to me than most. The form I have gains a lot from its position in this system. Being an &lt;em&gt;Everyman&lt;/em&gt;, I can confidently tell you that power confers upon me. It's all encompassing and passive enough that I often miss it happening myself. You, dear reader, will never escape it or dismiss it with a privilege check. This power is indifferent to all of our perspectives. It often supersedes any point I intend to make as it's going to be the first thing that anyone not bestowed with it will interact with. To thrash against it is just as much a facade, concerning yourself with the optics of a position rather than holding it, and inspecting it does not seem to help from my anecdotal experience either.&lt;/p&gt;
+&lt;p&gt;I can't say if this current feeling is guilt, whether it's labeled sufficiently as privilege, or if I will hand-wave it as survivorship bias in the future. Likely things started falling apart before I got here and it's just nature to thrash. I could pretend that this all has little bearing on what the future holds, but I've never found the nihilist's perspective. From where I'm at it seems I've personally been fucking up most of everything along the way.&lt;/p&gt;
+&lt;h1&gt;I've Tried Nothing, Everything Works&lt;/h1&gt;
+&lt;hr/&gt;
+
+&lt;p&gt;I know these things, and I still feel like shit all the time.&lt;/p&gt;
+&lt;p&gt;I'm more trying to construct a reason to clench my fists and rise above that is more concrete than innocent hopefulness. It's annoying to find myself again in this familiar old feeling, that depression is becoming my default. That depression is unremarkable and standardized. &lt;/p&gt;
+&lt;p&gt;Hey! That deeply personal struggle you have, with all its unique facets? Don't fret; everybody has it at some point. Come over here, and sit in the waiting room. Your therapist will have already printed out a spreadsheet with all of those pesky feelings little rows, ready to be checked. Once we are done here we can calculate what percentile you hit. Your very legitimate concerns with being unique might still ring true after all.&lt;/p&gt;
+&lt;p&gt;I had the chance to play &lt;em&gt;Disco Elysum&lt;/em&gt; recently, it's one of the few pieces that felt like it understood me. If you haven't played it, you should. I won't spoil anything if you keep reading. But I want to highlight one of its perspectives on self harm and mental wellbeing. To make a long story short, a conclusion to the thought "Finger on the Eject Button" is spelled out in the following:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;"The  Linux  console  implements a large subset of the VT102 and ECMA-48/ISO 6429/ANSI X3.64 terminal controls, plus certain private-mode sequences  for  changing  the  color  palette, character-set  mapping,  and  so  on."&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Specifically it has a section named "Mouse Tracking"&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;"Normal tracking mode (not implemented in Linux 2.0.24) sends an escape sequence on both button press and release.  Modifier information is also sent.  It is enabled by sending ESC [  ?  1000  h  and  disabled  with  ESC [ ? 1000 l.  On button press or release, xterm(1) sends ESC [ M bxy.  The low two bits of b encode button information: 0=MB1 pressed, 1=MB2 pressed, 2=MB3 pressed, 3=release.  The upper bits encode what modifiers were down when the button was pressed and are added together: 4=Shift, 8=Meta, 16=Control.  Again x and  y are the x and y coordinates of the mouse event.  The upper left corner is (1,1)."&lt;/p&gt;
+&lt;p&gt;"...Turns out &lt;em&gt;Finger On The Eject Button&lt;/em&gt; is pretty much your theme song. A headbanger from your teenage years and your wedding ballad. This is not the first time you're spinning the tape. This is not the first time you're spinning the tape." ~ Disco Elysium&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img alt="" src="/images/escape-codes-mind-blown.gif"&gt;&lt;/p&gt;
-&lt;h2&gt;Ok what are escape codes? &lt;a name="3"&gt;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;If you are like me the idea of escape codes was pretty muddy outside of colors in the terminal in which case you probably just imported a library and went about your day. Let's try to understand a little more; especially since the many examples of escape codes in the paragraph before (&lt;code&gt;ESC [  ?  1000  h&lt;/code&gt;) are hard to parse without more context.&lt;/p&gt;
-&lt;p&gt;Before I jump to an example, I want to point out how this was a special thing that was under my nose the whole time. Have you ever looked at an ascii table?&lt;/p&gt;
-&lt;p&gt;&lt;img alt="brianaspinall's ascii table" src="/images/better_ascii_table.jpg#big"&gt;
-&lt;a href="http://brianaspinall.com/math-cs-cracking-the-secret-code/"&gt;sourced from briannaspinall.com&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The characters from the middle of the table to the end, the ones that directly map to characters on the keyboard are pretty straightforward. This ASCII table just shows the mapping between some bits in the computer, and a character humans read. This mapping was made way back in 1963 by the American Standards Association (ASA) now known as the American National Standards Institute (ANSI)&lt;/p&gt;
-&lt;p&gt;Let's write a program to illuminate this!&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;a_char&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;ord&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a_char&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-
-&lt;span class="n"&gt;presumably_capital_a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;65&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;presumably_capital_a&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-
-&lt;span class="n"&gt;presumably_the_at_symbol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;0x3b&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;presumably_the_at_symbol&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;I'll leave you to execute those commands to see how they work, but we now can understand the special escape code in this mapping&lt;/p&gt;
-&lt;h3&gt;\033 0x1b ^[ &lt;a name="4"&gt;&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;The Escape character esentially tells the interpreter of the ascii code that next characters should be interpreted according to the control sequences defined in by one of the following standards:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;VT102&lt;/li&gt;
-&lt;li&gt;ECMA-48&lt;/li&gt;
-&lt;li&gt;ISO 6429&lt;/li&gt;
-&lt;li&gt;ANSI X3.64&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Let's attempt to change the color of some text as a simple example.&lt;/p&gt;
-&lt;p&gt;Looking at &lt;a href="https://www.ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf"&gt;the ANSI X3.64 escape codes&lt;/a&gt; we can see that after the escape code, a 38 means that we are attempting to change the forground color, but we don't get much useful information as to how.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;(reserved for future standardization; intended for setting character foreground colour as specified in ISO 8613-6 [CCITT Recommendation T.416]) &lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;Which leaves us without an answer. Since ISO 8613-6 costs $200+ and that's not happening even if I want to know what's going on here.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;TO THE INTERNET&lt;/strong&gt; ...again!&lt;/p&gt;
-&lt;h3&gt;Colors in the terminal &lt;a name="5"&gt;&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;Searching ANSI Color Codes I finally found &lt;a href="https://en.wikipedia.org/wiki/ANSI_escape_code#24-bit"&gt;an actual explanation how to change colors&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Lets try out the 24-bit colors just to see if they work&lt;/p&gt;
-&lt;p&gt;escape_test.py&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;ESCAPE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;FGCOLOR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;[;38;2;&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;RED&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;255;0;0&amp;quot;&lt;/span&gt;
-&lt;span class="n"&gt;FGCOLOR_END&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;m&amp;quot;&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;ESCAPE&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;FGCOLOR&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;RED&lt;/span&gt;&lt;span class="si"&gt;}{&lt;/span&gt;&lt;span class="n"&gt;FGCOLOR_END&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;HERE IS SOME TEXT&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;img alt="red text in stdout" src="/images/escape_test.png"&gt;&lt;/p&gt;
-&lt;p&gt;If you are not familiar with Python, what is happening here a simple print statement with a string format, to keep things easier to follow. We can get the same output with &lt;code&gt;printf&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[;38;2;255;0;0mHERE IS SOME TEXT&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;img alt="red text in stdout" src="/images/escape_test_printf.png"&gt;&lt;/p&gt;
-&lt;p&gt;So... Huzzah! This works in my default terminal &lt;em&gt;I nievely thought and continued developing&lt;/em&gt;. But let's check the default terminal of macOS.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="non colored text in stdout" src="/images/term-escape-test.png"&gt;&lt;/p&gt;
-&lt;p&gt;Yikes! This is not ideal. But I have colors in my terminal. so what's going on?&lt;/p&gt;
-&lt;p&gt;Some terminals don't support 24-bit colours. As with most things regarding computers we are often set in the limitations of technology in the past. Many terminals have not updated to use the 24-bit colours, so let's take a step back to the &lt;a href="https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit"&gt;8-bit colours on the same wikipedia article&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;instead of &lt;code&gt;\033\[;38;2;r;g;bm&lt;/code&gt; we will use &lt;code&gt;\033\[;38;5;nm&lt;/code&gt; where "n" refers to some magical calculation on the wiki:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="mf"&gt;16&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;36&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;×&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;6&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;×&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;≤&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;≤&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Let's try to make this work with another program:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Forground&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Standard Colors&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[38;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m##&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;High Intensity Colors&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[38;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m##&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;216 Colors&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;232&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[38;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m#&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="mi"&gt;36&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Grayscale Colors&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;232&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[38;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m#&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Background&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Standard Colors&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[48;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m  &lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;High Intensity Colors&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[48;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m  &lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;216 Colors&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;232&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[48;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m &lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="mi"&gt;36&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Grayscale Colors&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;232&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[48;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m &lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;rgb_to_8bit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;36&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;51&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;51&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;51&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Can I make some red with rgb?&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[48;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;rgb_to_8bit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m       &lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;What about purple?&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[48;5;&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;rgb_to_8bit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;m       &lt;/span&gt;&lt;span class="se"&gt;\033&lt;/span&gt;&lt;span class="s2"&gt;[0m&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;If you are like me and peruse for the pictures in blogs, this next one is really nice. I don't blame you for skimming, but take some time later to read through the code here, It's a lot of &lt;strong&gt;OLD COMPUTER MAGIC!&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Let's see what that looks like in my finiky terminal&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Colors working in old terminals" src="/images/8-bit-colour.png"&gt;&lt;/p&gt;
-&lt;p&gt;Tada! we now know a bit more about escape codes. Before I can continue with mouse tracking, we will want to talk about cursor movement in the terminal to display things clearly.&lt;/p&gt;
-&lt;h2&gt;Cursor Movement with ANSI Escape Codes &lt;a name="5"&gt;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;If we take an extra look at the same &lt;a href="" title="https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_(Control_Sequence_Introducer)_sequences"&gt;wikipedia article&lt;/a&gt; we see a section about changing the cursor position.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Cursor Position entry in Wikipedia" src="/images/cursor_position.png#big"&gt;&lt;/p&gt;
-&lt;p&gt;let's give this a try in our terminals as well.&lt;/p&gt;
-&lt;h3&gt;Finding Terminal Size with ANSI Escape Codes &lt;a name="6"&gt;&lt;/a&gt;&lt;/h3&gt;
-&lt;h2&gt;Mouse Events with ANSI Escape Codes &lt;a name="7"&gt;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;When we ran &lt;code&gt;man console_codes 4&lt;/code&gt; we found the following:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;"Normal tracking mode (not implemented in Linux 2.0.24) sends an escape sequence on both button press and release.  Modifier information is also sent.  It is enabled by sending ESC [  ?  1000  h  and  disabled  with  ESC [ ? 1000 l.  On button press or release, xterm(1) sends ESC [ M bxy.  The low two bits of b encode button information: 0=MB1 pressed, 1=MB2 pressed, 2=MB3 pressed, 3=release.  The upper bits encode what modifiers were down when the button was pressed and are added together: 4=Shift, 8=Meta, 16=Control.  Again x and  y are the x and y coordinates of the mouse event.  The upper left corner is (1,1)."&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;This should mean that we can send &lt;code&gt;\033[?1000h&lt;/code&gt; to enable mouse input and send &lt;code&gt;\033[?1000l&lt;/code&gt; to disable mouse input to go back to normal. Lets try it out&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;printf &amp;quot;\033[?1000h&amp;quot;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;When I click in the terminal I get some weird combination of letters and numbers and when I type in the terminal it works as expected. Let's disable the input to get our reularly functioning terminal back&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;printf &amp;quot;\033[?1000l&amp;quot;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;I took the liberty of recording my terminal as I did this test to show the output changing whenever I moved my mouse up and down the terminal while clicking:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="terminal output when clicking mouse" src="/images/esc_mouse_clicks.gif#big"&gt;&lt;/p&gt;
-&lt;p&gt;You might be able to see that the values printed, delimited by a # show the press and depress of the mouse at some cursor location.&lt;/p&gt;</content><category term="Technical"></category></entry><entry><title>Setting up GPG and Hardware Tokens</title><link href="/setting-up-gpg-and-hardware-tokens.html" rel="alternate"></link><published>2020-09-07T12:00:00-06:00</published><updated>2020-09-07T12:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:None,2020-09-07:/setting-up-gpg-and-hardware-tokens.html</id><summary type="html">&lt;h1&gt;GPG &amp;amp; Hardware Tokens&lt;/h1&gt;
-&lt;p&gt;&lt;img alt="" src="/images/Yubikey-Header.jpeg#headimg"&gt;&lt;/p&gt;
+&lt;p&gt;I don't know whether I will hold this perspective for long, but this take on depressiveness and suicidally feels right on the money. I feel it worth expressing that these topics are often put into media for the spectacle, and often do more harm in glorifying or sensationalizing self-harm. While I can't claim that Disco Elysum's quote is tactful, it feels far more genuine than most everything else I've come across.&lt;/p&gt;
+&lt;p&gt;I think that the consistency of a depressive perspective is what gives it its power and weight. Whether my current perception is hopeful, longing, lustful, bliss, hatred, all the songs on the mixtape find there way back to dread. I imagine that most people when met with the call to the void instinctual head shake "no, no that's silly". That response is there, or rather, I know it should be. Instead my response seems to have always been:&lt;/p&gt;
+&lt;p&gt;"Well, it's not really convenient for anyone right now. I know that ideas like 'deserve' are trite, and that no one 'deserves' to be alive. I just don't believe it... That I 'deserve' to be alive... It's just that now is not a good time, I got shit that I said I would do for some people, and well... Going through with this would mean lot of extra work for people, and the paperwork! Some people would be really sad if not annoyed... and I just don't want to push more of that shit into the universe right now..." and by that point I've found something to do with my hands or get hungry and leave.&lt;/p&gt;
+&lt;h1&gt;And after the fire, a soft murmuring sound&lt;/h1&gt;
+&lt;p&gt;I guess what I'm saying is that I have no triumphant retort to this soundtrack. I don't expect to defeat these feelings anymore. I know by now that breaking the fourth wall and asking you again if you are still reading is pointless. Even if I had the ability, I wouldn't want to know. I'm not pretending that I have some answer to these universals. I'm just hopeful that if you can tell that a real living feeling creature wrote this, that it's normal for things to be this painful. That, in spite of how weird and scary and fucking confusing all of these life questions actually are, we are always answering with something.&lt;/p&gt;
+&lt;p&gt;These asides where I try and fail to distil a lifetime's worth of experience and emotion into some tangible nugget of truth always feels like risking a lot for very little. I have no expectations that anyone will vibe with any of this, and honestly, at this point, I'm accepting that it's fine to swear and be surly and show my soft white underbelly.&lt;/p&gt;
+&lt;p&gt;Darling, we have already failed at so many things, let's fail at our next endeavour.&lt;/p&gt;</content><category term="Musings"></category></entry><entry><title>Setting up GPG and Hardware Tokens</title><link href="https://shiddy.io/setting-up-gpg-and-hardware-tokens.html" rel="alternate"></link><published>2020-09-07T12:00:00-06:00</published><updated>2020-09-07T12:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2020-09-07:/setting-up-gpg-and-hardware-tokens.html</id><summary type="html">&lt;h1&gt;GPG &amp;amp; Hardware Tokens&lt;/h1&gt;
+&lt;p&gt;&lt;img alt="" src="https://shiddy.io/images/Yubikey-Header.jpeg#headimg"&gt;&lt;/p&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#Preamble"&gt;Preamble&lt;/a&gt;&lt;/li&gt;
@@ -202,7 +70,7 @@
 &lt;li&gt;&lt;a href="#GPG Private Key Cleanup"&gt;GPG Private Key Cleanup&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#Publishing our Public GPG keys"&gt;Publishing our Public GPG keys&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#Setting our SSH agent use our GPG keys"&gt;Setting our SSH agent …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;h1&gt;GPG &amp;amp; Hardware Tokens&lt;/h1&gt;
-&lt;p&gt;&lt;img alt="" src="/images/Yubikey-Header.jpeg#headimg"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://shiddy.io/images/Yubikey-Header.jpeg#headimg"&gt;&lt;/p&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#Preamble"&gt;Preamble&lt;/a&gt;&lt;/li&gt;
@@ -279,7 +147,7 @@
 
 &lt;p&gt;&lt;strong&gt;*Note*&lt;/strong&gt; The &lt;code&gt;--cert-digest-algo&lt;/code&gt; flag allows us to specify the hashing algorithm on these keys. By default we will see SHA256, which is fine for most everyone, but since we can specify SHA512 which will be faster on our 64-bit machines, and also make a collision with our hash much less likely. &lt;a href="https://www.gnupg.org/gph/en/manual/r2029.html"&gt;According to the Docs&lt;/a&gt; we can show the algorithms used here, but only some of them map to the globals in &lt;em&gt;gcrypt.h&lt;/em&gt; so no love on specifying whatever hash you want ¯\&lt;em&gt;(ツ)&lt;/em&gt;/¯&lt;/p&gt;
 &lt;p&gt;We select &lt;code&gt;(11) ECC (set your own capabilites&lt;/code&gt; and we then toggle the signing capability &lt;code&gt;s&lt;/code&gt; which is on by default so that only the certify capability remains.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="gpg capability selection" src="/images/gpg-capability-selection.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gpg capability selection" src="https://shiddy.io/images/gpg-capability-selection.png"&gt;&lt;/p&gt;
 &lt;p&gt;Finally we select &lt;code&gt;(Q) Finished&lt;/code&gt; to then specify the encryption algorithm. In our case we want &lt;code&gt;(1) Curve 25519&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Next we are prompted with how long we want this cert to be valid for. I normally don't like to set limits for how long a key will be used in fear that I will lose historical data. That being said, I also limit the damage that is done if these keys are compromised by creating a revocation certificate. So, I enter a &lt;code&gt;0&lt;/code&gt; and confirm with &lt;code&gt;y&lt;/code&gt; to state that my master key will not expire.&lt;/p&gt;
 &lt;p&gt;Now we want to provide some information about who the key belongs to. I'll enter &lt;code&gt;shiddy&lt;/code&gt; for my name and &lt;code&gt;shiddy@shiddy.io&lt;/code&gt; for my email, and leave the comment blank. We then finalize the key creation with &lt;code&gt;(O)kay&lt;/code&gt;.&lt;/p&gt;
@@ -287,7 +155,7 @@
 &lt;p&gt;Congrats! We now will follow a similar sequence of steps to generate our &lt;em&gt;Authorization&lt;/em&gt;, &lt;em&gt;Encryption&lt;/em&gt;, and &lt;em&gt;Signing&lt;/em&gt; keys.&lt;/p&gt;
 &lt;p&gt;If we want to confirm our key status at any time we can execute &lt;code&gt;gpg --export shiddy@shiddy.io | gpg --list-packets&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Which at this point shows that we have generated two keys &lt;code&gt;pkey[0]&lt;/code&gt; and &lt;code&gt;pkey[1]&lt;/code&gt; as well as our &lt;code&gt;digest algo H10&lt;/code&gt; as part of the signature packet.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="gpg list packets example" src="/images/gpg-list-packets-example.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gpg list packets example" src="https://shiddy.io/images/gpg-list-packets-example.png"&gt;&lt;/p&gt;
 &lt;h3&gt;Master Key Revocation&lt;/h3&gt;
 &lt;p&gt;We want to make a means for us to say that this key has been compromised if we make a mistake in the future.&lt;/p&gt;
 &lt;p&gt;This is important because we set this key to never expire, if our key was compromised we have no means of informing others. That being said, we also need to make sure that this revocation certificate is as secure as our Master secret key, otherwise anyone could revoke our keys.&lt;/p&gt;
@@ -341,7 +209,7 @@
 &lt;p&gt;Tada!&lt;/p&gt;
 &lt;p&gt;We can follow this patter for our &lt;em&gt;Authentication&lt;/em&gt; and &lt;em&gt;Encryption&lt;/em&gt; subkeys:&lt;/p&gt;
 &lt;p&gt;Deselect our signature key with &lt;code&gt;key 1&lt;/code&gt;, select our Auth key with &lt;code&gt;key 2&lt;/code&gt;, apply it to the card with &lt;code&gt;keytocard&lt;/code&gt;, and tell the smart card it's an authentication key with &lt;code&gt;(2) Authentication Key&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="gpg keytocard example" src="/images/gpg-keytocard-example.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gpg keytocard example" src="https://shiddy.io/images/gpg-keytocard-example.png"&gt;&lt;/p&gt;
 &lt;p&gt;Finally writing our Encryption key via: Deselecting our authentication key with &lt;code&gt;key 2&lt;/code&gt;, selecting our encryption key with &lt;code&gt;key 3&lt;/code&gt;, writing it to the card with &lt;code&gt;keytocard&lt;/code&gt;, and telling the card it's an encryption key with &lt;code&gt;(3) Encryption Key&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Now we cleanly close gpg with &lt;code&gt;save&lt;/code&gt;.&lt;/p&gt;
 &lt;h2&gt;GPG Private Key Cleanup&lt;/h2&gt;
@@ -418,7 +286,7 @@ ykman openpgp set-touch $POLICY ENC
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;em&gt;If you have not modified this value yet, 123456 is the factory pin and 12345678 is the default administrative pin&lt;/em&gt;&lt;/p&gt;</content><category term="Technical"></category></entry><entry><title>Turn-on Tune-in Burn-out</title><link href="/turn-on-tune-in-burn-out.html" rel="alternate"></link><published>2017-09-09T00:00:00-06:00</published><updated>2017-09-09T00:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:None,2017-09-09:/turn-on-tune-in-burn-out.html</id><summary type="html">&lt;p&gt;I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what &lt;em&gt;this feels like&lt;/em&gt; and what this &lt;em&gt;felt like&lt;/em&gt; to determine …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what &lt;em&gt;this feels like&lt;/em&gt; and what this &lt;em&gt;felt like&lt;/em&gt; to determine whether my decisions were worth it. Hopefully, those who read this can gain some insight before heading down the same road as I have.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;If you have not modified this value yet, 123456 is the factory pin and 12345678 is the default administrative pin&lt;/em&gt;&lt;/p&gt;</content><category term="Technical"></category></entry><entry><title>Turn-on Tune-in Burn-out</title><link href="https://shiddy.io/turn-on-tune-in-burn-out.html" rel="alternate"></link><published>2017-09-09T00:00:00-06:00</published><updated>2017-09-09T00:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2017-09-09:/turn-on-tune-in-burn-out.html</id><summary type="html">&lt;p&gt;I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what &lt;em&gt;this feels like&lt;/em&gt; and what this &lt;em&gt;felt like&lt;/em&gt; to determine …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what &lt;em&gt;this feels like&lt;/em&gt; and what this &lt;em&gt;felt like&lt;/em&gt; to determine whether my decisions were worth it. Hopefully, those who read this can gain some insight before heading down the same road as I have.&lt;/p&gt;
 &lt;p&gt;This post will span a year; starting with my efforts throughout my senior year until I have finished with my Bachelor's degree and can provide my historical perspective on my work/life balance.&lt;/p&gt;
 &lt;h3&gt;Crash and Burn:&lt;/h3&gt;
 &lt;h4&gt;Bleed like a Stone&lt;/h4&gt;
@@ -481,7 +349,7 @@ ykman openpgp set-touch $POLICY ENC
 &lt;iframe width="100%" src="https://www.youtube.com/embed/yWkq7btSQvs" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;After reading through my journals over the last years I have realized something. That the points where I was most happy or interested in working, I was working towards something. I only now realize that as my degree is coming to an end, and I have achieved my dream job, I don't have any particular goals that I am working toward. I guess I didn't think that I would have gotten this far by now.&lt;/p&gt;
-&lt;p&gt;I feel that I have spent enough time here waxing non-poetic about burnout. But I need to start knowing what the goals in the next chapter in my life should look like.&lt;/p&gt;</content><category term="Musings"></category></entry><entry><title>The Curse of the Gifted</title><link href="/Pay%20it%20forward...%20technically.html" rel="alternate"></link><published>2016-03-05T00:00:00-07:00</published><updated>2016-03-05T00:00:00-07:00</updated><author><name>Shiddy</name></author><id>tag:None,2016-03-05:/Pay it forward... technically.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;In&lt;/span&gt; &lt;span class="nv"&gt;college&lt;/span&gt;, &lt;span class="nv"&gt;I&lt;/span&gt; &lt;span class="nv"&gt;studied&lt;/span&gt; &lt;span class="nv"&gt;comp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;sci&lt;/span&gt;
+&lt;p&gt;I feel that I have spent enough time here waxing non-poetic about burnout. But I need to start knowing what the goals in the next chapter in my life should look like.&lt;/p&gt;</content><category term="Musings"></category></entry><entry><title>The Curse of the Gifted</title><link href="https://shiddy.io/Pay%20it%20forward...%20technically.html" rel="alternate"></link><published>2016-03-05T00:00:00-07:00</published><updated>2016-03-05T00:00:00-07:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2016-03-05:/Pay it forward... technically.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;In&lt;/span&gt; &lt;span class="nv"&gt;college&lt;/span&gt;, &lt;span class="nv"&gt;I&lt;/span&gt; &lt;span class="nv"&gt;studied&lt;/span&gt; &lt;span class="nv"&gt;comp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;sci&lt;/span&gt;
 &lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="nv"&gt;class&lt;/span&gt;, &lt;span class="nv"&gt;so&lt;/span&gt; &lt;span class="nv"&gt;damned&lt;/span&gt; &lt;span class="nv"&gt;bored&lt;/span&gt; &lt;span class="nv"&gt;I&lt;/span&gt; &lt;span class="nv"&gt;could&lt;/span&gt; &lt;span class="nv"&gt;die&lt;/span&gt;.
 &lt;span class="nv"&gt;convinced&lt;/span&gt; &lt;span class="nv"&gt;to&lt;/span&gt; &lt;span class="nv"&gt;be&lt;/span&gt; &lt;span class="nv"&gt;best&lt;/span&gt;
 &lt;span class="nv"&gt;showed&lt;/span&gt; &lt;span class="nv"&gt;up&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;the&lt;/span&gt; &lt;span class="nv"&gt;test&lt;/span&gt;
@@ -517,7 +385,7 @@ ykman openpgp set-touch $POLICY ENC
 &lt;p&gt;One of the most influential people in my life was a high school English teacher that tried to instill in me the process of \"paying it forward.\" Reciprocating the gifts others had given me that I didn't really deserve. Real people, that write answers to others in forums, make how to guides, write books and take the time to share their insights to the world without seeking social adulation or fame. &lt;/p&gt;
 &lt;p&gt;Thus far I have really only abused the system. I have a bookshelf overflowing with technical books that I have sought out and purchased because their insights have moved me. In them, I have gained knowledge that I deceptively tout to be my own, while the real authors deserve far more praise than I. The countless articles and manuals that I have read on tools and processes written by people that didn't even bother to pen their name to the content they were providing staggers me. People that took literal man hours to help foster knowledge in others whom they didn't know. I am not an island, and all of my success in life can be directly attributed to those who paid it forward to me.&lt;/p&gt;
 &lt;p&gt;It's easy to think that when someone does not get something immediately or struggles with something I find easy, that they should simply try harder. But if I was to sum up all the hours that I had wracked my brain on a problem I find easy now, I guarantee that I would think I was a complete imbecile. Therefore, it's purely ego. I have no idea how many people I have unintentionally prevented from getting into technology because of my ego. And now that I see that in myself, I don't want to propagate my harmful outlook in others.&lt;/p&gt;
-&lt;p&gt;If we as a group ever want computer science to be loved by others, we need to call out people like me for not paying it forward.&lt;/p&gt;</content><category term="Musings"></category></entry><entry><title>Phone Marketing Nonsense</title><link href="/phone-marketing-nonsense.html" rel="alternate"></link><published>2015-08-05T00:00:00-06:00</published><updated>2015-08-05T00:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:None,2015-08-05:/phone-marketing-nonsense.html</id><summary type="html">&lt;h1&gt;I don’t want a new phone.&lt;/h1&gt;
+&lt;p&gt;If we as a group ever want computer science to be loved by others, we need to call out people like me for not paying it forward.&lt;/p&gt;</content><category term="Musings"></category></entry><entry><title>Phone Marketing Nonsense</title><link href="https://shiddy.io/phone-marketing-nonsense.html" rel="alternate"></link><published>2015-08-05T00:00:00-06:00</published><updated>2015-08-05T00:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2015-08-05:/phone-marketing-nonsense.html</id><summary type="html">&lt;h1&gt;I don’t want a new phone.&lt;/h1&gt;
 &lt;p&gt;I really don’t. I love my phone despite all its flaws. All of which are completely my fault and are not in any way the manufacturers. My phone has lasted through a personal hell:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;hours underwater when I went swimming on vacation …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;h1&gt;I don’t want a new phone.&lt;/h1&gt;
@@ -536,7 +404,7 @@ ykman openpgp set-touch $POLICY ENC
 &lt;h2&gt;This can be seen most clearly with Apple and OnePlus.&lt;/h2&gt;
 &lt;p&gt;I need not speak of the marketing pull Apple has on the first world. They market their products as sleek, and fashionable status symbol. People have the perception that Apple iPhones are the most powerful, and are involved with the most designing effort of any modern day cell phone.&lt;/p&gt;
 &lt;p&gt;This was certainly the case at the launch of the iPhone. The cell phone design paradigm was seemingly set in stone by Apple. Josh Heifferich’s image of phones before and after Apple got involved does the most justice to prove this point:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="" src="/images/150805-phone.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://shiddy.io/images/150805-phone.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://twitter.com/Digeratii/status/165324320179109888"&gt;src&lt;/a&gt;&lt;/p&gt;
 &lt;table&gt;
   &lt;tr&gt;
