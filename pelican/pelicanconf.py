@@ -31,5 +31,8 @@ EXTRA_PATH_METADATA = {
     'extra/CNAME': {'path': 'CNAME'},
 }
 
+
+MD_EXTENSIONS = ['codehilite(linenums = False)', 'extra', 'markdown.extensions.attr_list']
+
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True

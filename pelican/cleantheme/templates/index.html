@@ -9,7 +9,7 @@
 <ul id="post-list">
 
 {% for article in articles_page.object_list %}
-        <li><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark">[{{ article.date.strftime("%Y-%M-%d") }}] {{ article.title }}</a>
+        <li><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark">[{{ article.date.strftime("%Y-%m-%d") }}] {{ article.title }}</a>
 	<!-- <div class="entry-content"> {{ article.summary }} </div> -->
         </li>
 {% endfor %}
