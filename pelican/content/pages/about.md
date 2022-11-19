@@ -5,18 +5,19 @@ Summary: About Shiddy.io
 
 ## Where am I?
 
-I started this blog so that I could store documentation for things that didn't stay in my head.
+I started this blog so that I could store documentation that wouldn't stay in my head.
 
 In time it's turned into a place for me to express what I am passionate about and what's been on my mind.
-
 
 <img src="{static}/images/about/icon.png" style="float: right; width: 20%">
 ## Who are you?
 
-I find learning new things, and distilling that information to others gratifying. I've always loved technology since I was a kid. Consequently, most of my life has been around trying to get computers to do what I want.
+You can call me Shiddy. I studied Computer Science and now work as a software developer. I spend most of my energy in the security field.
 
-I studied computer science and work mostly with security. I've given up on trying to sound smart or correct. I want to solve hard problems spend time with people that share the same disposition.
+I like learning and applying low level tech. Often that means learning about older technologies rather than new ones. It also means that I care about the underlying components of any given project.
+
+I find it gratifying to distill some of these experiences into writing or videos and share them with you. It's my hope that you can see how learning and applying that knowledge is rewarding and delightful.
 
 ## Why Shiddy?
 
-I was irony-poisoned; Cool sounding names never seemed to fit. "Shiddy" stuck when playing a game with friends and I always thought it was more funny, and more suited in my efforts of thumbing my nose at all the aliases online.
+I was irony-poisoned; Cool sounding names never seemed to fit me. "Shiddy" stuck when playing a game with friends, and I at this point the name proves a nice filter for people that are too full of themselves. I've given up on trying to sound smart and putting on airs.
