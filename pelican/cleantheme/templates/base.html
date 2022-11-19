@@ -61,14 +61,15 @@
           {% for cat, null in categories %}
             <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
           {% endfor %}
+            <li></li>
         {% endif %}
 
         </ul></nav><!-- /#menu -->
         {% block content %}
         {% endblock %}
-	<pre id="footer">
-									 ---------------
-									<a href="https://github.com/shiddy">github</a> <a href="https://twitter.com/TellHause">twitter</a>
+	<pre class="footer">
+					-----------------------
+					<a href="https://github.com/shiddy">Github</a> <a href="https://www.youtube.com/channel/UCuF7oVKcM4K3wps5_vVXtww">Youtube</a> <a rel="me" href="https://infosec.exchange/@shiddy">Mastodon</a>
 	</pre>
         <footer id="contentinfo" class="body">
 		<!-- <address id="about" class="vcard body">

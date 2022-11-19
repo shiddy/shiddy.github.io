@@ -63,9 +63,10 @@ I think that the consistency of a depressive perspective is what gives it its po
 "Well, it's not really convenient for anyone right now. I know that ideas like 'deserve' are trite, and that no one 'deserves' to be alive. I just don't believe it... That I 'deserve' to be alive... It's just that now is not a good time, I got shit that I said I would do for some people, and well... Going through with this would mean lot of extra work for people, and the paperwork! Some people would be really sad if not annoyed... and I just don't want to push more of that shit into the universe right now..." and by that point I've found something to do with my hands or get hungry and leave.
 
 # And after the fire, a soft murmuring sound
+<hr/>
 
 I guess what I'm saying is that I have no triumphant retort to this soundtrack. I don't expect to defeat these feelings anymore. I know by now that breaking the fourth wall and asking you again if you are still reading is pointless. Even if I had the ability, I wouldn't want to know. I'm not pretending that I have some answer to these universals. I'm just hopeful that if you can tell that a real living feeling creature wrote this, that it's normal for things to be this painful. That, in spite of how weird and scary and fucking confusing all of these life questions actually are, we are always answering with something.
 
-These asides where I try and fail to distil a lifetime's worth of experience and emotion into some tangible nugget of truth always feels like risking a lot for very little. I have no expectations that anyone will vibe with any of this, and honestly, at this point, I'm accepting that it's fine to swear and be surly and show my soft white underbelly.
+These asides where I try and fail to distill a lifetime's worth of experience and emotion into some tangible nugget of truth always feels like risking a lot for very little. I have no expectations that anyone will vibe with any of this, and honestly, at this point, I'm accepting that it's fine to swear and be surly and show my soft white underbelly.
 
 Darling, we have already failed at so many things, let's fail at our next endeavour.

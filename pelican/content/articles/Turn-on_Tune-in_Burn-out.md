@@ -34,7 +34,7 @@ Despite not being a particularly well-read person, that idea resonated with me t
 
 Without delving too far into the feelings that motivated me to dust off my blog and write about burnout and attrition. I think an image will suffice my current concerns.
 
-![](https://i.imgur.com/O2YXXWT.png)
+<img alt="" src="https://i.imgur.com/O2YXXWT.png" width="100%" style="background-color: linen">
 
 I am only now realizing that I am not finding any new intrinsic value in my work or my schooling. Seeing this decline in interest in learning feels horrible. Often, the work that I am doing feels so far removed from what the outside world can see that I don't feel like there is any redeeming value in the work. I can't point to a web page or inform a friend that the thing he is doing with his phone was produced by me.
 
