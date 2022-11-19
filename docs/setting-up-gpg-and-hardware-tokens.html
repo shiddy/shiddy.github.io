@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
           <title>ShiddyIO - Setting up GPG and Hardware Tokens</title>
-	<link rel="stylesheet" type='text/css' href="https://shiddy.io/theme/css/style.css">
+	<link rel="stylesheet" type='text/css' href="/theme/css/style.css">
 	<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
         <meta charset="utf-8" />
         <meta name="generator" content="Pelican" />
-        <link href="https://shiddy.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="ShiddyIO Full Atom Feed" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="ShiddyIO Full Atom Feed" />
 
 
 
@@ -24,21 +24,22 @@
 	  •▀▀▀█▄•▐█▀▀█•▐█·▄▄▄█▌·▄▀▄█▌▐█▌▐█▪
 	  ▐▄▄▪▐█ ▐█ ▐█▌▐█▐█ .██▐█▪ ██·▀███▀·
 	  •▀▀▀▀ ▀▀▀▀ ·  ▪ ▀▀▀▀• ▀▀▀▀•  ▐█•
-	  <a href="/" class="header">/index</a> <a href="https://shiddy.io/pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="https://shiddy.io/feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
+	  <a href="/" class="header">/index</a> <a href="/pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="/feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
 	</pre>
 
         <nav id="menu"><ul>
 
 
-            <li><a href="https://shiddy.io/category/musings.html">Musings</a></li>
-            <li><a href="https://shiddy.io/category/random.html">Random</a></li>
-            <li class="active"><a href="https://shiddy.io/category/technical.html">Technical</a></li>
+            <li><a href="/category/musings.html">Musings</a></li>
+            <li><a href="/category/random.html">Random</a></li>
+            <li class="active"><a href="/category/technical.html">Technical</a></li>
+            <li></li>
 
         </ul></nav><!-- /#menu -->
 <section id="content" class="body">
   <div class="entry-content">
     <h1>GPG &amp; Hardware Tokens</h1>
-<p><img alt="" src="https://shiddy.io/images/Yubikey-Header.jpeg#headimg"></p>
+<p><img alt="" src="/images/Yubikey-Header.jpeg#headimg"></p>
 <h2>TL;DR</h2>
 <ul>
 <li><a href="#Preamble">Preamble</a></li>
@@ -115,7 +116,7 @@
 
 <p><strong>*Note*</strong> The <code>--cert-digest-algo</code> flag allows us to specify the hashing algorithm on these keys. By default we will see SHA256, which is fine for most everyone, but since we can specify SHA512 which will be faster on our 64-bit machines, and also make a collision with our hash much less likely. <a href="https://www.gnupg.org/gph/en/manual/r2029.html">According to the Docs</a> we can show the algorithms used here, but only some of them map to the globals in <em>gcrypt.h</em> so no love on specifying whatever hash you want ¯\<em>(ツ)</em>/¯</p>
 <p>We select <code>(11) ECC (set your own capabilites</code> and we then toggle the signing capability <code>s</code> which is on by default so that only the certify capability remains.</p>
-<p><img alt="gpg capability selection" src="https://shiddy.io/images/gpg-capability-selection.png"></p>
+<p><img alt="gpg capability selection" src="/images/gpg-capability-selection.png"></p>
 <p>Finally we select <code>(Q) Finished</code> to then specify the encryption algorithm. In our case we want <code>(1) Curve 25519</code></p>
 <p>Next we are prompted with how long we want this cert to be valid for. I normally don't like to set limits for how long a key will be used in fear that I will lose historical data. That being said, I also limit the damage that is done if these keys are compromised by creating a revocation certificate. So, I enter a <code>0</code> and confirm with <code>y</code> to state that my master key will not expire.</p>
 <p>Now we want to provide some information about who the key belongs to. I'll enter <code>shiddy</code> for my name and <code>shiddy@shiddy.io</code> for my email, and leave the comment blank. We then finalize the key creation with <code>(O)kay</code>.</p>
@@ -123,7 +124,7 @@
 <p>Congrats! We now will follow a similar sequence of steps to generate our <em>Authorization</em>, <em>Encryption</em>, and <em>Signing</em> keys.</p>
 <p>If we want to confirm our key status at any time we can execute <code>gpg --export shiddy@shiddy.io | gpg --list-packets</code></p>
 <p>Which at this point shows that we have generated two keys <code>pkey[0]</code> and <code>pkey[1]</code> as well as our <code>digest algo H10</code> as part of the signature packet.</p>
-<p><img alt="gpg list packets example" src="https://shiddy.io/images/gpg-list-packets-example.png"></p>
+<p><img alt="gpg list packets example" src="/images/gpg-list-packets-example.png"></p>
 <h3>Master Key Revocation</h3>
 <p>We want to make a means for us to say that this key has been compromised if we make a mistake in the future.</p>
 <p>This is important because we set this key to never expire, if our key was compromised we have no means of informing others. That being said, we also need to make sure that this revocation certificate is as secure as our Master secret key, otherwise anyone could revoke our keys.</p>
@@ -177,7 +178,7 @@
 <p>Tada!</p>
 <p>We can follow this patter for our <em>Authentication</em> and <em>Encryption</em> subkeys:</p>
 <p>Deselect our signature key with <code>key 1</code>, select our Auth key with <code>key 2</code>, apply it to the card with <code>keytocard</code>, and tell the smart card it's an authentication key with <code>(2) Authentication Key</code>.</p>
-<p><img alt="gpg keytocard example" src="https://shiddy.io/images/gpg-keytocard-example.png"></p>
+<p><img alt="gpg keytocard example" src="/images/gpg-keytocard-example.png"></p>
 <p>Finally writing our Encryption key via: Deselecting our authentication key with <code>key 2</code>, selecting our encryption key with <code>key 3</code>, writing it to the card with <code>keytocard</code>, and telling the card it's an encryption key with <code>(3) Encryption Key</code>.</p>
 <p>Now we cleanly close gpg with <code>save</code>.</p>
 <h2>GPG Private Key Cleanup</h2>
@@ -260,14 +261,13 @@ ykman openpgp set-touch $POLICY ENC
     <p style="text-align: right">
       Mon 07 September 2020
     </time>
-      | <a href="https://shiddy.io/category/technical.html">Technical</a>
+      | <a href="/category/technical.html">Technical</a>
     </p>
   </div><!-- /.post-info -->
 </section>
-	<pre id="footer">
-							  ------+---------------
-
-							<a href="https://github.com/shiddy">github</a> <a rel="me" href="https://infosec.exchange/@shiddy">Mastodon</a> <a href="https://www.youtube.com/channel/UCuF7oVKcM4K3wps5_vVXtww">Youtube</a>
+	<pre class="footer">
+					-----------------------
+					<a href="https://github.com/shiddy">Github</a> <a href="https://www.youtube.com/channel/UCuF7oVKcM4K3wps5_vVXtww">Youtube</a> <a rel="me" href="https://infosec.exchange/@shiddy">Mastodon</a>
 	</pre>
         <footer id="contentinfo" class="body">
 		<!-- <address id="about" class="vcard body">
