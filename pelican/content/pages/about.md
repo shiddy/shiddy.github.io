@@ -20,4 +20,4 @@ I find it gratifying to distill some of these experiences into writing or videos
 
 ## Why Shiddy?
 
-I was irony-poisoned; Cool sounding names never seemed to fit me. "Shiddy" stuck when playing a game with friends, and at this point the name proves to be a nice filter for people that are too full of themselves. I've given up on trying to sound smart and putting on airs. We all should learn to laugh at ourselves more.
+I was irony-poisoned; Cool sounding names never seemed to fit me. "Shiddy" stuck when playing a game with friends, and I at this point the name proves a nice filter for people that are too full of themselves. I've given up on trying to sound smart and putting on airs.
