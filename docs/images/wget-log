@@ -1,11 +1,0 @@
---2022-02-16 20:46:35--  https://media0.giphy.com/media/l0ErO5YlkTYkcZi3C/giphy.gif?cid=ecf05e47l2mpok30vylhi509bhck4suuoxiem57irxtz5i75
-Resolving media0.giphy.com (media0.giphy.com)... 199.232.198.2, 199.232.194.2
-Connecting to media0.giphy.com (media0.giphy.com)|199.232.198.2|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 1510206 (1.4M) [image/gif]
-Saving to: ‘giphy.gif?cid=ecf05e47l2mpok30vylhi509bhck4suuoxiem57irxtz5i75’
-
-             giphy.gif?ci   0%[                                   ]       0  --.-KB/s               giphy.gif?cid=ecf05e47l2m 100%[==================================>]   1.44M  --.-KB/s    in 0.05s   
-
-2022-02-16 20:46:35 (30.4 MB/s) - ‘giphy.gif?cid=ecf05e47l2mpok30vylhi509bhck4suuoxiem57irxtz5i75’ saved [1510206/1510206]
-

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>ShiddyIO - Bare Metal Kubernetes: An Ongoing PostMortem</title>
+	<link rel="stylesheet" type='text/css' href="http://192.168.1.5:8000/theme/css/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <link href="http://192.168.1.5:8000/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="ShiddyIO Full Atom Feed" />
+
+
+
+
+  <!--  -->
+
+
+</head>
+
+<body id="index" > <!-- class="home"-->
+	<div style="margin: 1em auto; max-width: 80ch;">
+	<pre class="header">
+	  .▄▄▄ ·   ▄ ▄ ▪  •   ▄ ·  ▄  ▄· ▄▄
+	  ▐█  ▀. ▪█▌▐█  █▌ ▪ ▐█  · ▐▌▐█▪ █▌
+	  •▀▀▀█▄•▐█▀▀█•▐█·▄▄▄█▌·▄▀▄█▌▐█▌▐█▪
+	  ▐▄▄▪▐█ ▐█ ▐█▌▐█▐█ .██▐█▪ ██·▀███▀·
+	  •▀▀▀▀ ▀▀▀▀ ·  ▪ ▀▀▀▀• ▀▀▀▀•  ▐█•
+	  <a href="/" class="header">/index</a> <a href="http://192.168.1.5:8000/pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="http://192.168.1.5:8000/feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
+	</pre>
+
+        <nav id="menu"><ul>
+
+
+            <li><a href="http://192.168.1.5:8000/category/musings.html">Musings</a></li>
+            <li><a href="http://192.168.1.5:8000/category/random.html">Random</a></li>
+            <li class="active"><a href="http://192.168.1.5:8000/category/technical.html">Technical</a></li>
+            <li></li>
+
+        </ul></nav><!-- /#menu -->
+<section id="content" class="body">
+  <div class="entry-content">
+    <h1>Bare Metal Kubernetes An Ongoing PostMortem</h1>
+<p><img alt="" src="http://192.168.1.5:8000/images/Yubikey-Header.jpeg#headimg"></p>
+<h2>Preable</h2>
+<p>Most of the technical things that I write here (hopefully) serve as documentation for myself. But if you are a weary traveler on the internet and find yourself here; I share the following warning. Bare Metal Kubernetes is to K8s as Linux from Scratch is to Ubuntu. You must make decisions on every piece your cluster uses, host machines prone to failure, and will be contstantly taxed on finding documentation that is helpful to the other individuals crazy enough to embark on such a journey. For that reason I would advise using this post as a guide, rather than documentation. You will learn more, find the process more gratifying, and be better off in debugging your own issues in the future if you take the extra time to understand the pieces and how they fit togther.</p>
+<p>That being said, after working through this process, I want to make sure that I don't spend another month fighting all the pieces fitting togehter in the future. So I will include all the steps needed and hopefully some reasonably well structured CM docs to get myself running in the future. This serves more as sanity insurance for myself.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="##goals">#goals</a></li>
+<li><a href="#Containers?">Containers?</a></li>
+<li><a href="#Container-Runtime-Environments">Container Runtime Environments</a></li>
+<li><a href="#Why-Kubernetes">Why Kubernetes</a></li>
+<li><a href="#HA,-Redundancy-and-you!">HA, Redundancy and you!</a></li>
+<li><a href="#Bare-Metal">Bare Metal</a></li>
+<li><a href="#Networking-Hostnaming">Networking, HostNaming</a></li>
+<li><a href="#Configuration-Management">Configuration Management</a></li>
+<li><a href="#Using-Kubernetes">Using Kubernetes</a></li>
+<li><a href="#Master,-Workers">Master, Workers</a></li>
+<li><a href="#Load-Balancing">Load Balancing</a></li>
+<li><a href="#Key-Valuing">Key Valuing</a></li>
+<li><a href="#Your-Meat-and-Potatoes">Your Meat and Potatoes</a></li>
+<li><a href="#The-Bowl-of-Cilantro">The Bowl of Cilantro</a></li>
+<li><a href="#Helm:-Another-Abstraction">Helm: Another Abstraction</a></li>
+<li><a href="#Container-Storage-Interfaces">Container Storage Interfaces</a><ul>
+<li><a href="#Democratic-CSI">Democratic-CSI</a></li>
+<li><a href="#CSI-Protocols">CSI Protocols</a></li>
+<li><a href="#Building-a-NAS">Building a NAS</a></li>
+<li><a href="#ZFS-Snapshots">ZFS Snapshots</a></li>
+<li><a href="#Cgroups-and-Kernel-Extensions">Cgroups and Kernel Extensions</a></li>
+<li><a href="#The-Default-SSH-Keys-Truenas-Makes-Don't-work.">The Default SSH Keys Truenas Makes Don't work.</a></li>
+</ul>
+</li>
+<li><a href="#Deploying-my-first-Helm-Chart">Deploying my first Helm Chart</a></li>
+<li><a href="#Fug.">Fug.</a></li>
+<li><a href="#Ingress-Controllers">Ingress Controllers</a></li>
+<li><a href="#Traefik,-Nginx-Proxy,-Oh-man">Traefik, Nginx Proxy, Oh man</a></li>
+<li><a href="#Static-IPs-are-not-cheap-for-the-Proletatriat">Static IPs are not cheap for the Proletatriat</a></li>
+<li><a href="#Dynamic-DNS">Dynamic DNS</a></li>
+<li><a href="#Helm:-Abstraction-Distraction">Helm: Abstraction Distraction</a><ul>
+<li><a href="#Am-I-taking-Crazy-Pills?">Am I taking Crazy Pills?</a></li>
+</ul>
+</li>
+<li><a href="#Building-our-own-Containers">Building our own Containers</a><ul>
+<li><a href="#Containers-to-run-on-K8s-Some-Considerations">Containers to run on K8s Some Considerations</a></li>
+<li><a href="#Scheduling">Scheduling</a></li>
+<li><a href="#Daemons">Daemons</a></li>
+<li><a href="#Containers?-OSes?-what-the-fuck">Containers? OSes? what the fuck</a></li>
+</ul>
+</li>
+<li><a href="#Container-Registries?">Container Registries?</a><ul>
+<li><a href="#Why-not-make-your-own?">Why not make your own?</a></li>
+<li><a href="#Self-Signed-Certs">Self Signed Certs</a></li>
+<li><a href="#CNAMEs-vs-Subject-Alternative-Names">CNAMEs vs Subject Alternative Names</a></li>
+<li><a href="#Dockers-are-like-Onions">Dockers are like Onions</a></li>
+<li><a href="#Docker-is-a-server-service">Docker is a server service</a></li>
+<li><a href="#Oh-god-they-don't-work-wtf">Oh god they don't work wtf</a></li>
+</ul>
+</li>
+<li><a href="#Architectures">Architectures</a><ul>
+<li><a href="#BuildKit">BuildKit</a></li>
+<li><a href="#QEMU">QEMU</a></li>
+<li><a href="#Oh-god-the-Nodes-need-the-SSL-certs">Oh god the Nodes need the SSL certs</a></li>
+<li><a href="#systemctl-restart-containerd">systemctl restart containerd</a></li>
+</ul>
+</li>
+<li><a href="#finally">Fine..A..F**king..ly</a>
+ <!-- https://youtu.be/yREZ46k2eiA?t=426 --></li>
+<li><a href="#Making-Another-Container">Making Another Container</a></li>
+<li><a href="#Back-to-Traefik">Back to Traefik</a></li>
+<li><a href="#Vaultwarden">Vaultwarden</a></li>
+</ul>
+<!-- ![gpg list packets example]({static}/images/gpg-list-packets-example.png) -->
+
+<h1><a id="#goals"></a>#goals</h1>
+<p><hr/>
+I wanted to make </p>
+<h1><a id="Containers?"></a>Containers?</h1>
+<hr/>
+
+<h1><a id="Container-Runtime-Environments"></a>Container Runtime Environments</h1>
+<hr/>
+
+<h1><a id="Why-Kubernetes"></a>Why Kubernetes</h1>
+<hr/>
+
+<h1><a id="HA,-Redundancy-and-you!"></a>HA, Redundancy and you!</h1>
+<hr/>
+
+<h1><a id="Bare_Metal"></a>Bare Metal</h1>
+<hr/>
+
+<h1><a id="Networking-Hostnaming"></a>Networking, HostNaming</h1>
+<hr/>
+
+<h1><a id="Configuration-Management"></a>Configuration Management</h1>
+<hr/>
+
+<h1><a id="Using-Kubernetes"></a>Using Kubernetes</h1>
+<hr/>
+
+<h1><a id="Master,-Workers"></a>Master, Workers</h1>
+<hr/>
+
+<h1><a id="Load-Balancing"></a>Load Balancing</h1>
+<hr/>
+
+<h1><a id="Key-Valuing"></a>Key Valuing</h1>
+<hr/>
+
+<h1><a id="Your-Meat-and-Potatoes"></a>Your Meat and Potatoes</h1>
+<hr/>
+
+<h1><a id="The-Bowl-of-Cilantro"></a>The Bowl of Cilantro</h1>
+<hr/>
+
+<h1><a id="Helm:-Another-Abstraction"></a>Helm: Another Abstraction</h1>
+<hr/>
+
+<h2><a id="Container-Storage-Interfaces"></a>Container Storage Interfaces</h2>
+<h2><a id="Democratic-CSI"></a>Democratic-CSI</h2>
+<h2><a id="CSI-Protocols"></a>CSI Protocols</h2>
+<h2><a id="Building-a-NAS"></a>Building a NAS</h2>
+<h2><a id="ZFS-Snapshots"></a>ZFS Snapshots</h2>
+<h2><a id="Cgroups-and-Kernel-Extensions"></a>Cgroups and Kernel Extensions</h2>
+<h2><a id="The-Default-SSH-Keys-Truenas-Makes-Don't-work."></a>The Default SSH Keys Truenas Makes Don't work.</h2>
+<h1><a id="Deploying-my-first-Helm-Chart"></a>Deploying my first Helm Chart</h1>
+<hr/>
+
+<h1><a id="Fug."></a>Fug.</h1>
+<hr/>
+
+<h1><a id="Ingress-Controllers"></a>Ingress Controllers</h1>
+<hr/>
+
+<h1><a id="Traefik,-Nginx-Proxy,-Oh-man"></a>Traefik, Nginx Proxy, Oh man</h1>
+<hr/>
+
+<h1><a id="Static-IPs-are-not-cheap-for-the-Proletatriat"></a>Static IPs are not cheap for the Proletatriat</h1>
+<hr/>
+
+<h1><a id="Dynamic-DNS"></a>Dynamic DNS</h1>
+<hr/>
+
+<h1><a id="Helm:-Abstraction-Distraction"></a>Helm: Abstraction Distraction</h1>
+<hr/>
+
+<h2><a id="Am-I-taking-Crazy-Pills?"></a>Am I taking Crazy Pills?</h2>
+<h1><a id="Building-our-own-Containers"></a>Building our own Containers</h1>
+<hr/>
+
+<h2><a id="Containers-to-run-on-K8s-Some-Considerations"></a>Containers to run on K8s Some Considerations</h2>
+<h2><a id="Scheduling"></a>Scheduling</h2>
+<h2><a id="Daemons"></a>Daemons</h2>
+<h2><a id="Containers?-OSes?-what-the-fuck"></a>Containers? OSes? what the fuck</h2>
+<h1><a id="Container-Registries?"></a>Container Registries?</h1>
+<hr/>
+
+<h2><a id="Why-not-make-your-own?"></a>Why not make your own?</h2>
+<h2><a id="Self-Signed-Certs"></a>Self Signed Certs</h2>
+<h2><a id="CNAMEs-vs-Subject-Alternative-Names"></a>CNAMEs vs Subject Alternative Names</h2>
+<h2><a id="Dockers-are-like-Onions"></a>Dockers are like Onions</h2>
+<h2><a id="Docker-is-a-server-service"></a>Docker is a server service</h2>
+<h2><a id="Oh-god-they-don't-work-wtf"></a>Oh god they don't work wtf</h2>
+<h1><a id="Architectures"></a>Architectures</h1>
+<hr/>
+
+<h2><a id="BuildKit"></a>BuildKit</h2>
+<h2><a id="QEMU"></a>QEMU</h2>
+<h2><a id="Oh-god-the-Nodes-need-the-SSL-certs"></a>Oh god the Nodes need the SSL certs</h2>
+<h2><a id="systemctl-restart-containerd"></a>systemctl restart containerd</h2>
+<h1><a id="finally"></a>Fine..A..F**king..ly</h1>
+<hr/>
+
+<h1><a id="Making-Another-Container"></a>Making Another Container</h1>
+<hr/>
+
+<h1><a id="Back-to-Traefik"></a>Back to Traefik</h1>
+<hr/>
+
+<h1><a id="Vaultwarden"></a>Vaultwarden</h1>
+<hr/>
+  </div><!-- /.entry-content -->
+  <div class="post-info">
+    <p style="text-align: right">
+      Fri 28 July 2023
+    </time>
+      | <a href="http://192.168.1.5:8000/category/technical.html">Technical</a>
+    </p>
+  </div><!-- /.post-info -->
+</section>
+	<pre class="footer">
+					-----------------------
+					<a href="https://github.com/shiddy">Github</a> <a href="https://www.youtube.com/channel/UCuF7oVKcM4K3wps5_vVXtww">Youtube</a> <a rel="me" href="https://infosec.exchange/@shiddy">Mastodon</a>
+	</pre>
+        <footer id="contentinfo" class="body">
+		<!-- <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>,
+                which takes great advantage of <a href="https://www.python.org/">Python</a>.
+		</address><-->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>

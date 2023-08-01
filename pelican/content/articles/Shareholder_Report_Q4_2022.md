@@ -54,7 +54,7 @@ Hey! That deeply personal struggle you have, with all its unique facets? Don't f
 
 I had the chance to play *Disco Elysum* recently, it's one of the few pieces that felt like it understood me. If you haven't played it, you should. I won't spoil anything if you keep reading. But I want to highlight one of its perspectives on self harm and mental wellbeing. To make a long story short, a conclusion to the thought "Finger on the Eject Button" is spelled out in the following:
 
->> "...Turns out *Finger On The Eject Button* is pretty much your theme song. A headbanger from your teenage years and your wedding ballad. This is not the first time you're spinning the tape. This is not the first time you're spinning the tape." ~ Disco Elysium
+>> "...Turns out *Finger On The Eject Button* is pretty much your theme song. A headbanger from your teenage years and your wedding ballad. This is not the first time you're spinning the tape." ~ Disco Elysium
 
 I don't know whether I will hold this perspective for long, but this take on depressiveness and suicidally feels right on the money. I feel it worth expressing that these topics are often put into media for the spectacle, and often do more harm in glorifying or sensationalizing self-harm. While I can't claim that Disco Elysum's quote is tactful, it feels far more genuine than most everything else I've come across.
 
