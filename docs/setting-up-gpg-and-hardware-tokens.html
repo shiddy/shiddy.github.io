@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
           <title>ShiddyIO - Setting up GPG and Hardware Tokens</title>
-	<link rel="stylesheet" type='text/css' href="http://192.168.1.5:8000/theme/css/style.css">
+	<link rel="stylesheet" type='text/css' href="https://shiddy.io/theme/css/style.css">
 	<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
         <meta charset="utf-8" />
         <meta name="generator" content="Pelican" />
-        <link href="http://192.168.1.5:8000/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="ShiddyIO Full Atom Feed" />
+        <link href="https://shiddy.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="ShiddyIO Full Atom Feed" />
 
 
 
@@ -24,22 +24,22 @@
 	  •▀▀▀█▄•▐█▀▀█•▐█·▄▄▄█▌·▄▀▄█▌▐█▌▐█▪
 	  ▐▄▄▪▐█ ▐█ ▐█▌▐█▐█ .██▐█▪ ██·▀███▀·
 	  •▀▀▀▀ ▀▀▀▀ ·  ▪ ▀▀▀▀• ▀▀▀▀•  ▐█•
-	  <a href="/" class="header">/index</a> <a href="http://192.168.1.5:8000/pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="http://192.168.1.5:8000/feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
+	  <a href="/" class="header">/index</a> <a href="https://shiddy.io/pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="https://shiddy.io/feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
 	</pre>
 
         <nav id="menu"><ul>
 
 
-            <li><a href="http://192.168.1.5:8000/category/musings.html">Musings</a></li>
-            <li><a href="http://192.168.1.5:8000/category/random.html">Random</a></li>
-            <li class="active"><a href="http://192.168.1.5:8000/category/technical.html">Technical</a></li>
+            <li><a href="https://shiddy.io/category/musings.html">Musings</a></li>
+            <li><a href="https://shiddy.io/category/random.html">Random</a></li>
+            <li class="active"><a href="https://shiddy.io/category/technical.html">Technical</a></li>
             <li></li>
 
         </ul></nav><!-- /#menu -->
 <section id="content" class="body">
   <div class="entry-content">
     <h1>GPG &amp; Hardware Tokens</h1>
-<p><img alt="" src="http://192.168.1.5:8000/images/Yubikey-Header.jpeg#headimg"></p>
+<p><img alt="" src="https://shiddy.io/images/Yubikey-Header.jpeg#headimg"></p>
 <h2>TL;DR</h2>
 <ul>
 <li><a href="#Preamble">Preamble</a></li>
@@ -140,9 +140,9 @@ cat <span class="s">&lt;&lt; EOF</span>
 </pre></div>
 
 
-<p><img alt="GPG key selection" src="http://192.168.1.5:8000/images/gpg-flags.png"></p>
+<p><img alt="GPG key selection" src="https://shiddy.io/images/gpg-flags.png"></p>
 <p>We select <code>(11) ECC (set your own capabilities</code> and we then toggle the "signing" capability with the <code>s</code> key. Signing is on by default, we only the certify capability on this master key.</p>
-<p><img alt="GPG capability selection" src="http://192.168.1.5:8000/images/gpg-capability-selection.png"></p>
+<p><img alt="GPG capability selection" src="https://shiddy.io/images/gpg-capability-selection.png"></p>
 <p>Finally we select <code>(Q) Finished</code> to then specify the encryption algorithm. In our case we want <code>(1) Curve 25519</code></p>
 <p>Next, we are prompted with how long we want this cert to be valid for. I normally don't like to set limits for how long a key will be used in fear that I will lose historical data. That being said, I also limit the damage that is done if these keys are compromised by creating a revocation certificate. So, I enter a <code>0</code> and confirm with <code>y</code> to state that my master key will not expire.</p>
 <p>Now we want to provide some information about who the key belongs to. I'll enter <code>shiddy</code> for my name and <code>shiddy@shiddy.io</code> for my email, and leave the comment blank. We then finalize the key creation with <code>(O)kay</code>.</p>
@@ -155,7 +155,7 @@ cat <span class="s">&lt;&lt; EOF</span>
 
 <p><strong>Note</strong> from here on out in the documentation I will only use my own key identifier. You should change this to have the same commands work on your machine.</p>
 <p>This shows that we have generated two keys <code>pkey[0]</code> and <code>pkey[1]</code> as part of the public packet, as well as our <code>digest algo 10</code> as part of the signature packet.</p>
-<p><img alt="GPG list packets example" src="http://192.168.1.5:8000/images/gpg-list-packets-example.png"></p>
+<p><img alt="GPG list packets example" src="https://shiddy.io/images/gpg-list-packets-example.png"></p>
 <h3><a id="Master Key Revocation"></a>Master Key Revocation</h3>
 <p>Part of being a good security minded individual, is making sure that we plan for the worst. Here we will make a revocation certificate to ensure that if we lose our private keys, we can just kill everything related to this key and start over.</p>
 <p>This is important because we set this key to never expire, if our key was compromised we have no means of informing others. That being said, we also need to make sure that this revocation certificate is as secure as our Master secret key, otherwise anyone could revoke our keys.</p>
@@ -206,11 +206,11 @@ cat <span class="s">&lt;&lt; EOF</span>
 
 <p>Here we want to select a specific subkey with <code>key 1</code>. Doing so will mark the subkey with an asterisk <strong>(*)</strong>. We then can send that specific key to our hardware token with <code>keytocard</code>.</p>
 <p>Since our key selected earlier was our signature key we inform the smart card it's a signature key with <code>(1) Signature Key</code></p>
-<p><img alt="GPG key selection" src="http://192.168.1.5:8000/images/gpg-key-selection.png"></p>
+<p><img alt="GPG key selection" src="https://shiddy.io/images/gpg-key-selection.png"></p>
 <p>Tada!</p>
 <p>We can follow this pattern for our <em>Authentication</em> and <em>Encryption</em> subkeys:</p>
 <p>Deselect our signature key with <code>key 1</code>, select our Auth key with <code>key 2</code>, apply it to the card with <code>keytocard</code>, and tell the smart card it's an authentication key with <code>(2) Authentication Key</code>.</p>
-<p><img alt="GPG keytocard example" src="http://192.168.1.5:8000/images/gpg-keytocard-example.png"></p>
+<p><img alt="GPG keytocard example" src="https://shiddy.io/images/gpg-keytocard-example.png"></p>
 <p>Finally, we can write out our Encryption key. Deselect our authentication key with <code>key 2</code>, select our encryption key with <code>key 3</code>, write it to the card with <code>keytocard</code>, and inform the card it's an encryption key with <code>(3) Encryption Key</code>.</p>
 <p>Now we cleanly close GPG with <code>save</code>.</p>
 <h2><a id="GPG Private Key Cleanup"></a>GPG Private Key Cleanup</h2>
@@ -255,7 +255,7 @@ https://keyserver.pgp.com/vkd/GetWelcomeScreen.event</p>
 </pre></div>
 
 
-<p><img alt="ssh-add -L example" src="http://192.168.1.5:8000/images/ssh-add-example.png"></p>
+<p><img alt="ssh-add -L example" src="https://shiddy.io/images/ssh-add-example.png"></p>
 <p>Which can then be added to any $HOME/.ssh/authorized_keys file on a server you want to access.</p>
 <h2><a id="Setting touch behavior for Yubikey Subkeys"></a>Setting touch behavior for Yubikey Subkeys</h2>
 <p>Here we are setting the state of the touch behavior for all our subkeys on our smart card. We have a few states to choose from.
@@ -311,7 +311,7 @@ ykman config usb --disable PIV
     <p style="text-align: right">
       Mon 07 September 2020
     </time>
-      | <a href="http://192.168.1.5:8000/category/technical.html">Technical</a>
+      | <a href="https://shiddy.io/category/technical.html">Technical</a>
     </p>
   </div><!-- /.post-info -->
 </section>
