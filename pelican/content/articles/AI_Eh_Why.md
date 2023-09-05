@@ -1,6 +1,8 @@
-Title: Some thoughts on Artificial Intelligence
+Title: Some thoughts on Artifical Inteligence
 Date: 2023-08-01 12:00
 Category: Musings
+
+<br/>
 
 ![]({static}/images/gits_brain.jpg#headimg)
 

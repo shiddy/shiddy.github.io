@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
           <title>ShiddyIO - Setting up GPG and Hardware Tokens</title>
-	<link rel="stylesheet" type='text/css' href="https://shiddy.io/theme/css/style.css">
+	<link rel="stylesheet" type='text/css' href="http://192.168.1.5:8000/theme/css/style.css">
 	<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
         <meta charset="utf-8" />
         <meta name="generator" content="Pelican" />
-        <link href="https://shiddy.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="ShiddyIO Full Atom Feed" />
+        <link href="http://192.168.1.5:8000/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="ShiddyIO Full Atom Feed" />
 
 
 
@@ -24,22 +24,22 @@
 	  •▀▀▀█▄•▐█▀▀█•▐█·▄▄▄█▌·▄▀▄█▌▐█▌▐█▪
 	  ▐▄▄▪▐█ ▐█ ▐█▌▐█▐█ .██▐█▪ ██·▀███▀·
 	  •▀▀▀▀ ▀▀▀▀ ·  ▪ ▀▀▀▀• ▀▀▀▀•  ▐█•
-	  <a href="/" class="header">/index</a> <a href="https://shiddy.io/pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="https://shiddy.io/feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
+	  <a href="/" class="header">/index</a> <a href="http://192.168.1.5:8000/pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="http://192.168.1.5:8000/feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
 	</pre>
 
         <nav id="menu"><ul>
 
 
-            <li><a href="https://shiddy.io/category/musings.html">Musings</a></li>
-            <li><a href="https://shiddy.io/category/random.html">Random</a></li>
-            <li class="active"><a href="https://shiddy.io/category/technical.html">Technical</a></li>
+            <li><a href="http://192.168.1.5:8000/category/musings.html">Musings</a></li>
+            <li><a href="http://192.168.1.5:8000/category/random.html">Random</a></li>
+            <li class="active"><a href="http://192.168.1.5:8000/category/technical.html">Technical</a></li>
             <li></li>
 
         </ul></nav><!-- /#menu -->
 <section id="content" class="body">
   <div class="entry-content">
     <h1>GPG &amp; Hardware Tokens</h1>
-<p><img alt="" src="https://shiddy.io/images/Yubikey-Header.jpeg#headimg"></p>
+<p><img alt="" src="http://192.168.1.5:8000/images/Yubikey-Header.jpeg#headimg"></p>
 <h2>TL;DR</h2>
 <ul>
 <li><a href="#Preamble">Preamble</a></li>
@@ -62,17 +62,18 @@
 <li><a href="#Setting touch behavior for Yubikey Subkeys">Setting touch behavior for Yubikey Subkeys</a></li>
 <li><a href="#Setting pin retries for Yubikey">Setting pin retries for Yubikey</a></li>
 <li><a href="#Setting pins for your Smart Card">Setting pins for your Smart Card</a></li>
+<li><a href="Enabling/Disabling Yubikey features">Enabling/Disabling Yubikey features</a></li>
 </ul>
-<h2>Preamble</h2>
-<p>Every time I set up a new computer there is a fair amount of time spent on getting various configs into a state I am comfortable with. Unfortunately, I don't have a means to automatically set up hardware tokens for authing into some machines so I often have to spend a day just looking up all the various commands and parameters. This post aims to make that process easier for me in the future, but also hopefully save you some time on your next gpg key setup.</p>
+<h2><a id="Preamble"></a>Preamble</h2>
+<p>Every time I set up a new computer there is a fair amount of time spent on getting various configs into a state I am comfortable with. Unfortunately, I don't have a means to automatically set up hardware tokens for authing into some machines so I often have to spend a day just looking up all the various commands and parameters. This post aims to make that process easier for me in the future, but also hopefully save you some time on your next GPG key setup.</p>
 <p>I also am using the <strong>Yubikey 5</strong> because <a href="https://support.yubico.com/support/solutions/articles/15000027139-yubikey-5-2-3-enhancements-to-openpgp-3-4-support">it supports the GPG 3.4 Smart Card spec</a>. Allowing us to write elliptic curve keypairs to the device. If you have a yubikey 4 or lower you will have to use RSA as your algorithm for all keys in this process.</p>
-<p>I don't claim to be a cryptography expert, and what I am posting here is to the best of my knowledge the most generic use case friendly way to set up a hardware token. If you have improvements feel free to send me a pgp message with the details.</p>
-<h2>Requirements</h2>
+<p>I don't claim to be a cryptography expert, and what I am posting here is to the best of my knowledge the most generic use-case friendly way to set up a hardware token. If you have improvements feel free to send me a PGP message with the details, or idk check my about page for where I am, I guess. (˵¯͒〰¯͒˵)</p>
+<h2><a id="Requirements"></a>Requirements</h2>
 <p>We are ensuring we have three programs for the following:</p>
 <ul>
 <li>GPG - for creating and setting keys for smart-cards</li>
-<li>PinEntry - a generic modal that will pop up when we need to enter our smart card's pin</li>
-<li>YkMan - a program that we can use to set the pins on our Yubikey, and require a human to touch it to auth</li>
+<li>PinEntry - a utility that will pop up for our OS when we need to enter our smart card's pin</li>
+<li>YkMan - a program that we can use to set the pins on our Yubikey, and require a human to touch it to authenticate</li>
 </ul>
 <p>For MacOS I assume that you are using homebrew or are able to get these programs from valid sources</p>
 <div class="highlight"><pre><span></span>brew install gnupg pinentry-mac ykman
@@ -80,119 +81,154 @@
 
 
 <p>For Linux I am using a Debian based package manager, but I trust you are able to find these packages with your specific distro.</p>
-<div class="highlight"><pre><span></span>sudo apt install gpg scdaemon libccid pinentry yubikey-manager
+<div class="highlight"><pre><span></span>sudo apt install gpg scdaemon libccid yubikey-manager
 </pre></div>
 
 
-<h3>Configuration</h3>
-<p>We need to tell our gpg-agent what our pinentry program is as well as that we plan to use our gpg agent for ssh</p>
-<p>for MacOS</p>
-<div class="highlight"><pre><span></span>echo &quot;pinentry-program /usr/local/bin/pinentry-mac\nenable-ssh-support&quot; &gt; $HOME/.gnupg/gpg-agent.conf
+<p><strong>Note</strong> <code>pinentry</code> requires you to know what kind of desktop environment you use on linux. For Ubuntu or Debian systems you would use "gnome", and install <code>pinentry-gnome3</code>, etc... If you don't know I would recommend using pinentry-curses which should work with most ttys.</p>
+<h3><a id="Configuration"></a>Configuration</h3>
+<p>We need to tell our gpg-agent what our pinentry program is as well as that we plan to use our GPG agent for ssh.</p>
+<p>This requires some directories to exist; the easiest way to ensure they exist is to use GPG itself to create them:</p>
+<div class="highlight"><pre><span></span>gpg -k
 </pre></div>
 
 
-<p>for Linux</p>
-<div class="highlight"><pre><span></span>echo &quot;pinentry-program /usr/bin/pinentry\nenable-ssh-support&quot; &gt; $HOME/.gnupg/gpg-agnet.conf
+<h4>for MacOS</h4>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="sb">`</span>which pinentry-curses <span class="m">1</span>&gt;/dev/null<span class="sb">`</span>
+<span class="k">then</span>
+cat <span class="s">&lt;&lt; EOF</span>
+<span class="s">pinentry-program $(which pinentry-curses)</span>
+<span class="s">default-cache-ttl 3600</span>
+<span class="s">max-cache-ttl-ssh 3600</span>
+<span class="s">enable-ssh-support</span>
+<span class="s">verbose</span>
+
+<span class="s">log-file $(echo &quot;$HOME/.gnupg/gpg-agent-log&quot;)</span>
+<span class="s">EOF</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&quot;You didn&#39;t install the requirements, you should check the pinentry-mac install step above.&quot;</span>
+<span class="k">fi</span> <span class="sb">```</span>
+
+<span class="c1">#### for Linux</span>
+
+<span class="sb">```</span>bash
+<span class="nb">echo</span> -e <span class="s2">&quot;pinentry-program /usr/bin/pinentry\nenable-ssh-support&quot;</span> &gt; <span class="nv">$HOME</span>/.gnupg/gpg-agnet.conf
 </pre></div>
 
 
-<h2>Our GPG key structure</h2>
-<p>What we are working towards is a single GPG master key that certifies multiple subkeys for specific actions, namely: <em>Authorizing</em>, <em>Signing</em>, and <em>Encrypting</em>. When we talk about a key in this context, we are referring to a key-pair. Meaning we will be making 8 keys in total 4 private and 4 public.</p>
-<div class="highlight"><pre><span></span><span class="n">Master</span><span class="w"> </span><span class="p">(</span><span class="n">Certify</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">  </span><span class="o">|--&gt;</span><span class="w"> </span><span class="n">Sub</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="n">Signing</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">  </span><span class="o">|--&gt;</span><span class="w"> </span><span class="n">Sub</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="n">Encrypting</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="o">|</span><span class="w"></span>
-<span class="w">  </span><span class="err">\</span><span class="o">--&gt;</span><span class="w"> </span><span class="n">Sub</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">(</span><span class="n">Authorizing</span><span class="p">)</span><span class="w"></span>
+<h2><a id="Our GPG key structure"></a>Our GPG key structure</h2>
+<p>What we are working towards is a single GPG master key that certifies multiple subkeys for specific actions, namely: <em>Authorizing</em>, <em>Signing</em>, and <em>Encrypting</em>. When we talk about a key in this context, we are referring to a key-pair. Meaning, we will be making 8 keys in total 4 private and 4 public.</p>
+<div class="highlight"><pre><span></span>Master <span class="o">(</span>Certify<span class="o">)</span>
+  <span class="p">|</span>
+  <span class="p">|</span>--&gt; Sub <span class="m">1</span> <span class="o">(</span>Signing<span class="o">)</span>
+  <span class="p">|</span>
+  <span class="p">|</span>--&gt; Sub <span class="m">2</span> <span class="o">(</span>Encrypting<span class="o">)</span>
+  <span class="p">|</span>
+  <span class="se">\-</span>-&gt; Sub <span class="m">3</span> <span class="o">(</span>Authorizing<span class="o">)</span>
 </pre></div>
 
 
 <p>I understand that there are mechanisms to run this as a batch job, however I want to walk through the steps manually first.</p>
-<h3>Creating the Master Cert Key</h3>
+<h3><a id="Creating the Master Cert Key"></a>Creating the Master Cert Key</h3>
 <div class="highlight"><pre><span></span>gpg --expert --full-generate-key --cert-digest-algo H10
 </pre></div>
 
 
-<p><strong>*Note*</strong> The <code>--cert-digest-algo</code> flag allows us to specify the hashing algorithm on these keys. By default we will see SHA256, which is fine for most everyone, but since we can specify SHA512 which will be faster on our 64-bit machines, and also make a collision with our hash much less likely. <a href="https://www.gnupg.org/gph/en/manual/r2029.html">According to the Docs</a> we can show the algorithms used here, but only some of them map to the globals in <em>gcrypt.h</em> so no love on specifying whatever hash you want ¯\<em>(ツ)</em>/¯</p>
-<p>We select <code>(11) ECC (set your own capabilites</code> and we then toggle the signing capability <code>s</code> which is on by default so that only the certify capability remains.</p>
-<p><img alt="gpg capability selection" src="https://shiddy.io/images/gpg-capability-selection.png"></p>
+<p><strong>*Note*</strong> The <code>--cert-digest-algo</code> flag allows us to specify the hashing algorithm on these keys. By default we will see SHA256, which is fine for most everyone, but since we can specify SHA512 which will be faster on our 64-bit machines, and also generally help with security by making collisions with our hash much less likely, ヾ(´￢｀)ﾉ <a href="https://www.gnupg.org/gph/en/manual/r2029.html">According to the Docs</a> we can show the algorithms used here, but only some of them map to the globals in <em>gcrypt.h</em> so no love on specifying whatever hash you want ¯\<em>(ツ)</em>/¯</p>
+<p><strong>*Note on note*</strong> If you are so inclined, you can print the algorithms that GPG support with the following <code>gpg --vv --version</code> this will show a specific identifier <code>H10</code> in our case, which you can see points to SHA512.</p>
+<div class="highlight"><pre><span></span>gpg -vv --version
+</pre></div>
+
+
+<p><img alt="GPG key selection" src="http://192.168.1.5:8000/images/gpg-flags.png"></p>
+<p>We select <code>(11) ECC (set your own capabilities</code> and we then toggle the "signing" capability with the <code>s</code> key. Signing is on by default, we only the certify capability on this master key.</p>
+<p><img alt="GPG capability selection" src="http://192.168.1.5:8000/images/gpg-capability-selection.png"></p>
 <p>Finally we select <code>(Q) Finished</code> to then specify the encryption algorithm. In our case we want <code>(1) Curve 25519</code></p>
-<p>Next we are prompted with how long we want this cert to be valid for. I normally don't like to set limits for how long a key will be used in fear that I will lose historical data. That being said, I also limit the damage that is done if these keys are compromised by creating a revocation certificate. So, I enter a <code>0</code> and confirm with <code>y</code> to state that my master key will not expire.</p>
+<p>Next, we are prompted with how long we want this cert to be valid for. I normally don't like to set limits for how long a key will be used in fear that I will lose historical data. That being said, I also limit the damage that is done if these keys are compromised by creating a revocation certificate. So, I enter a <code>0</code> and confirm with <code>y</code> to state that my master key will not expire.</p>
 <p>Now we want to provide some information about who the key belongs to. I'll enter <code>shiddy</code> for my name and <code>shiddy@shiddy.io</code> for my email, and leave the comment blank. We then finalize the key creation with <code>(O)kay</code>.</p>
 <p>At this point you may be prompted for a passphrase, <strong>This is different than your smart card pin</strong>, and is the only thing preventing this key from being used if someone gets access to your keyring or private key storage. Make sure to set it to something secure.</p>
 <p>Congrats! We now will follow a similar sequence of steps to generate our <em>Authorization</em>, <em>Encryption</em>, and <em>Signing</em> keys.</p>
-<p>If we want to confirm our key status at any time we can execute <code>gpg --export shiddy@shiddy.io | gpg --list-packets</code></p>
-<p>Which at this point shows that we have generated two keys <code>pkey[0]</code> and <code>pkey[1]</code> as well as our <code>digest algo H10</code> as part of the signature packet.</p>
-<p><img alt="gpg list packets example" src="https://shiddy.io/images/gpg-list-packets-example.png"></p>
-<h3>Master Key Revocation</h3>
-<p>We want to make a means for us to say that this key has been compromised if we make a mistake in the future.</p>
+<p>If we want to confirm our key status at any time we can execute <code>gpg --export shiddy@shiddy.io | gpg --list-packets</code> On the off chance you don't know already, your email address is the identifier for your GPG key, so you will want to use your email from the previous step. Otherwise if you have one key at this point you can use the following:</p>
+<div class="highlight"><pre><span></span>gpg --export <span class="sb">`</span>gpg -K <span class="p">|</span> grep <span class="s1">&#39;&lt;&#39;</span> <span class="p">|</span> cut -d<span class="se">\&lt;</span> -f2 <span class="p">|</span> tr -d <span class="s1">&#39;&gt;&#39;</span><span class="sb">`</span> <span class="p">|</span> gpg --list-packets
+</pre></div>
+
+
+<p><strong>Note</strong> from here on out in the documentation I will only use my own key identifier. You should change this to have the same commands work on your machine.</p>
+<p>This shows that we have generated two keys <code>pkey[0]</code> and <code>pkey[1]</code> as part of the public packet, as well as our <code>digest algo 10</code> as part of the signature packet.</p>
+<p><img alt="GPG list packets example" src="http://192.168.1.5:8000/images/gpg-list-packets-example.png"></p>
+<h3><a id="Master Key Revocation"></a>Master Key Revocation</h3>
+<p>Part of being a good security minded individual, is making sure that we plan for the worst. Here we will make a revocation certificate to ensure that if we lose our private keys, we can just kill everything related to this key and start over.</p>
 <p>This is important because we set this key to never expire, if our key was compromised we have no means of informing others. That being said, we also need to make sure that this revocation certificate is as secure as our Master secret key, otherwise anyone could revoke our keys.</p>
-<div class="highlight"><pre><span></span><span class="n">gpg</span><span class="w"> </span><span class="c1">--output shiddy\@shiddy.io.gpg-revocation-certificate --gen-revoke shiddy@shiddy.io</span>
+<div class="highlight"><pre><span></span>gpg --output shiddy<span class="se">\@</span>shiddy.io.gpg-revocation-certificate --gen-revoke shiddy@shiddy.io
 </pre></div>
 
 
 <p>The above command created a file <code>shiddy@shiddy.io.gpg-revocation-certificate</code> which contains the revocation certificate, print it and put in in a fire-safe, slap it on a usb and put it somewhere safe but <strong>do not keep it on your hard drive</strong></p>
-<h3>Subkey Generation</h3>
-<p>We want to create our subkeys from our master Certify key. So we will tell GPG that we want to edit this key which will drop us into a gpg prompt.</p>
-<div class="highlight"><pre><span></span><span class="n">gpg</span><span class="w"> </span><span class="c1">--expert --edit-key --cert-digest-algo H10 shiddy@shiddy.io</span>
+<h3><a id="Subkey Generation"></a>Subkey Generation</h3>
+<p>We want to create our subkeys from our master Certify key. So we will tell GPG that we want to edit this key which will drop us into a GPG prompt.</p>
+<div class="highlight"><pre><span></span>gpg --expert --edit-key --cert-digest-algo H10 shiddy@shiddy.io
 </pre></div>
 
 
 <p>We can then enter <code>addkey</code> to begin the creation of a new subkey.</p>
 <p>Selecting <code>(11) ECC (set your own capabilities)</code> again will default to <em>Sign</em> as the only action, but we should confirm this and then Finalize our key selection with <code>(Q) Finished</code>, <code>(1) Curve 25519</code> for the elliptic curve we want, that it will not expire with <code>0</code>, and a confirmation of <code>y</code>.</p>
 <p>Two more to go! Let's create our <em>Authenticate</em> key next</p>
-<p>Invoke <code>addkey</code> again, <code>(11) ECC (set your own capabilities)</code> and this time only enabling the <em>Authorization</em> capability and disabling any other capabilities. <code>0</code> for the expiration date, and a confirmation with <code>y</code>.</p>
-<p>One final <code>addkey</code>, <code>(12) ECC (encrypt only)</code>, <code>(1) Curve 25519</code> for the elliptic curve, <code>0</code> for the expiration date, and finally <code>y</code> to confirm</p>
-<p>finally we want to cleanly exit gpg with <code>save</code>.</p>
-<p>Huzzah! We now have a bunch of public and private keys!</p>
+<p>Invoke <code>addkey</code> again, <code>(11) ECC (set your own capabilities)</code> and this time only enabling the <em>Authorization</em> capability and disabling any other capabilities (<code>S</code>, <code>A</code> assuming the 'Sign' identifier is defaulted on your machine). <code>0</code> for the expiration date, and a confirmation with <code>y</code>.</p>
+<p>One final <code>addkey</code>, <code>(12) ECC (encrypt only)</code>, <code>(1) Curve 25519</code> for the elliptic curve, <code>Q</code> to confirm the selection, <code>0</code> for the expiration date, and finally <code>y</code> to confirm.</p>
+<p>Finally, we want to cleanly exit GPG with <code>save</code>.</p>
+<p>Huzzah! We now have a bunch of public and private keys attached to our Master Key!</p>
 <p>If we note what is returned to us here, we can see our master key set up with <code>sec ed25519</code> and our <em>Sign</em> and <em>Authenticate</em> keys as <code>ssb ed25519</code>. However our <em>Encryption</em> key is a <code>ssb cv25519</code> which specifies that it's going to be using an <em>integrated encryption scheme</em> (IES) to encrypt since the plaintext that can be encrypted in most elliptic curves is much smaller than RSA at similar bit lengths.</p>
-<p>It's also worth point out that we could create any subkey with any algorithm you desire, so if you for example worked at a place where it might not be guaranteed that you can ssh with elliptic curves, then you can reasonably only create the Authorization key as a RSA4096 while keeping the other two subkey pairs as EC25519.</p>
-<p>We can optionally add an image to this key with <code>addphoto</code> but it's worth noting that this is going to be stored on other people's machines, and that we don't want to make the people offering free cryptography solutions sad, so limiting the size is ideal.</p>
-<h3>Exporting our keys</h3>
+<p>It's also worth pointing out that we could create any subkey with any algorithm you desire, so if you for example worked at a place where it might not be guaranteed that you can ssh with elliptic curves, then you can reasonably only create the Authorization key as a RSA4096 while keeping the other two subkey pairs as EC25519. Dig?</p>
+<p>We can optionally add an image to this key with <code>addphoto</code> but it's worth noting that this is going to be stored on other people's machines. Size is therefore a concern, if/when we put this on a cert server, we don't want to make the people offering free cryptography solutions sad.</p>
+<h3><a id="Exporting our keys"></a>Exporting our keys</h3>
 <p>We are now ready to export our keys.</p>
 <p>We will export our secret keys we want to backup, as well as write to our smart card. We will also export our public keys, which we can publish to external hosts.</p>
-<h4>Exporting Public Keys</h4>
-<div class="highlight"><pre><span></span><span class="n">gpg</span><span class="w"> </span><span class="o">--</span><span class="k">export</span><span class="w"> </span><span class="o">-</span><span class="n">a</span><span class="w"> </span><span class="n">shiddy</span><span class="err">@</span><span class="n">shiddy</span><span class="o">.</span><span class="n">io</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">shiddy</span>\<span class="err">@</span><span class="n">shiddy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">pub</span><span class="w"></span>
+<h4><a id="Exporting Public Keys"></a>Exporting Public Keys</h4>
+<div class="highlight"><pre><span></span>gpg --export -a shiddy@shiddy.io &gt; shiddy<span class="se">\@</span>shiddy.io.pub
 </pre></div>
 
 
-<h4>Exporting Private Keys</h4>
-<div class="highlight"><pre><span></span><span class="n">gpg</span><span class="w"> </span><span class="o">--</span><span class="k">export</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">keys</span><span class="w"> </span><span class="o">-</span><span class="n">a</span><span class="w"> </span><span class="n">shiddy</span><span class="err">@</span><span class="n">shiddy</span><span class="o">.</span><span class="n">io</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">shiddy</span>\<span class="err">@</span><span class="n">shiddy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">priv</span><span class="w"></span>
+<h4><a id="Exporting Private Keys"></a>Exporting Private Keys</h4>
+<div class="highlight"><pre><span></span>gpg --export-secret-keys -a shiddy@shiddy.io &gt; shiddy<span class="se">\@</span>shiddy.io.priv
 </pre></div>
 
 
 <p>The two export commands we ran created two files <code>shiddy@shiddy.io.pub</code> and <code>shiddy@shiddy.io.priv</code> we want to save the private file one in the same place as our <code>shiddy@shiddy.io.gpg-revocation-certificate</code> from before. Making sure to remove them from the hard drive after doing so.</p>
-<h2>Writing our Keys to a Yubikey</h2>
+<p>However, we also now have our public key file. This should be <strong>super</strong> public, put it in a place where you can use it. For example, This is one of the most used files on my NAS when I need to spin up new machines, since I want to make sure that I can access them from one well-known key. I suggest you do the same, put it out there keep some copies around.</p>
+<h2><a id="Writing our Keys to a Yubikey"></a>Writing our Keys to a Yubikey</h2>
 <p>Let's check that our computer is able to read the smart card data. After plugging in our card we can run <code>gpg --card-status</code> to see what cards are plugged in, as well as what Signing, Encryption, and Authentication keys are on the device.</p>
 <p>If you are not starting out fresh, you can always run <code>ykman piv reset &amp;&amp; ykman openpgp reset</code></p>
-<p><strong>Note</strong> The <code>ykman openpgp reset</code> command resets your pin to 123456 and admin pin to 12345678. It's assumed that you know your pin and admin pin. We will change it to something else later in <a href="#Setting pins for your Smart Card">Setting pins for your Smart Card</a> below.</p>
-<p><strong>Note</strong> if you find you are getting errors like <code>Error: Failed connecting to YubiKey ... Make sure the application have require permissions</code> You might need to unplug and replug in your hardware device. We are making many changed in the course of this post and sometimes it can lock after it's been updated.</p>
-<div class="highlight"><pre><span></span><span class="n">gpg</span><span class="w"> </span><span class="c1">--edit-key shiddy@shiddy.io</span>
+<p><strong>Note</strong> The <code>ykman openpgp reset</code> command resets your pin to '123456' and admin pin to '12345678'. We will see how those are used in the future, don't worry ( ﾟｰﾟ). It's assumed that you know your pin and admin pin. We will change it to something else later in <a href="#Setting pins for your Smart Card">Setting pins for your Smart Card</a> below.</p>
+<p><strong>Note</strong> if you find you are getting errors like <code>Error: Failed connecting to YubiKey ... Make sure the application has required permissions</code> You might need to unplug and re-plug your hardware device. We are making many changes in the course of this post and sometimes it can lock after it's been updated.</p>
+<div class="highlight"><pre><span></span>gpg --edit-key shiddy@shiddy.io
 </pre></div>
 
 
-<p>Here we want to select a specific subkey with <code>key 1</code> and then telling saying that specific key should be sent to our smart card with <code>keytocard</code>.</p>
-<p><strong>Note</strong> You will see that the specific subkey is selected when it has an asterisk <strong>(*)</strong> next to it</p>
-<p>Since our key selected earlier was a signature key we inform the smart card it's a signature key with <code>(1) Signature Key</code></p>
+<p>Here we want to select a specific subkey with <code>key 1</code>. Doing so will mark the subkey with an asterisk <strong>(*)</strong>. We then can send that specific key to our hardware token with <code>keytocard</code>.</p>
+<p>Since our key selected earlier was our signature key we inform the smart card it's a signature key with <code>(1) Signature Key</code></p>
+<p><img alt="GPG key selection" src="http://192.168.1.5:8000/images/gpg-key-selection.png"></p>
 <p>Tada!</p>
-<p>We can follow this patter for our <em>Authentication</em> and <em>Encryption</em> subkeys:</p>
+<p>We can follow this pattern for our <em>Authentication</em> and <em>Encryption</em> subkeys:</p>
 <p>Deselect our signature key with <code>key 1</code>, select our Auth key with <code>key 2</code>, apply it to the card with <code>keytocard</code>, and tell the smart card it's an authentication key with <code>(2) Authentication Key</code>.</p>
-<p><img alt="gpg keytocard example" src="https://shiddy.io/images/gpg-keytocard-example.png"></p>
-<p>Finally writing our Encryption key via: Deselecting our authentication key with <code>key 2</code>, selecting our encryption key with <code>key 3</code>, writing it to the card with <code>keytocard</code>, and telling the card it's an encryption key with <code>(3) Encryption Key</code>.</p>
-<p>Now we cleanly close gpg with <code>save</code>.</p>
-<h2>GPG Private Key Cleanup</h2>
-<p>We will want to remove our private keys from GPG since they are now all written to our smart card</p>
-<div class="highlight"><pre><span></span>gpg --delete-secret-and-public-keys
+<p><img alt="GPG keytocard example" src="http://192.168.1.5:8000/images/gpg-keytocard-example.png"></p>
+<p>Finally, we can write out our Encryption key. Deselect our authentication key with <code>key 2</code>, select our encryption key with <code>key 3</code>, write it to the card with <code>keytocard</code>, and inform the card it's an encryption key with <code>(3) Encryption Key</code>.</p>
+<p>Now we cleanly close GPG with <code>save</code>.</p>
+<h2><a id="GPG Private Key Cleanup"></a>GPG Private Key Cleanup</h2>
+<p>Since we have exported our Master key to a file, and we exported our Subkeys to our hardware device, we don't need GPG to know about or store any of our keys.</p>
+<p>We can confirm what public keys are installed with <code>gpg -k</code>, and we can confirm what private keys are installed with <code>gpg -K</code>. For now you should see both your private and public keys.</p>
+<div class="highlight"><pre><span></span>gpg --delete-secret-and-public-keys shiddy@shiddy.io
 </pre></div>
 
 
+<p>Feel free to check that all your keys are gone with <code>gpg -K</code> and <code>gpg -k</code>.</p>
+<p>This will require a decent amount of confirming prompts, don't worry we already exported these keys. If worse comes to worse, this is a good time to fail and start over. Happens to the best of us.</p>
 <p>We will want to import our public keys to our GPG suite since it will be able to map them to the private keys on our smart card.</p>
-<div class="highlight"><pre><span></span><span class="n">gpg</span> <span class="o">--</span><span class="kn">import</span> <span class="nn">shiddy</span>\<span class="nd">@shiddy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">pub</span>
+<div class="highlight"><pre><span></span>gpg --import shiddy<span class="se">\@</span>shiddy.io.pub
 </pre></div>
 
 
-<p>The state of our system can be confirmed by running <code>gpg --card-status | tail</code> and seeing whether the output is similar to the following:</p>
+<p>Now is a good time to confirm again what keys GPG know about, again <code>gpg -K</code> and <code>gpg -k</code>.</p>
+<p>Let's confirm GPG knows that the public key we entered is related to the private keys on our card. We can be confirm this by running <code>gpg --card-status | tail</code> and seeing whether the output is similar to the following:</p>
 <div class="highlight"><pre><span></span>sec#  ed25519 ...
 ssb&gt;  ed25519 ...
 ssb&gt;  ed25519 ...
@@ -200,68 +236,82 @@ ssb&gt;  cv25519 ...
 </pre></div>
 
 
-<p>What this tells us is that GPG has mapped some of the public keys we imported to private keys on this card. The <strong>sec#</strong> and <strong>ssb&gt;</strong> inform us that gpg knows of a key but it does not have direct access to it.</p>
-<p>If we want to see public keys in our keyring we can type <code>gpg -k</code> which should show</p>
-<div class="highlight"><pre><span></span><span class="n">pub</span><span class="w">  </span><span class="n">ed25519</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="o">[</span><span class="n">C</span><span class="o">]</span><span class="w"></span>
-<span class="n">sub</span><span class="w">  </span><span class="n">ed25519</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="o">[</span><span class="n">S</span><span class="o">]</span><span class="w"></span>
-<span class="n">sub</span><span class="w">  </span><span class="n">ed25519</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="o">[</span><span class="n">A</span><span class="o">]</span><span class="w"></span>
-<span class="n">sub</span><span class="w">  </span><span class="n">cv25519</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="o">[</span><span class="n">E</span><span class="o">]</span><span class="w"></span>
-</pre></div>
-
-
-<p>Conversely if we want to see private keys we can type <code>gpg -K</code> which should show output similar to the end of <code>gpg --card-status</code></p>
-<h2>Publishing our Public GPG keys</h2>
-<p>Since we have public keys that others have to trust, we have to publish them on places that are tied to our identity. Commonly this is done with various keyservers:</p>
+<p>What this tells us is that GPG has mapped some of the public keys we imported to private keys on this card. The <strong>sec#</strong> and <strong>ssb&gt;</strong> inform us that GPG knows of a key but it does not have direct access to it. (Kinda like it's on our hardware key ৲(ᵕ3ᵕ)৴♡  )</p>
+<h2><a id="Publishing our Public GPG keys"></a>Publishing our Public GPG keys</h2>
+<p>Public keys are public... let's publish them! One such place where we can do so is on a keyserver. Here are some of the most common ones I've seen.</p>
 <p>http://keyserver.ubuntu.com/#
 http://pgp.mit.edu/
 https://keyserver.pgp.com/vkd/GetWelcomeScreen.event</p>
-<h2>Setting our SSH agent use our GPG keys</h2>
-<p>I place a path variable in my .bash_profile, however if you use another shell you might want to add it to it's appropriate profile/runcommand config.</p>
-<div class="highlight"><pre><span></span><span class="n">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">export SSH_AUTH_SOCK=</span><span class="se">\&quot;</span><span class="s2">$(gpgconf --list-dirs agent-ssh-socket)</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">~/.</span><span class="n">bash_profile</span><span class="w"></span>
+<h2><a id="Setting our SSH agent use our GPG keys"></a>Setting our SSH agent use our GPG keys</h2>
+<p>I place a path variable in my .bashrc, however if you use another shell you might want to add it to it's appropriate profile/runcommand config. <em>Note</em> Here be monsters, I spent a good ten minutes trying to get tmux and everything else happy. I'd stick with bashrc if you have the chance. <a href="https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html">[src]</a></p>
+<div class="highlight"><pre><span></span><span class="nb">echo</span> -e <span class="s2">&quot;\nexport SSH_AUTH_SOCK=\&quot;</span><span class="k">$(</span>gpgconf --list-dirs agent-ssh-socket<span class="k">)</span><span class="s2">\&quot;&quot;</span> &gt;&gt; ~/.bashrc
 </pre></div>
 
 
-<p>remember to source your new config as well <code>source ~/.bash_profile</code></p>
-<h3>Adding our public key to various authorized keys</h3>
+<p>remember to source your new config as well <code>source ~/.bashrc</code>, if you don't you will have to close and re-open your terminal for the key to be in your ssh agent.</p>
+<h3><a id="Adding our public key to various authorized keys"></a>Adding our public key to various authorized keys</h3>
 <p>We can print our public authentication key with the following:</p>
 <div class="highlight"><pre><span></span>ssh-add -L
 </pre></div>
 
 
-<p>Which can then be added to any of the expected authorized_keys files.</p>
-<h2>Setting touch behavior for Yubikey Subkeys</h2>
+<p><img alt="ssh-add -L example" src="http://192.168.1.5:8000/images/ssh-add-example.png"></p>
+<p>Which can then be added to any $HOME/.ssh/authorized_keys file on a server you want to access.</p>
+<h2><a id="Setting touch behavior for Yubikey Subkeys"></a>Setting touch behavior for Yubikey Subkeys</h2>
 <p>Here we are setting the state of the touch behavior for all our subkeys on our smart card. We have a few states to choose from.
-If you would like to read more about them you can read them with <code>ykman openpgp set-touch -h</code>.</p>
-<p>Unless you are doing any scripting where you would need to ssh to a bunch of places over some reasonable period of time, set your policy to <code>Cached</code> instead of <code>On</code>, and if you don't want anyone to change this policy on your smart card, you can set <code>fixed</code> or <code>cached-fixed</code> so that it can't be changed apart from a factory reset of the yubikey.</p>
-<div class="highlight"><pre><span></span>POLICY=&quot;On&quot;
-ykman openpgp set-touch $POLICY SIG
-ykman openpgp set-touch $POLICY AUT
-ykman openpgp set-touch $POLICY ENC
+If you would like to read more about them you can read them with <code>ykman openpgp keys set-touch -h</code>.</p>
+<p>Unless you are doing any scripting where you would need to authenticate to a bunch of places over some reasonably small period of time, set your policy to <code>Cached</code> instead of <code>On</code>, and if you don't want anyone to change this policy on your smart card, you can set <code>fixed</code> or <code>cached-fixed</code> so that it can't be changed apart from a factory reset of the yubikey.</p>
+<div class="highlight"><pre><span></span><span class="nv">POLICY</span><span class="o">=</span><span class="s2">&quot;On&quot;</span>
+ykman openpgp keys set-touch SIG <span class="nv">$POLICY</span>
+ykman openpgp keys set-touch AUT <span class="nv">$POLICY</span>
+ykman openpgp keys set-touch ENC <span class="nv">$POLICY</span>
 </pre></div>
 
 
-<h2>Setting pin retries for Yubikey</h2>
+<h2><a id="Setting pin retries for Yubikey"></a>Setting pin retries for Yubikey</h2>
 <p>We have some extra protections with our Yubikey that are worth enabling. Yubikey will lock out a key if a user fails to enter the correct password a number of times. However if you are like me and use a keyboard without any labels, you might want to make these thresholds more lenient.</p>
 <p>Here I am setting the number of retries for my pin to 5, the number of reset-code retries to 5 and the number of admin-pin retries to 10</p>
-<div class="highlight"><pre><span></span>ykman openpgp set-pin-retiries 5 5 10
+<div class="highlight"><pre><span></span>ykman openpgp access set-retries <span class="m">5</span> <span class="m">5</span> <span class="m">10</span>
 </pre></div>
 
 
-<h2>Setting pins for your Smart Card</h2>
+<h2><a id ="Setting pins for your Smart Card"></a>Setting pins for your Smart Card</h2>
 <p>Smart Cards generally have two pins, a pin for regular verification of the card owner, and an admin pin for making hardware changes to the smart card itself.</p>
-<p>If we fail validation with the pin a number of time above our pin retry count, we have to use the administrative pin to unlock the key. If we fail to validate the admin key in the same way, we brick our key, and would have to factory reset it.</p>
-<p>We can change these pins as well as unblock our pin with gpg, using the following command:</p>
+<p>If we fail validation with the pin the number of times configured above, we have to use the administrative pin to unlock the key. If we fail to validate the admin key in the same way, we brick our key, and would have to factory reset it.</p>
+<p>We can change these pins as well as unblock our pin with GPG, using the following command:</p>
 <div class="highlight"><pre><span></span>gpg --change-pin
 </pre></div>
 
 
 <p><em>If you have not modified this value yet, 123456 is the factory pin and 12345678 is the default administrative pin</em></p>
+<h2>Enabling/Disabling Yubikey features</h2>
+<p>If you like me are <strong>only</strong> interested in using these keys to back your GPG info, I would advise you to disable all of the yubikey features you are not using. Here is how.</p>
+<p>Firstly we can check what kind of protocols are already configured/enabled on our device with the following:</p>
+<div class="highlight"><pre><span></span>ykman info
+</pre></div>
+
+
+<h2>TODO SHOW PIC HERE</h2>
+<p>For my use case, it made sense for me to disable everything except PGP, which is done with the following:</p>
+<div class="highlight"><pre><span></span>ykman config nfc --disable-all
+
+ykman config usb --disable FIDO2
+ykman config usb --disable OTP
+ykman config usb --disable U2F
+ykman config usb --disable OATH
+ykman config usb --disable HSMAUTH
+ykman config usb --disable PIV
+</pre></div>
+
+
+<h2>Ok. Bye</h2>
+<p>( ・_・)ノ</p>
   </div><!-- /.entry-content -->
   <div class="post-info">
     <p style="text-align: right">
       Mon 07 September 2020
     </time>
-      | <a href="https://shiddy.io/category/technical.html">Technical</a>
+      | <a href="http://192.168.1.5:8000/category/technical.html">Technical</a>
     </p>
   </div><!-- /.post-info -->
 </section>
