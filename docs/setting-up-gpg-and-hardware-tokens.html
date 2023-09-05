@@ -62,7 +62,7 @@
 <li><a href="#Setting touch behavior for Yubikey Subkeys">Setting touch behavior for Yubikey Subkeys</a></li>
 <li><a href="#Setting pin retries for Yubikey">Setting pin retries for Yubikey</a></li>
 <li><a href="#Setting pins for your Smart Card">Setting pins for your Smart Card</a></li>
-<li><a href="Enabling/Disabling Yubikey features">Enabling/Disabling Yubikey features</a></li>
+<li><a href="#Enabling Disabling Yubikey features">Enabling/Disabling Yubikey features</a></li>
 </ul>
 <h2><a id="Preamble"></a>Preamble</h2>
 <p>Every time I set up a new computer there is a fair amount of time spent on getting various configs into a state I am comfortable with. Unfortunately, I don't have a means to automatically set up hardware tokens for authing into some machines so I often have to spend a day just looking up all the various commands and parameters. This post aims to make that process easier for me in the future, but also hopefully save you some time on your next GPG key setup.</p>
@@ -284,14 +284,13 @@ ykman openpgp keys set-touch ENC <span class="nv">$POLICY</span>
 
 
 <p><em>If you have not modified this value yet, 123456 is the factory pin and 12345678 is the default administrative pin</em></p>
-<h2>Enabling/Disabling Yubikey features</h2>
+<h2><a id="Enabling Disabling Yubikey features"></a> Enabling/Disabling Yubikey features</h2>
 <p>If you like me are <strong>only</strong> interested in using these keys to back your GPG info, I would advise you to disable all of the yubikey features you are not using. Here is how.</p>
 <p>Firstly we can check what kind of protocols are already configured/enabled on our device with the following:</p>
 <div class="highlight"><pre><span></span>ykman info
 </pre></div>
 
 
-<h2>TODO SHOW PIC HERE</h2>
 <p>For my use case, it made sense for me to disable everything except PGP, which is done with the following:</p>
 <div class="highlight"><pre><span></span>ykman config nfc --disable-all
 

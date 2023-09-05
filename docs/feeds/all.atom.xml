@@ -115,7 +115,7 @@
 &lt;li&gt;&lt;a href="#Setting touch behavior for Yubikey Subkeys"&gt;Setting touch behavior for Yubikey Subkeys&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#Setting pin retries for Yubikey"&gt;Setting pin retries for Yubikey&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#Setting pins for your Smart Card"&gt;Setting pins for your Smart Card&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="Enabling/Disabling Yubikey features"&gt;Enabling/Disabling Yubikey features&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#Enabling Disabling Yubikey features"&gt;Enabling/Disabling Yubikey features&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;&lt;a id="Preamble"&gt;&lt;/a&gt;Preamble&lt;/h2&gt;
 &lt;p&gt;Every time I set up a new computer there is a fair amount of time spent on getting various configs into a state I am comfortable with. Unfortunately, I don't have a means to automatically set up hardware tokens for authing into some machines so I often have to spend a day just looking up all the various commands and parameters. This post aims to make that process easier for me in the future, but also hopefully save you some time on your next GPG key setup.&lt;/p&gt;
@@ -337,14 +337,13 @@ ykman openpgp keys set-touch ENC &lt;span class="nv"&gt;$POLICY&lt;/span&gt;
 
 
 &lt;p&gt;&lt;em&gt;If you have not modified this value yet, 123456 is the factory pin and 12345678 is the default administrative pin&lt;/em&gt;&lt;/p&gt;
-&lt;h2&gt;Enabling/Disabling Yubikey features&lt;/h2&gt;
+&lt;h2&gt;&lt;a id="Enabling Disabling Yubikey features"&gt;&lt;/a&gt; Enabling/Disabling Yubikey features&lt;/h2&gt;
 &lt;p&gt;If you like me are &lt;strong&gt;only&lt;/strong&gt; interested in using these keys to back your GPG info, I would advise you to disable all of the yubikey features you are not using. Here is how.&lt;/p&gt;
 &lt;p&gt;Firstly we can check what kind of protocols are already configured/enabled on our device with the following:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ykman info
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;TODO SHOW PIC HERE&lt;/h2&gt;
 &lt;p&gt;For my use case, it made sense for me to disable everything except PGP, which is done with the following:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ykman config nfc --disable-all
 

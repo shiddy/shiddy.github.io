@@ -25,7 +25,7 @@ Category: Technical
  * [Setting touch behavior for Yubikey Subkeys](#Setting touch behavior for Yubikey Subkeys)
  * [Setting pin retries for Yubikey](#Setting pin retries for Yubikey)
  * [Setting pins for your Smart Card](#Setting pins for your Smart Card)
- * [Enabling/Disabling Yubikey features](Enabling/Disabling Yubikey features)
+ * [Enabling/Disabling Yubikey features](#Enabling Disabling Yubikey features)
 
 ## <a id="Preamble"></a>Preamble
 
@@ -345,7 +345,7 @@ gpg --change-pin
 
 *If you have not modified this value yet, 123456 is the factory pin and 12345678 is the default administrative pin*
 
-## Enabling/Disabling Yubikey features
+## <a id="Enabling Disabling Yubikey features"></a> Enabling/Disabling Yubikey features
 
 If you like me are **only** interested in using these keys to back your GPG info, I would advise you to disable all of the yubikey features you are not using. Here is how.
 
@@ -354,9 +354,6 @@ Firstly we can check what kind of protocols are already configured/enabled on ou
 ```bash
 ykman info
 ```
-
-## TODO SHOW PIC HERE
-
 For my use case, it made sense for me to disable everything except PGP, which is done with the following:
 
 ```bash

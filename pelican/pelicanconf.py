@@ -1,6 +1,7 @@
 AUTHOR = 'Shiddy'
 SITENAME = 'ShiddyIO'
 SITEURL = 'https://shiddy.io'
+#SITEURL = 'http://192.168.1.5:8000'
 PATH = 'content'
 TIMEZONE = 'America/Denver'
 DEFAULT_LANG = 'en'
@@ -34,4 +35,4 @@ EXTRA_PATH_METADATA = {
 }
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+RELATIVE_URLS = False

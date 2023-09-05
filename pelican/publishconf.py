@@ -8,6 +8,7 @@ from pelicanconf import *
 
 # If your site is available via HTTPS, make sure SITEURL begins with https://
 SITEURL = 'https://shiddy.io'
+#SITEURL = 'http://192.168.1.5:8000'
 RELATIVE_URLS = False
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
