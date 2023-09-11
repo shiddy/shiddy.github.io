@@ -2,9 +2,9 @@ Title: Phone Marketing Nonsense
 Date: 2015-08-05
 Category: Random
 
-# I don’t want a new phone.
+# I don't want a new phone.
 
-I really don’t. I love my phone despite all its flaws. All of which are completely my fault and are not in any way the manufacturers. My phone has lasted through a personal hell:
+I really don't. I love my phone despite all its flaws. All of which are completely my fault and are not in any way the manufacturers. My phone has lasted through a personal hell:
 
 * hours underwater when I went swimming on vacation
 * Being left in a snow bank for a few days when I had to hitchhike.
@@ -15,7 +15,7 @@ I really don’t. I love my phone despite all its flaws. All of which are comple
 
 That being said, the final straw for my pocket buddy was that HTC decided it was a good idea to start placing advertisements in the push notifications. Absolutely unacceptable.
 
-In my quest to find a decent phone I wanted to document some of the nonsense I’ve seen. I was expecting fad features. I’m looking at you “OK, Google”… and don’t think I forgot about you Mr “break me on anything galaxy edge”. Instead, I found that the marketing for cell phones the most confusing.
+In my quest to find a decent phone I wanted to document some of the nonsense I've seen. I was expecting fad features. I'm looking at you “OK, Google”… and don't think I forgot about you Mr “break me on anything galaxy edge”. Instead, I found that the marketing for cell phones the most confusing.
 
 Being cognizant of cellphone hardware no longer is a concern for an average consumer. Most phones work amazingly well. Even mediocre phones do more than an average person has time to enjoy. Distinguishing yourself as a manufacturer to your potential consumers is more akin to a popularity contest than ever. Yet, I find myself subject to less consumer vitriol online as well. Apart from short interest spikes after a release, announcements and product news does not seem to last more than a day. Keeping customers engaged with your service appears to be the holy grail of phone manufacturers.
 
@@ -23,7 +23,7 @@ Being cognizant of cellphone hardware no longer is a concern for an average cons
 
 I need not speak of the marketing pull Apple has on the first world. They market their products as sleek, and fashionable status symbol. People have the perception that Apple iPhones are the most powerful, and are involved with the most designing effort of any modern day cell phone.
 
-This was certainly the case at the launch of the iPhone. The cell phone design paradigm was seemingly set in stone by Apple. Josh Heifferich’s image of phones before and after Apple got involved does the most justice to prove this point:
+This was certainly the case at the launch of the iPhone. The cell phone design paradigm was seemingly set in stone by Apple. Josh Heifferich's image of phones before and after Apple got involved does the most justice to prove this point:
 
 ![]({static}/images/150805-phone.jpg)
 
@@ -89,8 +89,8 @@ This was certainly the case at the launch of the iPhone. The cell phone design p
   </tr>
 </table>
 
-What makes Apple so ubiquitous is clearly it’s advertising and word of mouth. They have built a reputation of having the highest quality phones used by the most famous people. As of my typing of this, they sell a watch for $17,000. Which is only $7,000 difference between their cheapest gold watch. The price difference is due entirely to a watchband color.
-I don’t want to spend time berating those who want to own these devices, nor spend space on my server dissecting why we are willing to pay more for status. Apple is the most clear example of how marketing is he most important factor in the success of mobile consumer technology, and sets the bar pretty high.
+What makes Apple so ubiquitous is clearly it's advertising and word of mouth. They have built a reputation of having the highest quality phones used by the most famous people. As of my typing of this, they sell a watch for $17,000. Which is only $7,000 difference between their cheapest gold watch. The price difference is due entirely to a watchband color.
+I don't want to spend time berating those who want to own these devices, nor spend space on my server dissecting why we are willing to pay more for status. Apple is the most clear example of how marketing is he most important factor in the success of mobile consumer technology, and sets the bar pretty high.
 
 ## Which brings me to OnePlus
 
@@ -105,10 +105,10 @@ Then rolled in the invites… If you want to purchase a OnePlus 2 (silly name as
 
 ![](https://media.giphy.com/media/7wToiGB3M5wME/giphy.gif)
 
-I don’t think that it’s reasonable to toady your potential customers around the way that the marketing team for OnePlus demands in order for you to buy their products. I’m absolutely anti-spam and anti-solicitation. Their invite system will artificially force people abusing the system or spamming to the top of the queue. This is not even that hard for people to accomplish anymore. [There are articles showing how it's possible and has been done already.](https://medium.com/@JakeCooper/how-i-hacked-the-oneplus-reservation-system-120ea1a7ad82)
+I don't think that it's reasonable to toady your potential customers around the way that the marketing team for OnePlus demands in order for you to buy their products. I'm absolutely anti-spam and anti-solicitation. Their invite system will artificially force people abusing the system or spamming to the top of the queue. This is not even that hard for people to accomplish anymore. [There are articles showing how it's possible and has been done already.](https://medium.com/@JakeCooper/how-i-hacked-the-oneplus-reservation-system-120ea1a7ad82)
 
-Evangelical marketing schemes like what OnePlus has implemented uproot the trust that we have in communally identifying worthwhile products. This is the most upsetting because the OnePlus 1 & 2 are more than powerful enough to get started through grass roots and word of mouth legitimatly. I would own one already if it were not for their marketing bogus.
+Evangelical marketing schemes like what OnePlus has implemented uproot the trust that we have in communally identifying worthwhile products. This is the most upsetting because the OnePlus 1 & 2 are more than powerful enough to get started through grass roots and word of mouth legitimately. I would own one already if it were not for their marketing bogus.
 
-Here is a good bit of advice for people who think this is not all that bad. If you are told that you have to tell other people how good something is before you can own it, it’s probably not a good thing.
+Here is a good bit of advice for people who think this is not all that bad. If you are told that you have to tell other people how good something is before you can own it, it's probably not a good thing.
 
-It’s rather unfortunate that I’m beginning to have to play detective for company selling anything to see whether it’s a giant marketing ploy…
+It's rather unfortunate that I'm beginning to have to play detective for company selling anything to see whether it's a giant marketing ploy…
