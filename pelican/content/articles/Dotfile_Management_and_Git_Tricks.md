@@ -60,11 +60,12 @@ $HOME/.zshrc => $HOME/DOTFILEREPO/zsh/.zshrc
 I was lucky enough to start using linux around Canonical's Precise Pangolin (12.04) release. If you ask me it was the perfect time to get serious because I was so late to the game. A ton of the bullshit was solved by smarter people than me. I could reasonably start learning with things that were in a functional state.
 
 Many of my future co-workers and co-horts would wax on about the nightmarish ages of old, and how easy I had it in comparison. Some of the more notable examples:
-* Buying a new laptop after fighting with ndiswrapper and a random broadcom nic longer than the cost of hours lost to it not working.
-* Trying to quit cigarettes when the company needed you to deploy iptables before firewalld existed.
-* wicd and iwlconfig for setting up wireless devices before NetworkManager, and only having one laptop without an ethernet port.
-* Running an isolinux memdisk kernel to install because many BIOSes didn't support usb booting, and praying that the myriad of tunables to whatever incantation your conputer's firmware would be accepted before el torito cd extensions.
-* Buying an nvidia graphics card and having to have a seperate windows machine to install the driver on, copying the needed files back to linux and running the "NVIDIA X Server Settings" gui to get a wildly inconsistent kernel interface to a busted driver so the nvidia module compilation would fail and you would have to spend weeks old manually compiled kernels waiting for upstream fixes.
+
+ * Buying a new laptop after fighting with ndiswrapper and a random broadcom nic longer than the cost of hours lost to it not working.
+ * Trying to quit cigarettes when the company needed you to deploy iptables before firewalld existed.
+ * wicd and iwlconfig for setting up wireless devices before NetworkManager, and only having one laptop without an ethernet port.
+ * Running an isolinux memdisk kernel to install because many BIOSes didn't support usb booting, and praying that the myriad of tunables to whatever incantation your conputer's firmware would be accepted before el torito cd extensions.
+ * Buying an nvidia graphics card and having to have a seperate windows machine to install the driver on, copying the needed files back to linux and running the "NVIDIA X Server Settings" gui to get a wildly inconsistent kernel interface to a busted driver so the nvidia module compilation would fail and you would have to spend weeks old manually compiled kernels waiting for upstream fixes.
 
 To be fair, I rarely get to use SIMD as much as I'd like. I hardly get to use compiled languaged as much as I'd like. But I've never been told by the guy who made my operating system that I should be retroactively aborted for using an enumerable for a system call read. If that did happen I have a feeling I would probably just install windows and get a job in finance or something idk.
 

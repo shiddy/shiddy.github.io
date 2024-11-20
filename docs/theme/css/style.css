@@ -140,6 +140,8 @@ img[src*="#big"] {
 #content li {
     color: var(--fg-color);
     font-weight: normal;
+    padding-top: 0.75rem;
+
 }
 #content ul li:before {
     content: '>> ';
