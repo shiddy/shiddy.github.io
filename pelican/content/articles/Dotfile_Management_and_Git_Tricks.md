@@ -37,7 +37,7 @@ mark{
 
 I am using [GNU STOW](https://www.gnu.org/software/stow/) with [git](https://git-scm.com/) to manage [my dotfiles](https://github.com/shiddy/dot). This means that all I have to do on a new machine is access my git repo, install stow, and pitter patter - let's get att'er. After many years of manually managing these files, using different migration tools, and writing a tool myself, I can confidently say that stow is the best solution I've used.
 
-The readme on my dotfiles should be easy enough to follow, but <mark style="padding-top:0;">the shiddy blog</mark> is where I take the time to talk through some of the more interesting bits, updating your files, security considerations, and if you ask nicely some useful quality of life pieces. Join me will you?
+The readme on my dotfiles should be easy enough to follow, but <mark style="padding-top:0;">THE SHIDDY BLOG</mark> is where I take the time to talk through some of the more interesting bits, updating your files, security considerations, and if you ask nicely some useful quality of life pieces. Join me will you?
 
 ## <a id="GNU-Stow"></a>GNU-Stow<hr/>
 
@@ -64,10 +64,10 @@ Many of my future co-workers and co-horts would wax on about the nightmarish age
  * Buying a new laptop after fighting with ndiswrapper and a random broadcom nic longer than the cost of hours lost to it not working.
  * Trying to quit cigarettes when the company needed you to deploy iptables before firewalld existed.
  * wicd and iwlconfig for setting up wireless devices before NetworkManager, and only having one laptop without an ethernet port.
- * Running an isolinux memdisk kernel to install because many BIOSes didn't support usb booting, and praying that the myriad of tunables to whatever incantation your conputer's firmware would be accepted before el torito cd extensions.
+ * Running an isolinux memdisk kernel to install because many BIOSes didn't support usb booting, and praying that the myriad of tunables to whatever incantation your computer's firmware would be accepted before el torito cd extensions.
  * Buying an nvidia graphics card and having to have a seperate windows machine to install the driver on, copying the needed files back to linux and running the "NVIDIA X Server Settings" gui to get a wildly inconsistent kernel interface to a busted driver so the nvidia module compilation would fail and you would have to spend weeks old manually compiled kernels waiting for upstream fixes.
 
-To be fair, I rarely get to use SIMD as much as I'd like. I hardly get to use compiled languaged as much as I'd like. But I've never been told by the guy who made my operating system that I should be retroactively aborted for using an enumerable for a system call read. If that did happen I have a feeling I would probably just install windows and get a job in finance or something idk.
+To be fair, I rarely get to use SIMD as much as I'd like. I hardly get to use compiled languages as much as I'd like. But I've never been told by the guy who made my operating system that I should be retroactively aborted for using an enumerable for a system call read. If that did happen I have a feeling I would probably just install windows and get a job in finance or something and get laid regularly idk.
 
 I feel like I lost the plot in this tangent a bit, but my point is that there has never been a better time to be getting into computing. The only real problem at this point is the curation of quality content. There is a decent amount of amazing material, and a seemingly infinite amount of absolute slop. Honestly, one of the best skills in comp-sci is just being around and paying attention while things are happening. Then you at least know what things felt like when computers were a hundred times slower, and why opening a random program shouldn't take 40 seconds long.
 
@@ -92,14 +92,13 @@ Or... hear me out, you could just sweep all the clutter under the rug by hiding 
 
 ![eyebrows.gif]({static}/images/eyebrows.gif)
 
-I know that sounds stupid, because it is. But the reason flags like `-a` exist on `ls`, and some files are hidden by default is because it makes finding the random file in your home directory harder. Until the X11 Desktop Group [proposed a standard on base directories in 2003](https://specifications.freedesktop.org/basedir-spec/latest/index.html) there was not a place other than random dotfiles in your home directory. It's one of the main reasons that we call our user configuration files dotfiles in the first place.
+I know that sounds stupid, because it is. But the reason flags like `-a` exist on `ls`, and some files are hidden by default is because without it, finding the random file in your home directory gets hard. Until the X11 Desktop Group [proposed a standard on base directories in 2003](https://specifications.freedesktop.org/basedir-spec/latest/index.html) there was not a place other than random dotfiles in your home directory. It's one of the main reasons that we call our user configuration files dotfiles in the first place.
 
 This standard means that we are able to move all our files to a directory where they belong, so long as the programs are written to respect the XDG standards (the number of which is growing pretty steadily)
 
 As we can see on their docs:
 
 > "`$XDG_CONFIG_HOME` defines the base directory relative to which user-specific configuration files should be stored. If `$XDG_CONFIG_HOME` is either not set or empty, a default equal to `$HOME`/.config should be used."
-
 
 I don't have a great reason for deviating from the default `$HOME/.config` path so that is what I will use the rest of this article
 
@@ -146,7 +145,7 @@ Now you are ready to use stow to link everything! The basic command looks like t
 
 `stow -d PATH/TO/YOUR/REPO -t ~ YOURPROGRAMNAME`
 
- * `-d` is the directory your stow should be running from, in this case we set it to the directory of our repo, variable expansion works fine btw
+ * `-d` is the directory your stow should be running from, in this case we set it to the directory of our stow repo.
  * `-t` is the target where we want to write symlinks to, in our case I use `~` which means our home directory of our current user
  * `YOURPROGRAMNAME` would refer to the directories that we created for each of our programs. `nvim`, `zsh`, `tmux` or whatever you specified.
 
@@ -175,9 +174,9 @@ Now for an adjacent idea that I want to treat you to... like a blog amuse bouche
 Somehow I find myself with a many to many relationship between git accounts and git servers with different auth schemes. This is very annoying since you can't use the same ssh pub keys on multiple accounts, this is why git@github.com allows you to test auth to it without a tty and github does not have to do weird pathing.
 
 also, did you know that you can get anyone's public keys off of github?
-[The Primagen's Public RSA Keys](https://github.com/theprimeagen.keys)
+[The Primeagen's Public RSA Keys](https://github.com/theprimeagen.keys)
 
-See? This is an intentional design choice but can lead to some unintentional data loss. \*The Primagen does not know that he has root access to my machines... yet\* So it's not uncommon to generate and revoke keys often if you are being serious about security and what you put online... perhaps that's an indicator of something I'm working on, perhaps it's not.
+See? This is an intentional design choice but can lead to some unintentional data loss. \*The Primeagen does not know that he has root access to my machines... yet\* So it's not uncommon to generate and revoke keys often if you are being serious about security and what you put online... perhaps that's an indicator of something I'm working on, perhaps it's not.
 
 So if you find yourself in the same situation you might have some random directory need to use a different ssh key for authing to your git server, while also using a completely different key for another repo on the same computer, this is the section that helps you.
 
