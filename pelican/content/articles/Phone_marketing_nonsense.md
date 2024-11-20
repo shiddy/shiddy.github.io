@@ -1,6 +1,6 @@
 Title: Phone Marketing Nonsense
 Date: 2015-08-05
-Category: Random
+Tags: Random
 
 # I don't want a new phone.
 

@@ -1,6 +1,6 @@
 Title: Some thoughts on Artificial Intelligence
 Date: 2023-08-01 12:00
-Category: Musings
+Tags: Musings
 
 <br/>
 

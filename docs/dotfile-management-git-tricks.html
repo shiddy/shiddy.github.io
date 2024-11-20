@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>ShiddyIO - Dotfile Management & Git Tricks</title>
+	<link rel="stylesheet" type='text/css' href="./theme/css/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
+        <meta charset="utf-8" />
+
+
+    <meta name="tags" content="Technical" />
+    <meta name="tags" content="Musings" />
+
+</head>
+
+<body id="index" > <!-- class="home"-->
+	<div style="margin: 1em auto; max-width: 80ch;">
+	<pre class="header">
+	  .▄▄▄ ·   ▄ ▄ ▪  •   ▄ ·  ▄  ▄· ▄▄
+	  ▐█  ▀. ▪█▌▐█  █▌ ▪ ▐█  · ▐▌▐█▪ █▌
+	  •▀▀▀█▄•▐█▀▀█•▐█·▄▄▄█▌·▄▀▄█▌▐█▌▐█▪
+	  ▐▄▄▪▐█ ▐█ ▐█▌▐█▐█ .██▐█▪ ██·▀███▀·
+	  •▀▀▀▀ ▀▀▀▀ ·  ▪ ▀▀▀▀• ▀▀▀▀•  ▐█•
+	  <a href="/" class="header">/index</a> <a href="./pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="./feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
+	</pre>
+
+        <nav id="menu"><ul>
+
+            <li class="active"><a href="./tag/technical.html">Technical</a></li>
+            <li class="active"><a href="./tag/musings.html">Musings</a></li>
+            <li><a href="./tag/random.html">Random</a></li>
+            <li></li>
+
+        </ul></nav><!-- /#menu -->
+<section id="content" class="body">
+  <div class="entry-content">
+    <style>
+mark{
+    background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow_animation 6s ease-in-out infinite;
+    background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+    0%,100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+}
+</style>
+
+<h1>TL;DR</h1>
+<ul>
+<li><a href="#Preamble">Preamble</a><ul>
+<li><a href="#GNU-Stow">GNU-Stow</a></li>
+<li><a href="#TheIdea">The Idea</a></li>
+</ul>
+</li>
+<li><a href="#Tangent-Time">Tangent Time!</a></li>
+<li><a href="#Managing-Dotfiles">Managing Dotfiles</a></li>
+<li><a href="#AmuseBouche">Amuse Bouche, Repo Specific Git Configs</a></li>
+</ul>
+<h1><a id="Preamble"></a>Preamble<hr/></h1>
+<p>I am using <a href="https://www.gnu.org/software/stow/">GNU STOW</a> with <a href="https://git-scm.com/">git</a> to manage <a href="https://github.com/shiddy/dot">my dotfiles</a>. This means that all I have to do on a new machine is access my git repo, install stow, and pitter patter - let's get att'er. After many years of manually managing these files, using different migration tools, and writing a tool myself, I can confidently say that stow is the best solution I've used.</p>
+<p>The readme on my dotfiles should be easy enough to follow, but <mark style="padding-top:0;">the shiddy blog</mark> is where I take the time to talk through some of the more interesting bits, updating your files, security considerations, and if you ask nicely some useful quality of life pieces. Join me will you?</p>
+<h2><a id="GNU-Stow"></a>GNU-Stow<hr/></h2>
+<p>GNU Stow is a really nice piece of software that does not get enough attention. It's also getting up there in years, <a href="https://git.savannah.gnu.org/cgit/stow.git/commit/?id=1b3b46907af7f23032645f14c27778cf77eae4dd">with its initial release in 2001</a> it's had enough eyes on it that it will work for my use case.</p>
+<p>The basic premise is that you can set up a slightly strange directory structure, call <code>stow</code> within the root of that directory and stow will create symlinks that the rest of your system will see and treat as regular files.</p>
+<p>This works quite well within git, where we can archive our stow configuration, but also because our configuration files are symlinks, whenever we change any of our configuration files (since they are symlinks), we can see all the changes as git changes natively and commit them without extra fuss!</p>
+<h2><a id="TheIdea"></a>The Idea<hr/></h2>
+<p>The basic premise is that we want to create our directory with paths that reflect the paths to our configuration files.</p>
+<div class="highlight"><pre><span></span><code>$HOME/.zshrc =&gt; $HOME/DOTFILEREPO/zsh/.zshrc
+</code></pre></div>
+
+<h1><a id="Tangent-Time"></a>Tangent time!<hr/></h1>
+<p>I was lucky enough to start using linux around Canonical's Precise Pangolin (12.04) release. If you ask me it was the perfect time to get serious because I was so late to the game. A ton of the bullshit was solved by smarter people than me. I could reasonably start learning with things that were in a functional state.</p>
+<p>Many of my future co-workers and co-horts would wax on about the nightmarish ages of old, and how easy I had it in comparison. Some of the more notable examples:
+* Buying a new laptop after fighting with ndiswrapper and a random broadcom nic longer than the cost of hours lost to it not working.
+* Trying to quit cigarettes when the company needed you to deploy iptables before firewalld existed.
+* wicd and iwlconfig for setting up wireless devices before NetworkManager, and only having one laptop without an ethernet port.
+* Running an isolinux memdisk kernel to install because many BIOSes didn't support usb booting, and praying that the myriad of tunables to whatever incantation your conputer's firmware would be accepted before el torito cd extensions.
+* Buying an nvidia graphics card and having to have a seperate windows machine to install the driver on, copying the needed files back to linux and running the "NVIDIA X Server Settings" gui to get a wildly inconsistent kernel interface to a busted driver so the nvidia module compilation would fail and you would have to spend weeks old manually compiled kernels waiting for upstream fixes.</p>
+<p>To be fair, I rarely get to use SIMD as much as I'd like. I hardly get to use compiled languaged as much as I'd like. But I've never been told by the guy who made my operating system that I should be retroactively aborted for using an enumerable for a system call read. If that did happen I have a feeling I would probably just install windows and get a job in finance or something idk.</p>
+<p>I feel like I lost the plot in this tangent a bit, but my point is that there has never been a better time to be getting into computing. The only real problem at this point is the curation of quality content. There is a decent amount of amazing material, and a seemingly infinite amount of absolute slop. Honestly, one of the best skills in comp-sci is just being around and paying attention while things are happening. Then you at least know what things felt like when computers were a hundred times slower, and why opening a random program shouldn't take 40 seconds long.</p>
+<p>People in those positions don't often praise the progress we have made, we don't often tell the stories where a bunch of people got together and cleaned up an utter shit-fest and left us with a better strategy.</p>
+<p>Think of this, how many common places exist for executables?</p>
+<div class="highlight"><pre><span></span><code>/bin
+/sbin
+/usr/bin
+/usr/sbin
+/usr/local/bin
+macos has bin and sbin directories for homebrew and a few for [Cryptex](https://support.apple.com/guide/security/apple-security-research-device-seca7ff718d2/1/web/1)
+random install dirs for things like node where they want you have to update your path after install
+~/Downloads  that one time you downloaded an .exe from your work email that strangely did nothing but open the commandline for a second.
+</code></pre></div>
+
+<p>To me, this list feels excessive... But don't get it twisted, <strong>at least</strong> there is a known and defined place for executables. Until <strong>very</strong> recently, configuration files were an absolute shit-show. Everyone who made a program that would have user specific configs would put them wherever they could. You want to put all your user specific data, configs, and state in a place specific to the user? <code>$HOME</code> is good enough. Then your <code>$HOME</code> directory looked like an ADHD teen's bedroom and you had to just let it fester over time.</p>
+<p>Or... hear me out, you could just sweep all the clutter under the rug by hiding the files from your default file program.</p>
+<p><img alt="eyebrows.gif" src="./images/eyebrows.gif"></p>
+<p>I know that sounds stupid, because it is. But the reason flags like <code>-a</code> exist on <code>ls</code>, and some files are hidden by default is because it makes finding the random file in your home directory harder. Until the X11 Desktop Group <a href="https://specifications.freedesktop.org/basedir-spec/latest/index.html">proposed a standard on base directories in 2003</a> there was not a place other than random dotfiles in your home directory. It's one of the main reasons that we call our user configuration files dotfiles in the first place.</p>
+<p>This standard means that we are able to move all our files to a directory where they belong, so long as the programs are written to respect the XDG standards (the number of which is growing pretty steadily)</p>
+<p>As we can see on their docs:</p>
+<blockquote>
+<p>"<code>$XDG_CONFIG_HOME</code> defines the base directory relative to which user-specific configuration files should be stored. If <code>$XDG_CONFIG_HOME</code> is either not set or empty, a default equal to <code>$HOME</code>/.config should be used."</p>
+</blockquote>
+<p>I don't have a great reason for deviating from the default <code>$HOME/.config</code> path so that is what I will use the rest of this article</p>
+<p>So cheers to you XDG Standard writers. Let's hope this becomes popular enough that people in the future don't even know what hidden files are, and we can add a new mitre attack group for gen alpha.</p>
+<h1><a id="Managing-Dotfiles"></a>Tangent Time Over, Managing Dotfiles<hr/></h1>
+<p>You will need to make a new repository in your version control software; Fill it with directories of the programs you want to manage the dotfiles for</p>
+<p>Worth pointing out that since we are setting up our dotfiles to be managed to the XDG_CONFIG_HOME standard we can add a .config directory here as well.</p>
+<div class="highlight"><pre><span></span><code>dot
+ |-nvim
+ |--.config
+ |-tmux
+ |--.config
+ |-zsh
+ |--.config (* you will have do add a .zshenv &#39;export ZDOTDIR=&quot;$HOME/.config&quot;&#39;)
+ |--.zshenv
+ | ...
+</code></pre></div>
+
+<p>Then we need to start moving our configs there. This works quite well if you are running on a new machine, lest you accidentally kill what you have in the process of copying things over...otherwise be careful.</p>
+<p>once you have moved everything over your directories should be populated with some of your dotfiles. It should look something like this</p>
+<div class="highlight"><pre><span></span><code>dot
+ |-nvim
+ |--.config
+ |---(imagine some LUA or something stupid)
+ |-tmux
+ |--.config
+ |---.tmux.conf
+ |-zsh
+ |--.config
+ |---.zshrc
+ |--.zshenv
+ | ...
+</code></pre></div>
+
+<p>Now you are ready to use stow to link everything! The basic command looks like this:</p>
+<p><code>stow -d PATH/TO/YOUR/REPO -t ~ YOURPROGRAMNAME</code></p>
+<ul>
+<li><code>-d</code> is the directory your stow should be running from, in this case we set it to the directory of our repo, variable expansion works fine btw</li>
+<li><code>-t</code> is the target where we want to write symlinks to, in our case I use <code>~</code> which means our home directory of our current user</li>
+<li><code>YOURPROGRAMNAME</code> would refer to the directories that we created for each of our programs. <code>nvim</code>, <code>zsh</code>, <code>tmux</code> or whatever you specified.</li>
+</ul>
+<p>If you are feeling really randy, you can also just make a shell script that has all these commands ready for a fresh install, or even a blog post so that you don't have to do that until you get to this part of the blog!</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># I&#39;m assuming you are using git, so I ignore .git and the current directory here, I assume you can change it if you need to.</span>
+<span class="k">for</span><span class="w"> </span>line<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>find<span class="w"> </span>.<span class="w"> </span>-type<span class="w"> </span>d<span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s2">&quot;s|.\/||&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span>-e<span class="w"> </span>.git<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\.&quot;</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">        </span>stow<span class="w"> </span>-d<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="w"> </span>-t<span class="w"> </span>~<span class="w"> </span><span class="nv">$line</span>
+<span class="k">done</span>
+</code></pre></div>
+
+<p>Then you can install everything with <code>/bin/bash whateveryounamethatthing.sh</code></p>
+<p>Now you can see any config changes you make with your version control, and updating it is as simple as committing your changes and fetching whatever changes you want on whatever machine you are using. Different branches can work for OS changes or local stack changes for me, but the sky is the limit.</p>
+<p>...and that's pretty much it...</p>
+<h1><a id="AmuseBouche"></a>Multiple Git SSH configs on one machine<hr/></h1>
+<p>Now for an adjacent idea that I want to treat you to... like a blog amuse bouche</p>
+<p>Somehow I find myself with a many to many relationship between git accounts and git servers with different auth schemes. This is very annoying since you can't use the same ssh pub keys on multiple accounts, this is why git@github.com allows you to test auth to it without a tty and github does not have to do weird pathing.</p>
+<p>also, did you know that you can get anyone's public keys off of github?
+<a href="https://github.com/theprimeagen.keys">The Primagen's Public RSA Keys</a></p>
+<p>See? This is an intentional design choice but can lead to some unintentional data loss. *The Primagen does not know that he has root access to my machines... yet* So it's not uncommon to generate and revoke keys often if you are being serious about security and what you put online... perhaps that's an indicator of something I'm working on, perhaps it's not.</p>
+<p>So if you find yourself in the same situation you might have some random directory need to use a different ssh key for authing to your git server, while also using a completely different key for another repo on the same computer, this is the section that helps you.</p>
+<p>Remember that .git directory I ignored in my dotfiles before? that has all the information of what's happening to the files on your repo, local and remote. If you look at a "normal" repository, there is a <code>.git/config</code> file that shows these connections to a local user.</p>
+<div class="highlight"><pre><span></span><code><span class="k">[core]</span>
+<span class="w">    </span><span class="na">repositoryformatversion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+<span class="w">    </span><span class="na">filemode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">bare</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+<span class="w">    </span><span class="na">logallrefupdates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">ignorecase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">precomposeunicode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="k">[remote &quot;origin&quot;]</span>
+<span class="w">    </span><span class="na">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">git@github.com:idk/something.git</span>
+<span class="w">    </span><span class="na">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">+refs/heads/*:refs/remotes/origin/*</span>
+<span class="k">[branch &quot;main&quot;]</span>
+<span class="w">    </span><span class="na">remote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">origin</span>
+<span class="w">    </span><span class="na">merge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">refs/heads/main</span>
+</code></pre></div>
+
+<p>Recall, we know that we have git@github.com as the remote user/host info in this file. So we need to configure the ssh connection information to something else. We can do so by adding a host to <code>~/.ssh/config</code> so that we can then edit the connection information in our repo's <code>.git/conffig</code> and have it route somewhere else. That looks like this:</p>
+<div class="highlight"><pre><span></span><code># $HOME/.ssh/config
+Host shiddy
+    HostName github.com
+    User git
+    IdentityFile /Users/user/.ssh/your-private-key-for-this-user
+</code></pre></div>
+
+<p>What we are essentially saying is that we should make a fake host (in my case called shiddy) that should be handled differently. So now we can update our <code>.git/config</code> file in our repo to use this fake host</p>
+<div class="highlight"><pre><span></span><code><span class="k">[core]</span>
+<span class="w">    </span><span class="na">repositoryformatversion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+<span class="w">    </span><span class="na">filemode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">bare</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+<span class="w">    </span><span class="na">logallrefupdates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">ignorecase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">precomposeunicode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="k">[remote &quot;origin&quot;]</span>
+<span class="w">    </span><span class="na">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">git@shiddy:idk/something.git</span><span class="w"> </span><span class="c1"># NOTE THE DOMAIN CHANGE</span>
+<span class="w">    </span><span class="na">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">+refs/heads/*:refs/remotes/origin/*</span>
+<span class="k">[branch &quot;main&quot;]</span>
+<span class="w">    </span><span class="na">remote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">origin</span>
+<span class="w">    </span><span class="na">merge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">refs/heads/main</span>
+</code></pre></div>
+
+<p>This will work all well and good, but also would mean that every commit you make will be for whatever your global git user is, which can be another data loss that you can run into committing to different git repos as same user. So we have one final change we should make to our local git config:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[core]</span>
+<span class="w">    </span><span class="na">repositoryformatversion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">0</span>
+<span class="w">    </span><span class="na">filemode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">bare</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+<span class="w">    </span><span class="na">logallrefupdates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">ignorecase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">precomposeunicode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="k">[remote &quot;origin&quot;]</span>
+<span class="w">    </span><span class="na">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">git@personal-github:shiddy/dot.git</span>
+<span class="w">    </span><span class="na">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">+refs/heads/*:refs/remotes/origin/*</span>
+<span class="k">[branch &quot;main&quot;]</span>
+<span class="w">    </span><span class="na">remote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">origin</span>
+<span class="w">    </span><span class="na">merge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">refs/heads/main</span>
+<span class="na">[user] # This tells git to use the following user for git changes to all it manages in this .git repo</span>
+<span class="w">    </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">shiddy</span>
+<span class="w">    </span><span class="na">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">shiddy@shiddy.io</span>
+</code></pre></div>
+
+<p>And would you guess, the changes to <code>.ssh/config</code> are also dotfiles? So minding all of the ways you can passively leak information, you can add the <code>.ssh/config</code> changes to your stow repo. I'll leave that as an exercise for the reader if you are so inclined.</p>
+<p>Thanks for reading! Hopefully you learned something, and if you have anything to say I guess you can find my contact links at the bottom of the page.</p>
+<p>OK BYE |o･-･)ﾉ</p>
+  </div><!-- /.entry-content -->
+  <div class="post-info">
+    <p style="text-align: right">
+      Wed 20 November 2024
+    </time>
+    </p>
+  </div><!-- /.post-info -->
+</section>
+  <div id="footer">
+    <p>-------------------------------<br/>
+    <a href="https://github.com/shiddy">Github</a> <a href="https://www.youtube.com/channel/UCuF7oVKcM4K3wps5_vVXtww">Youtube</a> <a rel="mastodon" href="https://infosec.exchange/@shiddy">Mastodon</a> <a rel="bluesky" href="https://bsky.app/profile/shiddy.io">Bluesky</a></p>
+  </div>
+</body>
+</html>

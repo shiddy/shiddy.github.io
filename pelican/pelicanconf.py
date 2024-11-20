@@ -27,11 +27,22 @@ SOCIAL = (('You can add links in your config file', '#'),
 
 DEFAULT_PAGINATION = False
 
-
 STATIC_PATHS = ['images', 'extra/CNAME', 'extra/favicon.ico']
 EXTRA_PATH_METADATA = {
     'extra/favicon.ico': {'path': 'favicon.ico'},
     'extra/CNAME': {'path': 'CNAME'},
+}
+
+MARKDOWN = {
+    'extension_configs': {
+        'markdown.extensions.codehilite': {
+            'css_class': 'highlight',
+            'guess_lang': False
+        },
+        'markdown.extensions.extra': {},
+        'markdown.extensions.meta': {},
+    },
+    'output_format': 'html5'
 }
 
 # Uncomment following line if you want document-relative URLs when developing

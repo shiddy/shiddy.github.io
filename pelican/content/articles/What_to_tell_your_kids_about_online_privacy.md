@@ -1,6 +1,6 @@
 Title: What to tell your kids about online privacy
 Date: 2010-12-03
-Category: Random
+Tags: Random
 Status: hidden
 
 

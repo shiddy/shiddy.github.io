@@ -1,6 +1,6 @@
 Title: Turn-on Tune-in Burn-out
 Date: 2017-09-09
-Category: Musings
+Tags: Musings
 
 I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what *this feels like* and what this *felt like* to determine whether my decisions were worth it. Hopefully, those who read this can gain some insight before heading down the same road as I have.
 

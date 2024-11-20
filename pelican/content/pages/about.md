@@ -1,18 +1,17 @@
 Title: About
 Date: 2010-12-03
-Status: hidden
 Summary: About Shiddy.io
 
-## Where am I?
+## What is this?
 
-I started this blog so that I could store documentation that wouldn't stay in my head.
+I honestly started this blog so that I could store documentation that wouldn't stay in my head.
 
 In time it's turned into a place for me to express what I am passionate about and what's been on my mind.
 
-<img src="{static}/images/about/icon.png" style="float: right; width: 20%">
+<img src="{static}/images/about-me.gif" style="float: right; width: 20%">
 ## Who are you?
 
-You can call me Shiddy. I studied Computer Science and now work as a software developer. I spend most of my energy in the security field.
+You can call me Shiddy. I studied Computer Science and do lots of things adjacent to technology. I spend most of my energy in the security field.
 
 I like learning and applying low level tech. Often that means learning about older technologies rather than new ones. It also means that I care about the underlying components of any given project.
 
