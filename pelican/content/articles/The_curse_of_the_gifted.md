@@ -1,6 +1,6 @@
 Title: The Curse of the Gifted
 Date: 2016-03-05
-Category: Musings
+Tags: Musings
 Slug: Pay it forward... technically
 
     In college, I studied comp-sci

@@ -1,5 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ShiddyIO</title><link href="https://shiddy.io/" rel="alternate"></link><link href="https://shiddy.io/feeds/all.atom.xml" rel="self"></link><id>https://shiddy.io/</id><updated>2023-08-01T12:00:00-06:00</updated><entry><title>Some thoughts on Artificial Intelligence</title><link href="https://shiddy.io/some-thoughts-on-artificial-intelligence.html" rel="alternate"></link><published>2023-08-01T12:00:00-06:00</published><updated>2023-08-01T12:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2023-08-01:/some-thoughts-on-artificial-intelligence.html</id><summary type="html">&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ShiddyIO</title><link href="https://shiddy.io/" rel="alternate"></link><link href="https://shiddy.io/feeds/all.atom.xml" rel="self"></link><id>https://shiddy.io/</id><updated>2024-11-20T12:00:00-07:00</updated><entry><title>Dotfile Management &amp; Git Tricks</title><link href="https://shiddy.io/dotfile-management-git-tricks.html" rel="alternate"></link><published>2024-11-20T12:00:00-07:00</published><updated>2024-11-20T12:00:00-07:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2024-11-20:/dotfile-management-git-tricks.html</id><summary type="html">&lt;style&gt;
+mark{
+    background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow_animation 6s ease-in-out infinite;
+    background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+    0%,100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+}
+&lt;/style&gt;
+
+&lt;h1&gt;TL;DR&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#Preamble"&gt;Preamble&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#GNU-Stow"&gt;GNU-Stow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#TheIdea"&gt;The Idea&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#Tangent-Time"&gt;Tangent Time!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#Managing-Dotfiles"&gt;Managing Dotfiles&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#AmuseBouche"&gt;Amuse Bouche, Repo Specific Git …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;style&gt;
+mark{
+    background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow_animation 6s ease-in-out infinite;
+    background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+    0%,100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+}
+&lt;/style&gt;
+
+&lt;h1&gt;TL;DR&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#Preamble"&gt;Preamble&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#GNU-Stow"&gt;GNU-Stow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#TheIdea"&gt;The Idea&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#Tangent-Time"&gt;Tangent Time!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#Managing-Dotfiles"&gt;Managing Dotfiles&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#AmuseBouche"&gt;Amuse Bouche, Repo Specific Git Configs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;&lt;a id="Preamble"&gt;&lt;/a&gt;Preamble&lt;hr/&gt;&lt;/h1&gt;
+&lt;p&gt;I am using &lt;a href="https://www.gnu.org/software/stow/"&gt;GNU STOW&lt;/a&gt; with &lt;a href="https://git-scm.com/"&gt;git&lt;/a&gt; to manage &lt;a href="https://github.com/shiddy/dot"&gt;my dotfiles&lt;/a&gt;. This means that all I have to do on a new machine is access my git repo, install stow, and pitter patter - let's get att'er. After many years of manually managing these files, using different migration tools, and writing a tool myself, I can confidently say that stow is the best solution I've used.&lt;/p&gt;
+&lt;p&gt;The readme on my dotfiles should be easy enough to follow, but &lt;mark style="padding-top:0;"&gt;the shiddy blog&lt;/mark&gt; is where I take the time to talk through some of the more interesting bits, updating your files, security considerations, and if you ask nicely some useful quality of life pieces. Join me will you?&lt;/p&gt;
+&lt;h2&gt;&lt;a id="GNU-Stow"&gt;&lt;/a&gt;GNU-Stow&lt;hr/&gt;&lt;/h2&gt;
+&lt;p&gt;GNU Stow is a really nice piece of software that does not get enough attention. It's also getting up there in years, &lt;a href="https://git.savannah.gnu.org/cgit/stow.git/commit/?id=1b3b46907af7f23032645f14c27778cf77eae4dd"&gt;with its initial release in 2001&lt;/a&gt; it's had enough eyes on it that it will work for my use case.&lt;/p&gt;
+&lt;p&gt;The basic premise is that you can set up a slightly strange directory structure, call &lt;code&gt;stow&lt;/code&gt; within the root of that directory and stow will create symlinks that the rest of your system will see and treat as regular files.&lt;/p&gt;
+&lt;p&gt;This works quite well within git, where we can archive our stow configuration, but also because our configuration files are symlinks, whenever we change any of our configuration files (since they are symlinks), we can see all the changes as git changes natively and commit them without extra fuss!&lt;/p&gt;
+&lt;h2&gt;&lt;a id="TheIdea"&gt;&lt;/a&gt;The Idea&lt;hr/&gt;&lt;/h2&gt;
+&lt;p&gt;The basic premise is that we want to create our directory with paths that reflect the paths to our configuration files.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$HOME/.zshrc =&amp;gt; $HOME/DOTFILEREPO/zsh/.zshrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1&gt;&lt;a id="Tangent-Time"&gt;&lt;/a&gt;Tangent time!&lt;hr/&gt;&lt;/h1&gt;
+&lt;p&gt;I was lucky enough to start using linux around Canonical's Precise Pangolin (12.04) release. If you ask me it was the perfect time to get serious because I was so late to the game. A ton of the bullshit was solved by smarter people than me. I could reasonably start learning with things that were in a functional state.&lt;/p&gt;
+&lt;p&gt;Many of my future co-workers and co-horts would wax on about the nightmarish ages of old, and how easy I had it in comparison. Some of the more notable examples:
+* Buying a new laptop after fighting with ndiswrapper and a random broadcom nic longer than the cost of hours lost to it not working.
+* Trying to quit cigarettes when the company needed you to deploy iptables before firewalld existed.
+* wicd and iwlconfig for setting up wireless devices before NetworkManager, and only having one laptop without an ethernet port.
+* Running an isolinux memdisk kernel to install because many BIOSes didn't support usb booting, and praying that the myriad of tunables to whatever incantation your conputer's firmware would be accepted before el torito cd extensions.
+* Buying an nvidia graphics card and having to have a seperate windows machine to install the driver on, copying the needed files back to linux and running the "NVIDIA X Server Settings" gui to get a wildly inconsistent kernel interface to a busted driver so the nvidia module compilation would fail and you would have to spend weeks old manually compiled kernels waiting for upstream fixes.&lt;/p&gt;
+&lt;p&gt;To be fair, I rarely get to use SIMD as much as I'd like. I hardly get to use compiled languaged as much as I'd like. But I've never been told by the guy who made my operating system that I should be retroactively aborted for using an enumerable for a system call read. If that did happen I have a feeling I would probably just install windows and get a job in finance or something idk.&lt;/p&gt;
+&lt;p&gt;I feel like I lost the plot in this tangent a bit, but my point is that there has never been a better time to be getting into computing. The only real problem at this point is the curation of quality content. There is a decent amount of amazing material, and a seemingly infinite amount of absolute slop. Honestly, one of the best skills in comp-sci is just being around and paying attention while things are happening. Then you at least know what things felt like when computers were a hundred times slower, and why opening a random program shouldn't take 40 seconds long.&lt;/p&gt;
+&lt;p&gt;People in those positions don't often praise the progress we have made, we don't often tell the stories where a bunch of people got together and cleaned up an utter shit-fest and left us with a better strategy.&lt;/p&gt;
+&lt;p&gt;Think of this, how many common places exist for executables?&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/bin
+/sbin
+/usr/bin
+/usr/sbin
+/usr/local/bin
+macos has bin and sbin directories for homebrew and a few for [Cryptex](https://support.apple.com/guide/security/apple-security-research-device-seca7ff718d2/1/web/1)
+random install dirs for things like node where they want you have to update your path after install
+~/Downloads  that one time you downloaded an .exe from your work email that strangely did nothing but open the commandline for a second.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;To me, this list feels excessive... But don't get it twisted, &lt;strong&gt;at least&lt;/strong&gt; there is a known and defined place for executables. Until &lt;strong&gt;very&lt;/strong&gt; recently, configuration files were an absolute shit-show. Everyone who made a program that would have user specific configs would put them wherever they could. You want to put all your user specific data, configs, and state in a place specific to the user? &lt;code&gt;$HOME&lt;/code&gt; is good enough. Then your &lt;code&gt;$HOME&lt;/code&gt; directory looked like an ADHD teen's bedroom and you had to just let it fester over time.&lt;/p&gt;
+&lt;p&gt;Or... hear me out, you could just sweep all the clutter under the rug by hiding the files from your default file program.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eyebrows.gif" src="https://shiddy.io/images/eyebrows.gif"&gt;&lt;/p&gt;
+&lt;p&gt;I know that sounds stupid, because it is. But the reason flags like &lt;code&gt;-a&lt;/code&gt; exist on &lt;code&gt;ls&lt;/code&gt;, and some files are hidden by default is because it makes finding the random file in your home directory harder. Until the X11 Desktop Group &lt;a href="https://specifications.freedesktop.org/basedir-spec/latest/index.html"&gt;proposed a standard on base directories in 2003&lt;/a&gt; there was not a place other than random dotfiles in your home directory. It's one of the main reasons that we call our user configuration files dotfiles in the first place.&lt;/p&gt;
+&lt;p&gt;This standard means that we are able to move all our files to a directory where they belong, so long as the programs are written to respect the XDG standards (the number of which is growing pretty steadily)&lt;/p&gt;
+&lt;p&gt;As we can see on their docs:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;"&lt;code&gt;$XDG_CONFIG_HOME&lt;/code&gt; defines the base directory relative to which user-specific configuration files should be stored. If &lt;code&gt;$XDG_CONFIG_HOME&lt;/code&gt; is either not set or empty, a default equal to &lt;code&gt;$HOME&lt;/code&gt;/.config should be used."&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I don't have a great reason for deviating from the default &lt;code&gt;$HOME/.config&lt;/code&gt; path so that is what I will use the rest of this article&lt;/p&gt;
+&lt;p&gt;So cheers to you XDG Standard writers. Let's hope this becomes popular enough that people in the future don't even know what hidden files are, and we can add a new mitre attack group for gen alpha.&lt;/p&gt;
+&lt;h1&gt;&lt;a id="Managing-Dotfiles"&gt;&lt;/a&gt;Tangent Time Over, Managing Dotfiles&lt;hr/&gt;&lt;/h1&gt;
+&lt;p&gt;You will need to make a new repository in your version control software; Fill it with directories of the programs you want to manage the dotfiles for&lt;/p&gt;
+&lt;p&gt;Worth pointing out that since we are setting up our dotfiles to be managed to the XDG_CONFIG_HOME standard we can add a .config directory here as well.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;dot
+ |-nvim
+ |--.config
+ |-tmux
+ |--.config
+ |-zsh
+ |--.config (* you will have do add a .zshenv &amp;#39;export ZDOTDIR=&amp;quot;$HOME/.config&amp;quot;&amp;#39;)
+ |--.zshenv
+ | ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then we need to start moving our configs there. This works quite well if you are running on a new machine, lest you accidentally kill what you have in the process of copying things over...otherwise be careful.&lt;/p&gt;
+&lt;p&gt;once you have moved everything over your directories should be populated with some of your dotfiles. It should look something like this&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;dot
+ |-nvim
+ |--.config
+ |---(imagine some LUA or something stupid)
+ |-tmux
+ |--.config
+ |---.tmux.conf
+ |-zsh
+ |--.config
+ |---.zshrc
+ |--.zshenv
+ | ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now you are ready to use stow to link everything! The basic command looks like this:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;stow -d PATH/TO/YOUR/REPO -t ~ YOURPROGRAMNAME&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-d&lt;/code&gt; is the directory your stow should be running from, in this case we set it to the directory of our repo, variable expansion works fine btw&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-t&lt;/code&gt; is the target where we want to write symlinks to, in our case I use &lt;code&gt;~&lt;/code&gt; which means our home directory of our current user&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;YOURPROGRAMNAME&lt;/code&gt; would refer to the directories that we created for each of our programs. &lt;code&gt;nvim&lt;/code&gt;, &lt;code&gt;zsh&lt;/code&gt;, &lt;code&gt;tmux&lt;/code&gt; or whatever you specified.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you are feeling really randy, you can also just make a shell script that has all these commands ready for a fresh install, or even a blog post so that you don't have to do that until you get to this part of the blog!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="c1"&gt;# I&amp;#39;m assuming you are using git, so I ignore .git and the current directory here, I assume you can change it if you need to.&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;line&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;find&lt;span class="w"&gt; &lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;-type&lt;span class="w"&gt; &lt;/span&gt;d&lt;span class="w"&gt; &lt;/span&gt;-maxdepth&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sed&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;s|.\/||&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;-v&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;.git&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\.&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;stow&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-t&lt;span class="w"&gt; &lt;/span&gt;~&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$line&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then you can install everything with &lt;code&gt;/bin/bash whateveryounamethatthing.sh&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now you can see any config changes you make with your version control, and updating it is as simple as committing your changes and fetching whatever changes you want on whatever machine you are using. Different branches can work for OS changes or local stack changes for me, but the sky is the limit.&lt;/p&gt;
+&lt;p&gt;...and that's pretty much it...&lt;/p&gt;
+&lt;h1&gt;&lt;a id="AmuseBouche"&gt;&lt;/a&gt;Multiple Git SSH configs on one machine&lt;hr/&gt;&lt;/h1&gt;
+&lt;p&gt;Now for an adjacent idea that I want to treat you to... like a blog amuse bouche&lt;/p&gt;
+&lt;p&gt;Somehow I find myself with a many to many relationship between git accounts and git servers with different auth schemes. This is very annoying since you can't use the same ssh pub keys on multiple accounts, this is why git@github.com allows you to test auth to it without a tty and github does not have to do weird pathing.&lt;/p&gt;
+&lt;p&gt;also, did you know that you can get anyone's public keys off of github?
+&lt;a href="https://github.com/theprimeagen.keys"&gt;The Primagen's Public RSA Keys&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;See? This is an intentional design choice but can lead to some unintentional data loss. *The Primagen does not know that he has root access to my machines... yet* So it's not uncommon to generate and revoke keys often if you are being serious about security and what you put online... perhaps that's an indicator of something I'm working on, perhaps it's not.&lt;/p&gt;
+&lt;p&gt;So if you find yourself in the same situation you might have some random directory need to use a different ssh key for authing to your git server, while also using a completely different key for another repo on the same computer, this is the section that helps you.&lt;/p&gt;
+&lt;p&gt;Remember that .git directory I ignored in my dotfiles before? that has all the information of what's happening to the files on your repo, local and remote. If you look at a "normal" repository, there is a &lt;code&gt;.git/config&lt;/code&gt; file that shows these connections to a local user.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[core]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;repositoryformatversion&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;0&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;filemode&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;bare&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;false&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;logallrefupdates&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;ignorecase&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;precomposeunicode&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="k"&gt;[remote &amp;quot;origin&amp;quot;]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;url&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;git@github.com:idk/something.git&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;fetch&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;+refs/heads/*:refs/remotes/origin/*&lt;/span&gt;
+&lt;span class="k"&gt;[branch &amp;quot;main&amp;quot;]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;remote&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;origin&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;merge&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;refs/heads/main&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Recall, we know that we have git@github.com as the remote user/host info in this file. So we need to configure the ssh connection information to something else. We can do so by adding a host to &lt;code&gt;~/.ssh/config&lt;/code&gt; so that we can then edit the connection information in our repo's &lt;code&gt;.git/conffig&lt;/code&gt; and have it route somewhere else. That looks like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;# $HOME/.ssh/config
+Host shiddy
+    HostName github.com
+    User git
+    IdentityFile /Users/user/.ssh/your-private-key-for-this-user
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;What we are essentially saying is that we should make a fake host (in my case called shiddy) that should be handled differently. So now we can update our &lt;code&gt;.git/config&lt;/code&gt; file in our repo to use this fake host&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[core]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;repositoryformatversion&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;0&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;filemode&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;bare&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;false&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;logallrefupdates&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;ignorecase&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;precomposeunicode&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="k"&gt;[remote &amp;quot;origin&amp;quot;]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;url&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;git@shiddy:idk/something.git&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# NOTE THE DOMAIN CHANGE&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;fetch&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;+refs/heads/*:refs/remotes/origin/*&lt;/span&gt;
+&lt;span class="k"&gt;[branch &amp;quot;main&amp;quot;]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;remote&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;origin&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;merge&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;refs/heads/main&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will work all well and good, but also would mean that every commit you make will be for whatever your global git user is, which can be another data loss that you can run into committing to different git repos as same user. So we have one final change we should make to our local git config:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[core]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;repositoryformatversion&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;0&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;filemode&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;bare&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;false&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;logallrefupdates&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;ignorecase&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;precomposeunicode&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="k"&gt;[remote &amp;quot;origin&amp;quot;]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;url&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;git@personal-github:shiddy/dot.git&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;fetch&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;+refs/heads/*:refs/remotes/origin/*&lt;/span&gt;
+&lt;span class="k"&gt;[branch &amp;quot;main&amp;quot;]&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;remote&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;origin&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;merge&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;refs/heads/main&lt;/span&gt;
+&lt;span class="na"&gt;[user] # This tells git to use the following user for git changes to all it manages in this .git repo&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;shiddy&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="na"&gt;email&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;shiddy@shiddy.io&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And would you guess, the changes to &lt;code&gt;.ssh/config&lt;/code&gt; are also dotfiles? So minding all of the ways you can passively leak information, you can add the &lt;code&gt;.ssh/config&lt;/code&gt; changes to your stow repo. I'll leave that as an exercise for the reader if you are so inclined.&lt;/p&gt;
+&lt;p&gt;Thanks for reading! Hopefully you learned something, and if you have anything to say I guess you can find my contact links at the bottom of the page.&lt;/p&gt;
+&lt;p&gt;OK BYE |o･-･)ﾉ&lt;/p&gt;</content><category term="articles"></category><category term="Technical"></category><category term="Musings"></category></entry><entry><title>Some thoughts on Artificial Intelligence</title><link href="https://shiddy.io/some-thoughts-on-artificial-intelligence.html" rel="alternate"></link><published>2023-08-01T12:00:00-06:00</published><updated>2023-08-01T12:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2023-08-01:/some-thoughts-on-artificial-intelligence.html</id><summary type="html">&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="" src="https://shiddy.io/images/gits_brain.jpg#headimg"&gt;&lt;/p&gt;
 &lt;h1&gt;On the cusp of something&lt;/h1&gt;
 &lt;hr/&gt;
@@ -14,12 +238,12 @@
 &lt;p&gt;Frankly, I've spent too much of my life listening to sad nerds peacocking to give any attention to this new shiny thing. Yet, it's undeniable that recent LLM developments mark a leap in technology.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;THE DISSONANCE!&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;So here are some collection of my thoughts that are not sweeping societal BS everyone seems to love. I've broken them into different pages, they seem to read better as short little stories. These thoughts may be dumb, but they are at least mine.&lt;/p&gt;
-&lt;p&gt;&lt;hr/&gt;
-&lt;br/&gt;&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://shiddy.io/dont-be-why-the-i-in-ai-is-always-lacking.html"&gt; Don't Be - Why the "I" in AI is always lacking. &lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4&gt;More Coming Soon, my fingers hurt&lt;/h4&gt;</content><category term="Musings"></category></entry><entry><title>The Report to the Shareholders Q4 2022</title><link href="https://shiddy.io/the-report-to-the-shareholders-q4-2022.html" rel="alternate"></link><published>2022-11-16T05:00:00-07:00</published><updated>2022-11-16T05:00:00-07:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2022-11-16:/the-report-to-the-shareholders-q4-2022.html</id><summary type="html">&lt;p&gt;&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h4&gt;More Coming Soon, my fingers hurt&lt;/h4&gt;</content><category term="articles"></category><category term="Musings"></category></entry><entry><title>The Report to the Shareholders Q4 2022</title><link href="https://shiddy.io/the-report-to-the-shareholders-q4-2022.html" rel="alternate"></link><published>2022-11-16T05:00:00-07:00</published><updated>2022-11-16T05:00:00-07:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2022-11-16:/the-report-to-the-shareholders-q4-2022.html</id><summary type="html">&lt;p&gt;&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h1&gt;Q4 2022 - Report to the Shareholders&lt;/h1&gt;
 &lt;hr/&gt;
 
@@ -72,7 +296,7 @@
 
 &lt;p&gt;I guess what I'm saying is that I have no triumphant retort to this soundtrack. I don't expect to defeat these feelings anymore. I know by now that breaking the fourth wall and asking you again if you are still reading is pointless. Even if I had the ability, I wouldn't want to know. I'm not pretending that I have some answer to these universals. I'm just hopeful that if you can tell that a real living feeling creature wrote this, that it's normal for things to be this painful. That, in spite of how weird and scary and fucking confusing all of these life questions actually are, we are always answering with something.&lt;/p&gt;
 &lt;p&gt;These asides where I try and fail to distill a lifetime's worth of experience and emotion into some tangible nugget of truth always feels like risking a lot for very little. I have no expectations that anyone will vibe with any of this, and honestly, at this point, I'm accepting that it's fine to swear and be surly and show my soft white underbelly.&lt;/p&gt;
-&lt;p&gt;Darling, we have already failed at so many things, let's fail at our next endeavour.&lt;/p&gt;</content><category term="Musings"></category></entry><entry><title>Setting up GPG and Hardware Tokens</title><link href="https://shiddy.io/setting-up-gpg-and-hardware-tokens.html" rel="alternate"></link><published>2020-09-07T12:00:00-06:00</published><updated>2020-09-07T12:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2020-09-07:/setting-up-gpg-and-hardware-tokens.html</id><summary type="html">&lt;h1&gt;GPG &amp;amp; Hardware Tokens&lt;/h1&gt;
+&lt;p&gt;Darling, we have already failed at so many things, let's fail at our next endeavour.&lt;/p&gt;</content><category term="articles"></category><category term="Musings"></category></entry><entry><title>Setting up GPG and Hardware Tokens</title><link href="https://shiddy.io/setting-up-gpg-and-hardware-tokens.html" rel="alternate"></link><published>2020-09-07T12:00:00-06:00</published><updated>2020-09-07T12:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2020-09-07:/setting-up-gpg-and-hardware-tokens.html</id><summary type="html">&lt;h1&gt;GPG &amp;amp; Hardware Tokens&lt;/h1&gt;
 &lt;p&gt;&lt;img alt="" src="https://shiddy.io/images/Yubikey-Header.jpeg#headimg"&gt;&lt;/p&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;ul&gt;
@@ -129,27 +353,24 @@
 &lt;li&gt;YkMan - a program that we can use to set the pins on our Yubikey, and require a human to touch it to authenticate&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;For MacOS I assume that you are using homebrew or are able to get these programs from valid sources&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;brew install gnupg pinentry-mac ykman
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;gnupg&lt;span class="w"&gt; &lt;/span&gt;pinentry-mac&lt;span class="w"&gt; &lt;/span&gt;ykman
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;For Linux I am using a Debian based package manager, but I trust you are able to find these packages with your specific distro.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt install gpg scdaemon libccid yubikey-manager
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;apt&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;scdaemon&lt;span class="w"&gt; &lt;/span&gt;libccid&lt;span class="w"&gt; &lt;/span&gt;yubikey-manager
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; &lt;code&gt;pinentry&lt;/code&gt; requires you to know what kind of desktop environment you use on linux. For Ubuntu or Debian systems you would use "gnome", and install &lt;code&gt;pinentry-gnome3&lt;/code&gt;, etc... If you don't know I would recommend using pinentry-curses which should work with most ttys.&lt;/p&gt;
 &lt;h3&gt;&lt;a id="Configuration"&gt;&lt;/a&gt;Configuration&lt;/h3&gt;
 &lt;p&gt;We need to tell our gpg-agent what our pinentry program is as well as that we plan to use our GPG agent for ssh.&lt;/p&gt;
 &lt;p&gt;This requires some directories to exist; the easiest way to ensure they exist is to use GPG itself to create them:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg -k
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-k
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;for MacOS&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="sb"&gt;`&lt;/span&gt;which pinentry-curses &lt;span class="m"&gt;1&lt;/span&gt;&amp;gt;/dev/null&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;which&lt;span class="w"&gt; &lt;/span&gt;pinentry-curses&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&amp;gt;/dev/null&lt;span class="sb"&gt;`&lt;/span&gt;
 &lt;span class="k"&gt;then&lt;/span&gt;
-cat &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
+cat&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
 &lt;span class="s"&gt;pinentry-program $(which pinentry-curses)&lt;/span&gt;
 &lt;span class="s"&gt;default-cache-ttl 3600&lt;/span&gt;
 &lt;span class="s"&gt;max-cache-ttl-ssh 3600&lt;/span&gt;
@@ -159,39 +380,35 @@ cat &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
 &lt;span class="s"&gt;log-file $(echo &amp;quot;$HOME/.gnupg/gpg-agent-log&amp;quot;)&lt;/span&gt;
 &lt;span class="s"&gt;EOF&lt;/span&gt;
 &lt;span class="k"&gt;else&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;You didn&amp;#39;t install the requirements, you should check the pinentry-mac install step above.&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;fi&lt;/span&gt; &lt;span class="sb"&gt;```&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;You didn&amp;#39;t install the requirements, you should check the pinentry-mac install step above.&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;```&lt;/span&gt;
 
 &lt;span class="c1"&gt;#### for Linux&lt;/span&gt;
 
 &lt;span class="sb"&gt;```&lt;/span&gt;bash
-&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;pinentry-program /usr/bin/pinentry\nenable-ssh-support&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.gnupg/gpg-agnet.conf
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;pinentry-program /usr/bin/pinentry\nenable-ssh-support&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/.gnupg/gpg-agnet.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;&lt;a id="Our GPG key structure"&gt;&lt;/a&gt;Our GPG key structure&lt;/h2&gt;
 &lt;p&gt;What we are working towards is a single GPG master key that certifies multiple subkeys for specific actions, namely: &lt;em&gt;Authorizing&lt;/em&gt;, &lt;em&gt;Signing&lt;/em&gt;, and &lt;em&gt;Encrypting&lt;/em&gt;. When we talk about a key in this context, we are referring to a key-pair. Meaning, we will be making 8 keys in total 4 private and 4 public.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Master &lt;span class="o"&gt;(&lt;/span&gt;Certify&lt;span class="o"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;|&lt;/span&gt;
-  &lt;span class="p"&gt;|&lt;/span&gt;--&amp;gt; Sub &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;Signing&lt;span class="o"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;|&lt;/span&gt;
-  &lt;span class="p"&gt;|&lt;/span&gt;--&amp;gt; Sub &lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;Encrypting&lt;span class="o"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;|&lt;/span&gt;
-  &lt;span class="se"&gt;\-&lt;/span&gt;-&amp;gt; Sub &lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;Authorizing&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Master&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;Certify&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;--&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;Sub&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;Signing&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;--&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;Sub&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;Encrypting&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="se"&gt;\-&lt;/span&gt;-&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;Sub&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;Authorizing&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;I understand that there are mechanisms to run this as a batch job, however I want to walk through the steps manually first.&lt;/p&gt;
 &lt;h3&gt;&lt;a id="Creating the Master Cert Key"&gt;&lt;/a&gt;Creating the Master Cert Key&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --expert --full-generate-key --cert-digest-algo H10
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--expert&lt;span class="w"&gt; &lt;/span&gt;--full-generate-key&lt;span class="w"&gt; &lt;/span&gt;--cert-digest-algo&lt;span class="w"&gt; &lt;/span&gt;H10
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;*Note*&lt;/strong&gt; The &lt;code&gt;--cert-digest-algo&lt;/code&gt; flag allows us to specify the hashing algorithm on these keys. By default we will see SHA256, which is fine for most everyone, but since we can specify SHA512 which will be faster on our 64-bit machines, and also generally help with security by making collisions with our hash much less likely, ヾ(´￢｀)ﾉ &lt;a href="https://www.gnupg.org/gph/en/manual/r2029.html"&gt;According to the Docs&lt;/a&gt; we can show the algorithms used here, but only some of them map to the globals in &lt;em&gt;gcrypt.h&lt;/em&gt; so no love on specifying whatever hash you want ¯\&lt;em&gt;(ツ)&lt;/em&gt;/¯&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;*Note on note*&lt;/strong&gt; If you are so inclined, you can print the algorithms that GPG support with the following &lt;code&gt;gpg --vv --version&lt;/code&gt; this will show a specific identifier &lt;code&gt;H10&lt;/code&gt; in our case, which you can see points to SHA512.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg -vv --version
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-vv&lt;span class="w"&gt; &lt;/span&gt;--version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img alt="GPG key selection" src="https://shiddy.io/images/gpg-flags.png"&gt;&lt;/p&gt;
 &lt;p&gt;We select &lt;code&gt;(11) ECC (set your own capabilities&lt;/code&gt; and we then toggle the "signing" capability with the &lt;code&gt;s&lt;/code&gt; key. Signing is on by default, we only the certify capability on this master key.&lt;/p&gt;
@@ -202,9 +419,8 @@ cat &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
 &lt;p&gt;At this point you may be prompted for a passphrase, &lt;strong&gt;This is different than your smart card pin&lt;/strong&gt;, and is the only thing preventing this key from being used if someone gets access to your keyring or private key storage. Make sure to set it to something secure.&lt;/p&gt;
 &lt;p&gt;Congrats! We now will follow a similar sequence of steps to generate our &lt;em&gt;Authorization&lt;/em&gt;, &lt;em&gt;Encryption&lt;/em&gt;, and &lt;em&gt;Signing&lt;/em&gt; keys.&lt;/p&gt;
 &lt;p&gt;If we want to confirm our key status at any time we can execute &lt;code&gt;gpg --export shiddy@shiddy.io | gpg --list-packets&lt;/code&gt; On the off chance you don't know already, your email address is the identifier for your GPG key, so you will want to use your email from the previous step. Otherwise if you have one key at this point you can use the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --export &lt;span class="sb"&gt;`&lt;/span&gt;gpg -K &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s1"&gt;&amp;#39;&amp;lt;&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; cut -d&lt;span class="se"&gt;\&amp;lt;&lt;/span&gt; -f2 &lt;span class="p"&gt;|&lt;/span&gt; tr -d &lt;span class="s1"&gt;&amp;#39;&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; gpg --list-packets
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--export&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;-K&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt;&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;cut&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="se"&gt;\&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-f2&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;tr&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--list-packets
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; from here on out in the documentation I will only use my own key identifier. You should change this to have the same commands work on your machine.&lt;/p&gt;
 &lt;p&gt;This shows that we have generated two keys &lt;code&gt;pkey[0]&lt;/code&gt; and &lt;code&gt;pkey[1]&lt;/code&gt; as part of the public packet, as well as our &lt;code&gt;digest algo 10&lt;/code&gt; as part of the signature packet.&lt;/p&gt;
@@ -212,16 +428,14 @@ cat &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
 &lt;h3&gt;&lt;a id="Master Key Revocation"&gt;&lt;/a&gt;Master Key Revocation&lt;/h3&gt;
 &lt;p&gt;Part of being a good security minded individual, is making sure that we plan for the worst. Here we will make a revocation certificate to ensure that if we lose our private keys, we can just kill everything related to this key and start over.&lt;/p&gt;
 &lt;p&gt;This is important because we set this key to never expire, if our key was compromised we have no means of informing others. That being said, we also need to make sure that this revocation certificate is as secure as our Master secret key, otherwise anyone could revoke our keys.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --output shiddy&lt;span class="se"&gt;\@&lt;/span&gt;shiddy.io.gpg-revocation-certificate --gen-revoke shiddy@shiddy.io
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--output&lt;span class="w"&gt; &lt;/span&gt;shiddy&lt;span class="se"&gt;\@&lt;/span&gt;shiddy.io.gpg-revocation-certificate&lt;span class="w"&gt; &lt;/span&gt;--gen-revoke&lt;span class="w"&gt; &lt;/span&gt;shiddy@shiddy.io
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The above command created a file &lt;code&gt;shiddy@shiddy.io.gpg-revocation-certificate&lt;/code&gt; which contains the revocation certificate, print it and put in in a fire-safe, slap it on a usb and put it somewhere safe but &lt;strong&gt;do not keep it on your hard drive&lt;/strong&gt;&lt;/p&gt;
 &lt;h3&gt;&lt;a id="Subkey Generation"&gt;&lt;/a&gt;Subkey Generation&lt;/h3&gt;
 &lt;p&gt;We want to create our subkeys from our master Certify key. So we will tell GPG that we want to edit this key which will drop us into a GPG prompt.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --expert --edit-key --cert-digest-algo H10 shiddy@shiddy.io
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--expert&lt;span class="w"&gt; &lt;/span&gt;--edit-key&lt;span class="w"&gt; &lt;/span&gt;--cert-digest-algo&lt;span class="w"&gt; &lt;/span&gt;H10&lt;span class="w"&gt; &lt;/span&gt;shiddy@shiddy.io
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;We can then enter &lt;code&gt;addkey&lt;/code&gt; to begin the creation of a new subkey.&lt;/p&gt;
 &lt;p&gt;Selecting &lt;code&gt;(11) ECC (set your own capabilities)&lt;/code&gt; again will default to &lt;em&gt;Sign&lt;/em&gt; as the only action, but we should confirm this and then Finalize our key selection with &lt;code&gt;(Q) Finished&lt;/code&gt;, &lt;code&gt;(1) Curve 25519&lt;/code&gt; for the elliptic curve we want, that it will not expire with &lt;code&gt;0&lt;/code&gt;, and a confirmation of &lt;code&gt;y&lt;/code&gt;.&lt;/p&gt;
@@ -237,14 +451,12 @@ cat &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
 &lt;p&gt;We are now ready to export our keys.&lt;/p&gt;
 &lt;p&gt;We will export our secret keys we want to backup, as well as write to our smart card. We will also export our public keys, which we can publish to external hosts.&lt;/p&gt;
 &lt;h4&gt;&lt;a id="Exporting Public Keys"&gt;&lt;/a&gt;Exporting Public Keys&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --export -a shiddy@shiddy.io &amp;gt; shiddy&lt;span class="se"&gt;\@&lt;/span&gt;shiddy.io.pub
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--export&lt;span class="w"&gt; &lt;/span&gt;-a&lt;span class="w"&gt; &lt;/span&gt;shiddy@shiddy.io&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;shiddy&lt;span class="se"&gt;\@&lt;/span&gt;shiddy.io.pub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h4&gt;&lt;a id="Exporting Private Keys"&gt;&lt;/a&gt;Exporting Private Keys&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --export-secret-keys -a shiddy@shiddy.io &amp;gt; shiddy&lt;span class="se"&gt;\@&lt;/span&gt;shiddy.io.priv
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--export-secret-keys&lt;span class="w"&gt; &lt;/span&gt;-a&lt;span class="w"&gt; &lt;/span&gt;shiddy@shiddy.io&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;shiddy&lt;span class="se"&gt;\@&lt;/span&gt;shiddy.io.priv
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The two export commands we ran created two files &lt;code&gt;shiddy@shiddy.io.pub&lt;/code&gt; and &lt;code&gt;shiddy@shiddy.io.priv&lt;/code&gt; we want to save the private file one in the same place as our &lt;code&gt;shiddy@shiddy.io.gpg-revocation-certificate&lt;/code&gt; from before. Making sure to remove them from the hard drive after doing so.&lt;/p&gt;
 &lt;p&gt;However, we also now have our public key file. This should be &lt;strong&gt;super&lt;/strong&gt; public, put it in a place where you can use it. For example, This is one of the most used files on my NAS when I need to spin up new machines, since I want to make sure that I can access them from one well-known key. I suggest you do the same, put it out there keep some copies around.&lt;/p&gt;
@@ -253,9 +465,8 @@ cat &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
 &lt;p&gt;If you are not starting out fresh, you can always run &lt;code&gt;ykman piv reset &amp;amp;&amp;amp; ykman openpgp reset&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; The &lt;code&gt;ykman openpgp reset&lt;/code&gt; command resets your pin to '123456' and admin pin to '12345678'. We will see how those are used in the future, don't worry ( ﾟｰﾟ). It's assumed that you know your pin and admin pin. We will change it to something else later in &lt;a href="#Setting pins for your Smart Card"&gt;Setting pins for your Smart Card&lt;/a&gt; below.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; if you find you are getting errors like &lt;code&gt;Error: Failed connecting to YubiKey ... Make sure the application has required permissions&lt;/code&gt; You might need to unplug and re-plug your hardware device. We are making many changes in the course of this post and sometimes it can lock after it's been updated.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --edit-key shiddy@shiddy.io
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--edit-key&lt;span class="w"&gt; &lt;/span&gt;shiddy@shiddy.io
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Here we want to select a specific subkey with &lt;code&gt;key 1&lt;/code&gt;. Doing so will mark the subkey with an asterisk &lt;strong&gt;(*)&lt;/strong&gt;. We then can send that specific key to our hardware token with &lt;code&gt;keytocard&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Since our key selected earlier was our signature key we inform the smart card it's a signature key with &lt;code&gt;(1) Signature Key&lt;/code&gt;&lt;/p&gt;
@@ -269,25 +480,22 @@ cat &lt;span class="s"&gt;&amp;lt;&amp;lt; EOF&lt;/span&gt;
 &lt;h2&gt;&lt;a id="GPG Private Key Cleanup"&gt;&lt;/a&gt;GPG Private Key Cleanup&lt;/h2&gt;
 &lt;p&gt;Since we have exported our Master key to a file, and we exported our Subkeys to our hardware device, we don't need GPG to know about or store any of our keys.&lt;/p&gt;
 &lt;p&gt;We can confirm what public keys are installed with &lt;code&gt;gpg -k&lt;/code&gt;, and we can confirm what private keys are installed with &lt;code&gt;gpg -K&lt;/code&gt;. For now you should see both your private and public keys.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --delete-secret-and-public-keys shiddy@shiddy.io
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--delete-secret-and-public-keys&lt;span class="w"&gt; &lt;/span&gt;shiddy@shiddy.io
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Feel free to check that all your keys are gone with &lt;code&gt;gpg -K&lt;/code&gt; and &lt;code&gt;gpg -k&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;This will require a decent amount of confirming prompts, don't worry we already exported these keys. If worse comes to worse, this is a good time to fail and start over. Happens to the best of us.&lt;/p&gt;
 &lt;p&gt;We will want to import our public keys to our GPG suite since it will be able to map them to the private keys on our smart card.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --import shiddy&lt;span class="se"&gt;\@&lt;/span&gt;shiddy.io.pub
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--import&lt;span class="w"&gt; &lt;/span&gt;shiddy&lt;span class="se"&gt;\@&lt;/span&gt;shiddy.io.pub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now is a good time to confirm again what keys GPG know about, again &lt;code&gt;gpg -K&lt;/code&gt; and &lt;code&gt;gpg -k&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Let's confirm GPG knows that the public key we entered is related to the private keys on our card. We can be confirm this by running &lt;code&gt;gpg --card-status | tail&lt;/code&gt; and seeing whether the output is similar to the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sec#  ed25519 ...
-ssb&amp;gt;  ed25519 ...
-ssb&amp;gt;  ed25519 ...
-ssb&amp;gt;  cv25519 ...
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sec#&lt;span class="w"&gt;  &lt;/span&gt;ed25519&lt;span class="w"&gt; &lt;/span&gt;...
+ssb&amp;gt;&lt;span class="w"&gt;  &lt;/span&gt;ed25519&lt;span class="w"&gt; &lt;/span&gt;...
+ssb&amp;gt;&lt;span class="w"&gt;  &lt;/span&gt;ed25519&lt;span class="w"&gt; &lt;/span&gt;...
+ssb&amp;gt;&lt;span class="w"&gt;  &lt;/span&gt;cv25519&lt;span class="w"&gt; &lt;/span&gt;...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;What this tells us is that GPG has mapped some of the public keys we imported to private keys on this card. The &lt;strong&gt;sec#&lt;/strong&gt; and &lt;strong&gt;ssb&amp;gt;&lt;/strong&gt; inform us that GPG knows of a key but it does not have direct access to it. (Kinda like it's on our hardware key ৲(ᵕ3ᵕ)৴♡  )&lt;/p&gt;
 &lt;h2&gt;&lt;a id="Publishing our Public GPG keys"&gt;&lt;/a&gt;Publishing our Public GPG keys&lt;/h2&gt;
@@ -297,16 +505,14 @@ http://pgp.mit.edu/
 https://keyserver.pgp.com/vkd/GetWelcomeScreen.event&lt;/p&gt;
 &lt;h2&gt;&lt;a id="Setting our SSH agent use our GPG keys"&gt;&lt;/a&gt;Setting our SSH agent use our GPG keys&lt;/h2&gt;
 &lt;p&gt;I place a path variable in my .bashrc, however if you use another shell you might want to add it to it's appropriate profile/runcommand config. &lt;em&gt;Note&lt;/em&gt; Here be monsters, I spent a good ten minutes trying to get tmux and everything else happy. I'd stick with bashrc if you have the chance. &lt;a href="https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html"&gt;[src]&lt;/a&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\nexport SSH_AUTH_SOCK=\&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;gpgconf --list-dirs agent-ssh-socket&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;\&amp;quot;&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;\nexport SSH_AUTH_SOCK=\&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;gpgconf&lt;span class="w"&gt; &lt;/span&gt;--list-dirs&lt;span class="w"&gt; &lt;/span&gt;agent-ssh-socket&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;\&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;remember to source your new config as well &lt;code&gt;source ~/.bashrc&lt;/code&gt;, if you don't you will have to close and re-open your terminal for the key to be in your ssh agent.&lt;/p&gt;
 &lt;h3&gt;&lt;a id="Adding our public key to various authorized keys"&gt;&lt;/a&gt;Adding our public key to various authorized keys&lt;/h3&gt;
 &lt;p&gt;We can print our public authentication key with the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ssh-add -L
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ssh-add&lt;span class="w"&gt; &lt;/span&gt;-L
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img alt="ssh-add -L example" src="https://shiddy.io/images/ssh-add-example.png"&gt;&lt;/p&gt;
 &lt;p&gt;Which can then be added to any $HOME/.ssh/authorized_keys file on a server you want to access.&lt;/p&gt;
@@ -314,50 +520,45 @@ https://keyserver.pgp.com/vkd/GetWelcomeScreen.event&lt;/p&gt;
 &lt;p&gt;Here we are setting the state of the touch behavior for all our subkeys on our smart card. We have a few states to choose from.
 If you would like to read more about them you can read them with &lt;code&gt;ykman openpgp keys set-touch -h&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Unless you are doing any scripting where you would need to authenticate to a bunch of places over some reasonably small period of time, set your policy to &lt;code&gt;Cached&lt;/code&gt; instead of &lt;code&gt;On&lt;/code&gt;, and if you don't want anyone to change this policy on your smart card, you can set &lt;code&gt;fixed&lt;/code&gt; or &lt;code&gt;cached-fixed&lt;/code&gt; so that it can't be changed apart from a factory reset of the yubikey.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;POLICY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;On&amp;quot;&lt;/span&gt;
-ykman openpgp keys set-touch SIG &lt;span class="nv"&gt;$POLICY&lt;/span&gt;
-ykman openpgp keys set-touch AUT &lt;span class="nv"&gt;$POLICY&lt;/span&gt;
-ykman openpgp keys set-touch ENC &lt;span class="nv"&gt;$POLICY&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;POLICY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;On&amp;quot;&lt;/span&gt;
+ykman&lt;span class="w"&gt; &lt;/span&gt;openpgp&lt;span class="w"&gt; &lt;/span&gt;keys&lt;span class="w"&gt; &lt;/span&gt;set-touch&lt;span class="w"&gt; &lt;/span&gt;SIG&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$POLICY&lt;/span&gt;
+ykman&lt;span class="w"&gt; &lt;/span&gt;openpgp&lt;span class="w"&gt; &lt;/span&gt;keys&lt;span class="w"&gt; &lt;/span&gt;set-touch&lt;span class="w"&gt; &lt;/span&gt;AUT&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$POLICY&lt;/span&gt;
+ykman&lt;span class="w"&gt; &lt;/span&gt;openpgp&lt;span class="w"&gt; &lt;/span&gt;keys&lt;span class="w"&gt; &lt;/span&gt;set-touch&lt;span class="w"&gt; &lt;/span&gt;ENC&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$POLICY&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;&lt;a id="Setting pin retries for Yubikey"&gt;&lt;/a&gt;Setting pin retries for Yubikey&lt;/h2&gt;
 &lt;p&gt;We have some extra protections with our Yubikey that are worth enabling. Yubikey will lock out a key if a user fails to enter the correct password a number of times. However if you are like me and use a keyboard without any labels, you might want to make these thresholds more lenient.&lt;/p&gt;
 &lt;p&gt;Here I am setting the number of retries for my pin to 5, the number of reset-code retries to 5 and the number of admin-pin retries to 10&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ykman openpgp access set-retries &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ykman&lt;span class="w"&gt; &lt;/span&gt;openpgp&lt;span class="w"&gt; &lt;/span&gt;access&lt;span class="w"&gt; &lt;/span&gt;set-retries&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;&lt;a id ="Setting pins for your Smart Card"&gt;&lt;/a&gt;Setting pins for your Smart Card&lt;/h2&gt;
 &lt;p&gt;Smart Cards generally have two pins, a pin for regular verification of the card owner, and an admin pin for making hardware changes to the smart card itself.&lt;/p&gt;
 &lt;p&gt;If we fail validation with the pin the number of times configured above, we have to use the administrative pin to unlock the key. If we fail to validate the admin key in the same way, we brick our key, and would have to factory reset it.&lt;/p&gt;
 &lt;p&gt;We can change these pins as well as unblock our pin with GPG, using the following command:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gpg --change-pin
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;gpg&lt;span class="w"&gt; &lt;/span&gt;--change-pin
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;If you have not modified this value yet, 123456 is the factory pin and 12345678 is the default administrative pin&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;&lt;a id="Enabling Disabling Yubikey features"&gt;&lt;/a&gt; Enabling/Disabling Yubikey features&lt;/h2&gt;
 &lt;p&gt;If you like me are &lt;strong&gt;only&lt;/strong&gt; interested in using these keys to back your GPG info, I would advise you to disable all of the yubikey features you are not using. Here is how.&lt;/p&gt;
 &lt;p&gt;Firstly we can check what kind of protocols are already configured/enabled on our device with the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ykman info
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ykman&lt;span class="w"&gt; &lt;/span&gt;info
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;For my use case, it made sense for me to disable everything except PGP, which is done with the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ykman config nfc --disable-all
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ykman&lt;span class="w"&gt; &lt;/span&gt;config&lt;span class="w"&gt; &lt;/span&gt;nfc&lt;span class="w"&gt; &lt;/span&gt;--disable-all
 
-ykman config usb --disable FIDO2
-ykman config usb --disable OTP
-ykman config usb --disable U2F
-ykman config usb --disable OATH
-ykman config usb --disable HSMAUTH
-ykman config usb --disable PIV
-&lt;/pre&gt;&lt;/div&gt;
-
+ykman&lt;span class="w"&gt; &lt;/span&gt;config&lt;span class="w"&gt; &lt;/span&gt;usb&lt;span class="w"&gt; &lt;/span&gt;--disable&lt;span class="w"&gt; &lt;/span&gt;FIDO2
+ykman&lt;span class="w"&gt; &lt;/span&gt;config&lt;span class="w"&gt; &lt;/span&gt;usb&lt;span class="w"&gt; &lt;/span&gt;--disable&lt;span class="w"&gt; &lt;/span&gt;OTP
+ykman&lt;span class="w"&gt; &lt;/span&gt;config&lt;span class="w"&gt; &lt;/span&gt;usb&lt;span class="w"&gt; &lt;/span&gt;--disable&lt;span class="w"&gt; &lt;/span&gt;U2F
+ykman&lt;span class="w"&gt; &lt;/span&gt;config&lt;span class="w"&gt; &lt;/span&gt;usb&lt;span class="w"&gt; &lt;/span&gt;--disable&lt;span class="w"&gt; &lt;/span&gt;OATH
+ykman&lt;span class="w"&gt; &lt;/span&gt;config&lt;span class="w"&gt; &lt;/span&gt;usb&lt;span class="w"&gt; &lt;/span&gt;--disable&lt;span class="w"&gt; &lt;/span&gt;HSMAUTH
+ykman&lt;span class="w"&gt; &lt;/span&gt;config&lt;span class="w"&gt; &lt;/span&gt;usb&lt;span class="w"&gt; &lt;/span&gt;--disable&lt;span class="w"&gt; &lt;/span&gt;PIV
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;Ok. Bye&lt;/h2&gt;
-&lt;p&gt;( ・_・)ノ&lt;/p&gt;</content><category term="Technical"></category></entry><entry><title>Turn-on Tune-in Burn-out</title><link href="https://shiddy.io/turn-on-tune-in-burn-out.html" rel="alternate"></link><published>2017-09-09T00:00:00-06:00</published><updated>2017-09-09T00:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2017-09-09:/turn-on-tune-in-burn-out.html</id><summary type="html">&lt;p&gt;I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what &lt;em&gt;this feels like&lt;/em&gt; and what this &lt;em&gt;felt like&lt;/em&gt; to determine …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what &lt;em&gt;this feels like&lt;/em&gt; and what this &lt;em&gt;felt like&lt;/em&gt; to determine whether my decisions were worth it. Hopefully, those who read this can gain some insight before heading down the same road as I have.&lt;/p&gt;
+&lt;p&gt;( ・_・)ノ&lt;/p&gt;</content><category term="articles"></category><category term="Technical"></category></entry><entry><title>Turn-on Tune-in Burn-out</title><link href="https://shiddy.io/turn-on-tune-in-burn-out.html" rel="alternate"></link><published>2017-09-09T00:00:00-06:00</published><updated>2017-09-09T00:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2017-09-09:/turn-on-tune-in-burn-out.html</id><summary type="html">&lt;p&gt;I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what &lt;em&gt;this feels like&lt;/em&gt; and what this &lt;em&gt;felt like&lt;/em&gt; to determine …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'm writing this at the peak of a burnout that has been lasting me for the better half of the last decade. I would like to think of myself as somewhat of an empiricist so I want to document what &lt;em&gt;this feels like&lt;/em&gt; and what this &lt;em&gt;felt like&lt;/em&gt; to determine whether my decisions were worth it. Hopefully, those who read this can gain some insight before heading down the same road as I have.&lt;/p&gt;
 &lt;p&gt;This post will span a year; starting with my efforts throughout my senior year until I have finished with my Bachelor's degree and can provide my historical perspective on my work/life balance.&lt;/p&gt;
 &lt;h3&gt;Crash and Burn:&lt;/h3&gt;
 &lt;h4&gt;Bleed like a Stone&lt;/h4&gt;
@@ -386,15 +587,14 @@ ykman config usb --disable PIV
 &lt;p&gt;What burns the most is that after all is said and done, I hate that I have taken the skill that I have spent so long working to develop, and burned through every last bit of passion and joy I initially found in it. Recalling the days when I first thought to myself, "I can do this," where every lesson formed some piece of a cohesive whole. How every little improvement made a world of difference to how much fun it was to have to really think about what I was doing.&lt;/p&gt;
 &lt;p&gt;I remember when was first learning how to program with Scratch in high school. We were tasked with making a calculator with sprites that could do basic arithmetic up to three digits on the screen. As an incomprehensibly lazy child, paired with my rather unstudious nature, I knew that if I was to complete this assignment I would have to spend a lot of time to figure out how to do it. So I spent an entire evening working out how to make this program work. To my genuine astonishment, I was able to complete the assignment in a single night. I felt genuine satisfaction as began to unravel the complexities of something as simple as a calculator and know what little piece to add to the program next. It was such a novel concept at the time to use a variable to store a value of what I wanted to put on the screen, and that I could take the output of any calculation and update that same variable and have it all work itself out!&lt;/p&gt;
 &lt;p&gt;When I went to class, I remember being baffled that apart from one other student, the rest of my peers had attempted to hard-code hundreds of possibilities and ended up with programs like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;when&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="nv"&gt;pressed&lt;/span&gt;:
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nv"&gt;pressed&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="nv"&gt;pressed&lt;/span&gt;
-      &lt;span class="nv"&gt;display&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nv"&gt;pressed&lt;/span&gt;
-      &lt;span class="nv"&gt;display&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;when 1 pressed:
+  if + pressed
+    if 1 pressed
+      display 2
+    if 2 pressed
+      display 3
     ...
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;I remember feeling so gratified when I was able to explain to them how I approached the problem with my variables. Watching them observe my thoughts and then have it "click" for them, jumping back to their computers to implement something simple rather than difficult. The rest of the day I was so excited to program the next assignment that I couldn't focus on any other classes. I was completely enamored with all the possibilities of things to make. I knew that if I tried hard enough that I could make anything with my computer, and I was so genuinely excited to learn what was next. I remember specifically thinking of what I would be doing once I got "good" at computers.&lt;/p&gt;
 &lt;p&gt;Now a lot of those dreams are within reach, and I can not be less interested. I get home, and you could not force me to do any projects "for fun." I don't want to listen to music, read, watch movies, or anything else to decompress; I just want to sit alone and not think about anything for once.&lt;/p&gt;
@@ -420,21 +620,19 @@ ykman config usb --disable PIV
 &lt;iframe width="100%" src="https://www.youtube.com/embed/yWkq7btSQvs" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;After reading through my journals over the last years I have realized something. That the points where I was most happy or interested in working, I was working towards something. I only now realize that as my degree is coming to an end, and I have achieved my dream job, I don't have any particular goals that I am working toward. I guess I didn't think that I would have gotten this far by now.&lt;/p&gt;
-&lt;p&gt;I feel that I have spent enough time here waxing non-poetic about burnout. But I need to start knowing what the goals in the next chapter in my life should look like.&lt;/p&gt;</content><category term="Musings"></category></entry><entry><title>The Curse of the Gifted</title><link href="https://shiddy.io/Pay%20it%20forward...%20technically.html" rel="alternate"></link><published>2016-03-05T00:00:00-07:00</published><updated>2016-03-05T00:00:00-07:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2016-03-05:/Pay it forward... technically.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;In&lt;/span&gt; &lt;span class="nv"&gt;college&lt;/span&gt;, &lt;span class="nv"&gt;I&lt;/span&gt; &lt;span class="nv"&gt;studied&lt;/span&gt; &lt;span class="nv"&gt;comp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;sci&lt;/span&gt;
-&lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="nv"&gt;class&lt;/span&gt;, &lt;span class="nv"&gt;so&lt;/span&gt; &lt;span class="nv"&gt;damned&lt;/span&gt; &lt;span class="nv"&gt;bored&lt;/span&gt; &lt;span class="nv"&gt;I&lt;/span&gt; &lt;span class="nv"&gt;could&lt;/span&gt; &lt;span class="nv"&gt;die&lt;/span&gt;.
-&lt;span class="nv"&gt;convinced&lt;/span&gt; &lt;span class="nv"&gt;to&lt;/span&gt; &lt;span class="nv"&gt;be&lt;/span&gt; &lt;span class="nv"&gt;best&lt;/span&gt;
-&lt;span class="nv"&gt;showed&lt;/span&gt; &lt;span class="nv"&gt;up&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;the&lt;/span&gt; &lt;span class="nv"&gt;test&lt;/span&gt;
-&lt;span class="nv"&gt;Turns&lt;/span&gt; &lt;span class="nv"&gt;out&lt;/span&gt; &lt;span class="nv"&gt;all&lt;/span&gt; &lt;span class="nv"&gt;my&lt;/span&gt; &lt;span class="nv"&gt;skills&lt;/span&gt; &lt;span class="nv"&gt;were&lt;/span&gt; &lt;span class="nv"&gt;a&lt;/span&gt; &lt;span class="nv"&gt;lie&lt;/span&gt;.
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I feel that I have spent enough time here waxing non-poetic about burnout. But I need to start knowing what the goals in the next chapter in my life should look like.&lt;/p&gt;</content><category term="articles"></category><category term="Musings"></category></entry><entry><title>The Curse of the Gifted</title><link href="https://shiddy.io/Pay%20it%20forward...%20technically.html" rel="alternate"></link><published>2016-03-05T00:00:00-07:00</published><updated>2016-03-05T00:00:00-07:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2016-03-05:/Pay it forward... technically.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;In college, I studied comp-sci
+in class, so damned bored I could die.
+convinced to be best
+showed up for the test
+Turns out all my skills were a lie.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;At this venture, I am almost done with my university education. No matter where you stand on higher education …&lt;/p&gt;</summary><content type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;In&lt;/span&gt; &lt;span class="nv"&gt;college&lt;/span&gt;, &lt;span class="nv"&gt;I&lt;/span&gt; &lt;span class="nv"&gt;studied&lt;/span&gt; &lt;span class="nv"&gt;comp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;sci&lt;/span&gt;
-&lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="nv"&gt;class&lt;/span&gt;, &lt;span class="nv"&gt;so&lt;/span&gt; &lt;span class="nv"&gt;damned&lt;/span&gt; &lt;span class="nv"&gt;bored&lt;/span&gt; &lt;span class="nv"&gt;I&lt;/span&gt; &lt;span class="nv"&gt;could&lt;/span&gt; &lt;span class="nv"&gt;die&lt;/span&gt;.
-&lt;span class="nv"&gt;convinced&lt;/span&gt; &lt;span class="nv"&gt;to&lt;/span&gt; &lt;span class="nv"&gt;be&lt;/span&gt; &lt;span class="nv"&gt;best&lt;/span&gt;
-&lt;span class="nv"&gt;showed&lt;/span&gt; &lt;span class="nv"&gt;up&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;the&lt;/span&gt; &lt;span class="nv"&gt;test&lt;/span&gt;
-&lt;span class="nv"&gt;Turns&lt;/span&gt; &lt;span class="nv"&gt;out&lt;/span&gt; &lt;span class="nv"&gt;all&lt;/span&gt; &lt;span class="nv"&gt;my&lt;/span&gt; &lt;span class="nv"&gt;skills&lt;/span&gt; &lt;span class="nv"&gt;were&lt;/span&gt; &lt;span class="nv"&gt;a&lt;/span&gt; &lt;span class="nv"&gt;lie&lt;/span&gt;.
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;p&gt;At this venture, I am almost done with my university education. No matter where you stand on higher education, I …&lt;/p&gt;</summary><content type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;In college, I studied comp-sci
+in class, so damned bored I could die.
+convinced to be best
+showed up for the test
+Turns out all my skills were a lie.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;At this venture, I am almost done with my university education. No matter where you stand on higher education, I personally found that the experience was worth all the cost, time, and effort in one revelation.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;I am not awesome, I am ungrateful.&lt;/strong&gt;&lt;/p&gt;
@@ -456,7 +654,7 @@ ykman config usb --disable PIV
 &lt;p&gt;One of the most influential people in my life was a high school English teacher that tried to instill in me the process of \"paying it forward.\" Reciprocating the gifts others had given me that I didn't really deserve. Real people, that write answers to others in forums, make how to guides, write books and take the time to share their insights to the world without seeking social adulation or fame. &lt;/p&gt;
 &lt;p&gt;Thus far I have really only abused the system. I have a bookshelf overflowing with technical books that I have sought out and purchased because their insights have moved me. In them, I have gained knowledge that I deceptively tout to be my own, while the real authors deserve far more praise than I. The countless articles and manuals that I have read on tools and processes written by people that didn't even bother to pen their name to the content they were providing staggers me. People that took literal man hours to help foster knowledge in others whom they didn't know. I am not an island, and all of my success in life can be directly attributed to those who paid it forward to me.&lt;/p&gt;
 &lt;p&gt;It's easy to think that when someone does not get something immediately or struggles with something I find easy, that they should simply try harder. But if I was to sum up all the hours that I had wracked my brain on a problem I find easy now, I guarantee that I would think I was a complete imbecile. Therefore, it's purely ego. I have no idea how many people I have unintentionally prevented from getting into technology because of my ego. And now that I see that in myself, I don't want to propagate my harmful outlook in others.&lt;/p&gt;
-&lt;p&gt;If we as a group ever want computer science to be loved by others, we need to call out people like me for not paying it forward.&lt;/p&gt;</content><category term="Musings"></category></entry><entry><title>Phone Marketing Nonsense</title><link href="https://shiddy.io/phone-marketing-nonsense.html" rel="alternate"></link><published>2015-08-05T00:00:00-06:00</published><updated>2015-08-05T00:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2015-08-05:/phone-marketing-nonsense.html</id><summary type="html">&lt;h1&gt;I don't want a new phone.&lt;/h1&gt;
+&lt;p&gt;If we as a group ever want computer science to be loved by others, we need to call out people like me for not paying it forward.&lt;/p&gt;</content><category term="articles"></category><category term="Musings"></category></entry><entry><title>Phone Marketing Nonsense</title><link href="https://shiddy.io/phone-marketing-nonsense.html" rel="alternate"></link><published>2015-08-05T00:00:00-06:00</published><updated>2015-08-05T00:00:00-06:00</updated><author><name>Shiddy</name></author><id>tag:shiddy.io,2015-08-05:/phone-marketing-nonsense.html</id><summary type="html">&lt;h1&gt;I don't want a new phone.&lt;/h1&gt;
 &lt;p&gt;I really don't. I love my phone despite all its flaws. All of which are completely my fault and are not in any way the manufacturers. My phone has lasted through a personal hell:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;hours underwater when I went swimming on vacation&lt;/li&gt;
@@ -549,4 +747,4 @@ I don't want to spend time berating those who want to own these devices, nor spe
 &lt;p&gt;I don't think that it's reasonable to toady your potential customers around the way that the marketing team for OnePlus demands in order for you to buy their products. I'm absolutely anti-spam and anti-solicitation. Their invite system will artificially force people abusing the system or spamming to the top of the queue. This is not even that hard for people to accomplish anymore. &lt;a href="https://medium.com/@JakeCooper/how-i-hacked-the-oneplus-reservation-system-120ea1a7ad82"&gt;There are articles showing how it's possible and has been done already.&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Evangelical marketing schemes like what OnePlus has implemented uproot the trust that we have in communally identifying worthwhile products. This is the most upsetting because the OnePlus 1 &amp;amp; 2 are more than powerful enough to get started through grass roots and word of mouth legitimately. I would own one already if it were not for their marketing bogus.&lt;/p&gt;
 &lt;p&gt;Here is a good bit of advice for people who think this is not all that bad. If you are told that you have to tell other people how good something is before you can own it, it's probably not a good thing.&lt;/p&gt;
-&lt;p&gt;It's rather unfortunate that I'm beginning to have to play detective for company selling anything to see whether it's a giant marketing ploy…&lt;/p&gt;</content><category term="Random"></category></entry></feed>
+&lt;p&gt;It's rather unfortunate that I'm beginning to have to play detective for company selling anything to see whether it's a giant marketing ploy…&lt;/p&gt;</content><category term="articles"></category><category term="Random"></category></entry></feed>

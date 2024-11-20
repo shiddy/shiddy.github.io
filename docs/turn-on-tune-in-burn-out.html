@@ -2,17 +2,12 @@
 <html lang="en">
 <head>
           <title>ShiddyIO - Turn-on Tune-in Burn-out</title>
-	<link rel="stylesheet" type='text/css' href="https://shiddy.io/theme/css/style.css">
+	<link rel="stylesheet" type='text/css' href="./theme/css/style.css">
 	<link href='https://fonts.googleapis.com/css?family=Ubuntu Mono' rel='stylesheet'>
         <meta charset="utf-8" />
-        <meta name="generator" content="Pelican" />
-        <link href="https://shiddy.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="ShiddyIO Full Atom Feed" />
 
 
-
-
-  <!--  -->
-
+    <meta name="tags" content="Musings" />
 
 </head>
 
@@ -24,15 +19,14 @@
 	  •▀▀▀█▄•▐█▀▀█•▐█·▄▄▄█▌·▄▀▄█▌▐█▌▐█▪
 	  ▐▄▄▪▐█ ▐█ ▐█▌▐█▐█ .██▐█▪ ██·▀███▀·
 	  •▀▀▀▀ ▀▀▀▀ ·  ▪ ▀▀▀▀• ▀▀▀▀•  ▐█•
-	  <a href="/" class="header">/index</a> <a href="https://shiddy.io/pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="https://shiddy.io/feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
+	  <a href="/" class="header">/index</a> <a href="./pages/about.html" class="header">/about</a> <a rel="alternate" type="application/atom+xml" href="./feeds/all.atom.xml" class="header">/rss</a> --------- ▀ --
 	</pre>
 
         <nav id="menu"><ul>
 
-
-            <li class="active"><a href="https://shiddy.io/category/musings.html">Musings</a></li>
-            <li><a href="https://shiddy.io/category/random.html">Random</a></li>
-            <li><a href="https://shiddy.io/category/technical.html">Technical</a></li>
+            <li><a href="./tag/technical.html">Technical</a></li>
+            <li class="active"><a href="./tag/musings.html">Musings</a></li>
+            <li><a href="./tag/random.html">Random</a></li>
             <li></li>
 
         </ul></nav><!-- /#menu -->
@@ -67,15 +61,14 @@
 <p>What burns the most is that after all is said and done, I hate that I have taken the skill that I have spent so long working to develop, and burned through every last bit of passion and joy I initially found in it. Recalling the days when I first thought to myself, "I can do this," where every lesson formed some piece of a cohesive whole. How every little improvement made a world of difference to how much fun it was to have to really think about what I was doing.</p>
 <p>I remember when was first learning how to program with Scratch in high school. We were tasked with making a calculator with sprites that could do basic arithmetic up to three digits on the screen. As an incomprehensibly lazy child, paired with my rather unstudious nature, I knew that if I was to complete this assignment I would have to spend a lot of time to figure out how to do it. So I spent an entire evening working out how to make this program work. To my genuine astonishment, I was able to complete the assignment in a single night. I felt genuine satisfaction as began to unravel the complexities of something as simple as a calculator and know what little piece to add to the program next. It was such a novel concept at the time to use a variable to store a value of what I wanted to put on the screen, and that I could take the output of any calculation and update that same variable and have it all work itself out!</p>
 <p>When I went to class, I remember being baffled that apart from one other student, the rest of my peers had attempted to hard-code hundreds of possibilities and ended up with programs like this:</p>
-<div class="highlight"><pre><span></span><span class="nv">when</span> <span class="mi">1</span> <span class="nv">pressed</span>:
-  <span class="k">if</span> <span class="o">+</span> <span class="nv">pressed</span>
-    <span class="k">if</span> <span class="mi">1</span> <span class="nv">pressed</span>
-      <span class="nv">display</span> <span class="mi">2</span>
-    <span class="k">if</span> <span class="mi">2</span> <span class="nv">pressed</span>
-      <span class="nv">display</span> <span class="mi">3</span>
+<div class="highlight"><pre><span></span><code>when 1 pressed:
+  if + pressed
+    if 1 pressed
+      display 2
+    if 2 pressed
+      display 3
     ...
-</pre></div>
-
+</code></pre></div>
 
 <p>I remember feeling so gratified when I was able to explain to them how I approached the problem with my variables. Watching them observe my thoughts and then have it "click" for them, jumping back to their computers to implement something simple rather than difficult. The rest of the day I was so excited to program the next assignment that I couldn't focus on any other classes. I was completely enamored with all the possibilities of things to make. I knew that if I tried hard enough that I could make anything with my computer, and I was so genuinely excited to learn what was next. I remember specifically thinking of what I would be doing once I got "good" at computers.</p>
 <p>Now a lot of those dreams are within reach, and I can not be less interested. I get home, and you could not force me to do any projects "for fun." I don't want to listen to music, read, watch movies, or anything else to decompress; I just want to sit alone and not think about anything for once.</p>
@@ -107,19 +100,12 @@
     <p style="text-align: right">
       Sat 09 September 2017
     </time>
-      | <a href="https://shiddy.io/category/musings.html">Musings</a>
     </p>
   </div><!-- /.post-info -->
 </section>
-	<pre class="footer">
-					-----------------------
-					<a href="https://github.com/shiddy">Github</a> <a href="https://www.youtube.com/channel/UCuF7oVKcM4K3wps5_vVXtww">Youtube</a> <a rel="me" href="https://infosec.exchange/@shiddy">Mastodon</a>
-	</pre>
-        <footer id="contentinfo" class="body">
-		<!-- <address id="about" class="vcard body">
-                Proudly powered by <a href="https://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="https://www.python.org/">Python</a>.
-		</address><-->
-        </footer><!-- /#contentinfo -->
+  <div id="footer">
+    <p>-------------------------------<br/>
+    <a href="https://github.com/shiddy">Github</a> <a href="https://www.youtube.com/channel/UCuF7oVKcM4K3wps5_vVXtww">Youtube</a> <a rel="mastodon" href="https://infosec.exchange/@shiddy">Mastodon</a> <a rel="bluesky" href="https://bsky.app/profile/shiddy.io">Bluesky</a></p>
+  </div>
 </body>
 </html>

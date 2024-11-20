@@ -1,6 +1,6 @@
 Title: Setting up GPG and Hardware Tokens
 Date: 2020-09-07 12:00
-Category: Technical
+Tags: Technical
 
 # GPG & Hardware Tokens
 
