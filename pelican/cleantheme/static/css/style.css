@@ -240,4 +240,6 @@ tbody tr:nth-child(even) {
     --color-8: #282a36;
 }
 
-/* Make sure that in-line code blocks are word-wrapped */
+#TOC li {
+  padding-top: 0;
+{
