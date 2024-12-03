@@ -113,30 +113,33 @@ random install dirs for things like node where they want you have to update your
 &lt;p&gt;You will need to make a new repository in your version control software; Fill it with directories of the programs you want to manage the dotfiles for.&lt;/p&gt;
 &lt;p&gt;Worth pointing out that since we are setting up our dotfiles to be managed to the XDG_CONFIG_HOME standard we can add a .config directory here as well.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;dot
- |-nvim
- |--.config
- |-tmux
- |--.config
- |-zsh
- |--.config (* you will have do add a .zshenv &amp;#39;export ZDOTDIR=&amp;quot;$HOME/.config&amp;quot; for some zsh instances.&amp;#39;)
- |--.zshenv
- | ...
+├── nvim
+│  └── .config
+├── tmux
+│  └── .config
+├── zsh
+│  ├── .config (* you will have do add a .zshenv &amp;#39;export ZDOTDIR=&amp;quot;$HOME/.config&amp;quot; for some zsh instances.&amp;#39;)
+└...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then we need to start moving our configs there. This works quite well if you are running on a new machine, lest you accidentally kill what you have in the process of copying things over...otherwise be careful.&lt;/p&gt;
 &lt;p&gt;Once you have moved everything over your directories should be populated with some of your dotfiles. It should look something like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;dot
- |-nvim
- |--.config
- |---(imagine some LUA or something even more stupid)
- |-tmux
- |--.config
- |---.tmux.conf
- |-zsh
- |--.config
- |---.zshrc
- |--.zshenv
- | ...
+├── nvim
+│  └── .config
+│     └── nvim
+│        └── (imagine some LUA or something even more stupid)
+├── tmux
+│  └── .config
+│     └── tmux
+│        └── tmux.conf
+├── zsh
+│  ├── .config
+│  │  ├── .zsh
+│  │  │  └── completions
+│  │  └── .zshrc
+│  └── .zshenv
+└...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now you are ready to use stow to link everything! The basic command looks like this:&lt;/p&gt;

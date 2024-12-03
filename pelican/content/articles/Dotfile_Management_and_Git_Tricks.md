@@ -113,14 +113,13 @@ Worth pointing out that since we are setting up our dotfiles to be managed to th
 
 ```
 dot
- |-nvim
- |--.config
- |-tmux
- |--.config
- |-zsh
- |--.config (* you will have do add a .zshenv 'export ZDOTDIR="$HOME/.config" for some zsh instances.')
- |--.zshenv
- | ...
+├── nvim
+│  └── .config
+├── tmux
+│  └── .config
+├── zsh
+│  ├── .config (* you will have do add a .zshenv 'export ZDOTDIR="$HOME/.config" for some zsh instances.')
+└...
 ```
 
 Then we need to start moving our configs there. This works quite well if you are running on a new machine, lest you accidentally kill what you have in the process of copying things over...otherwise be careful.
@@ -129,17 +128,21 @@ Once you have moved everything over your directories should be populated with so
 
 ```
 dot
- |-nvim
- |--.config
- |---(imagine some LUA or something even more stupid)
- |-tmux
- |--.config
- |---.tmux.conf
- |-zsh
- |--.config
- |---.zshrc
- |--.zshenv
- | ...
+├── nvim
+│  └── .config
+│     └── nvim
+│        └── (imagine some LUA or something even more stupid)
+├── tmux
+│  └── .config
+│     └── tmux
+│        └── tmux.conf
+├── zsh
+│  ├── .config
+│  │  ├── .zsh
+│  │  │  └── completions
+│  │  └── .zshrc
+│  └── .zshenv
+└...
 ```
 
 Now you are ready to use stow to link everything! The basic command looks like this:

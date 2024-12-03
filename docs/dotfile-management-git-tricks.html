@@ -115,30 +115,33 @@ random install dirs for things like node where they want you have to update your
 <p>You will need to make a new repository in your version control software; Fill it with directories of the programs you want to manage the dotfiles for.</p>
 <p>Worth pointing out that since we are setting up our dotfiles to be managed to the XDG_CONFIG_HOME standard we can add a .config directory here as well.</p>
 <div class="highlight"><pre><span></span><code>dot
- |-nvim
- |--.config
- |-tmux
- |--.config
- |-zsh
- |--.config (* you will have do add a .zshenv &#39;export ZDOTDIR=&quot;$HOME/.config&quot; for some zsh instances.&#39;)
- |--.zshenv
- | ...
+├── nvim
+│  └── .config
+├── tmux
+│  └── .config
+├── zsh
+│  ├── .config (* you will have do add a .zshenv &#39;export ZDOTDIR=&quot;$HOME/.config&quot; for some zsh instances.&#39;)
+└...
 </code></pre></div>
 
 <p>Then we need to start moving our configs there. This works quite well if you are running on a new machine, lest you accidentally kill what you have in the process of copying things over...otherwise be careful.</p>
 <p>Once you have moved everything over your directories should be populated with some of your dotfiles. It should look something like this:</p>
 <div class="highlight"><pre><span></span><code>dot
- |-nvim
- |--.config
- |---(imagine some LUA or something even more stupid)
- |-tmux
- |--.config
- |---.tmux.conf
- |-zsh
- |--.config
- |---.zshrc
- |--.zshenv
- | ...
+├── nvim
+│  └── .config
+│     └── nvim
+│        └── (imagine some LUA or something even more stupid)
+├── tmux
+│  └── .config
+│     └── tmux
+│        └── tmux.conf
+├── zsh
+│  ├── .config
+│  │  ├── .zsh
+│  │  │  └── completions
+│  │  └── .zshrc
+│  └── .zshenv
+└...
 </code></pre></div>
 
 <p>Now you are ready to use stow to link everything! The basic command looks like this:</p>
